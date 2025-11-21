@@ -80,7 +80,7 @@ import javax.swing.border.EmptyBorder;
 
     // Start time
 <span class="nc" id="L82">    panel.add(new JLabel(&quot;Start Time:&quot;));</span>
-<span class="nc" id="L83">    java.util.Calendar startCal = java.util.Calendar.getInstance();</span>
+<span class="nc" id="L83">    java.util.Calendar startCal = new java.util.GregorianCalendar();</span>
 <span class="nc" id="L84">    startCal.set(java.util.Calendar.HOUR_OF_DAY, 9);</span>
 <span class="nc" id="L85">    startCal.set(java.util.Calendar.MINUTE, 0);</span>
 <span class="nc" id="L86">    startCal.set(java.util.Calendar.SECOND, 0);</span>
@@ -94,7 +94,7 @@ import javax.swing.border.EmptyBorder;
 
     // End time
 <span class="nc" id="L96">    panel.add(new JLabel(&quot;End Time:&quot;));</span>
-<span class="nc" id="L97">    java.util.Calendar endCal = java.util.Calendar.getInstance();</span>
+<span class="nc" id="L97">    java.util.Calendar endCal = new java.util.GregorianCalendar();</span>
 <span class="nc" id="L98">    endCal.set(java.util.Calendar.HOUR_OF_DAY, 10);</span>
 <span class="nc" id="L99">    endCal.set(java.util.Calendar.MINUTE, 0);</span>
 <span class="nc" id="L100">    endCal.set(java.util.Calendar.SECOND, 0);</span>
@@ -206,7 +206,7 @@ import javax.swing.border.EmptyBorder;
         } else {
 <span class="nc" id="L207">          java.util.Date startTimeValue = (java.util.Date) startTimeSpinner.getValue();</span>
 <span class="nc" id="L208">          java.util.Date endTimeValue = (java.util.Date) endTimeSpinner.getValue();</span>
-<span class="nc" id="L209">          java.util.Calendar cal = java.util.Calendar.getInstance();</span>
+<span class="nc" id="L209">          java.util.Calendar cal = new java.util.GregorianCalendar();</span>
 <span class="nc" id="L210">          cal.setTime(startTimeValue);</span>
 <span class="nc" id="L211">          startTime = LocalTime.of(cal.get(java.util.Calendar.HOUR_OF_DAY),</span>
 <span class="nc" id="L212">              cal.get(java.util.Calendar.MINUTE));</span>

@@ -80,7 +80,7 @@ public class EventDialog {
 
     // Start time
     panel.add(new JLabel("Start Time:"));
-    java.util.Calendar startCal = java.util.Calendar.getInstance();
+    java.util.Calendar startCal = new java.util.GregorianCalendar();
     startCal.set(java.util.Calendar.HOUR_OF_DAY, 9);
     startCal.set(java.util.Calendar.MINUTE, 0);
     startCal.set(java.util.Calendar.SECOND, 0);
@@ -94,7 +94,7 @@ public class EventDialog {
 
     // End time
     panel.add(new JLabel("End Time:"));
-    java.util.Calendar endCal = java.util.Calendar.getInstance();
+    java.util.Calendar endCal = new java.util.GregorianCalendar();
     endCal.set(java.util.Calendar.HOUR_OF_DAY, 10);
     endCal.set(java.util.Calendar.MINUTE, 0);
     endCal.set(java.util.Calendar.SECOND, 0);
@@ -206,7 +206,7 @@ public class EventDialog {
         } else {
           java.util.Date startTimeValue = (java.util.Date) startTimeSpinner.getValue();
           java.util.Date endTimeValue = (java.util.Date) endTimeSpinner.getValue();
-          java.util.Calendar cal = java.util.Calendar.getInstance();
+          java.util.Calendar cal = new java.util.GregorianCalendar();
           cal.setTime(startTimeValue);
           startTime = LocalTime.of(cal.get(java.util.Calendar.HOUR_OF_DAY),
               cal.get(java.util.Calendar.MINUTE));

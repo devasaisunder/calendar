@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="calendar.model.testing.ControllerCommandsTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.009">
+<testsuite name="calendar.model.testing.ControllerCommandsTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:39:02" hostname="Devas-MacBook-Pro.local" time="0.005">
   <properties/>
-  <testcase name="testCommandBusy" classname="calendar.model.testing.ControllerCommandsTest" time="0.002"/>
+  <testcase name="testCommandBusy" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testCommandEdit" classname="calendar.model.testing.ControllerCommandsTest" time="0.001"/>
-  <testcase name="testIoMockGetEvent" classname="calendar.model.testing.ControllerCommandsTest" time="0.001"/>
+  <testcase name="testIoMockGetEvent" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testIoController" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testCommandCreateNullCheck" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testGetEventsReturnsNewList" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
-  <testcase name="testRunWrongCommand" classname="calendar.model.testing.ControllerCommandsTest" time="0.001"/>
+  <testcase name="testRunWrongCommand" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testIsBusyDefaultReturnFalse" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testRunExitCommand" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testIncreaseMockCoverageTestTwo" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testIncreaseMockCoverage" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testRemoveEvent1" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testIoMockForEachEvent" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
-  <testcase name="testGetAllEvents" classname="calendar.model.testing.ControllerCommandsTest" time="0.001"/>
+  <testcase name="testGetAllEvents" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testTrailingSpaceDoesNotAddEmptyToken" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
-  <testcase name="testEmptyCommandReturnsEmptyList" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
+  <testcase name="testEmptyCommandReturnsEmptyList" classname="calendar.model.testing.ControllerCommandsTest" time="0.001"/>
   <testcase name="testIoMockRemoveEvent" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testRunInvalidSingleTokenCommand" classname="calendar.model.testing.ControllerCommandsTest" time="0.001"/>
   <testcase name="testCalendarView" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testIoMockBusy" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testIoMockEdit" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testIoFakeAppendable2" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
-  <testcase name="testTwoTokenCommandIsValid" classname="calendar.model.testing.ControllerCommandsTest" time="0.001"/>
+  <testcase name="testTwoTokenCommandIsValid" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testInvalidTwoWordCommandTriggersRenderError" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
-  <testcase name="testCommandGetEvent" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
+  <testcase name="testCommandGetEvent" classname="calendar.model.testing.ControllerCommandsTest" time="0.001"/>
   <testcase name="testIoFakeAppendable" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testInvalidCommandKeyTriggersRenderError" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>
   <testcase name="testCommandCreate" classname="calendar.model.testing.ControllerCommandsTest" time="0.0"/>

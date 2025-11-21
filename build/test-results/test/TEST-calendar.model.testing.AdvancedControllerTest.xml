@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="calendar.model.testing.AdvancedControllerTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.004">
+<testsuite name="calendar.model.testing.AdvancedControllerTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:39:02" hostname="Devas-MacBook-Pro.local" time="0.003">
   <properties/>
   <testcase name="testUseCalendarCommandFlow" classname="calendar.model.testing.AdvancedControllerTest" time="0.002"/>
-  <testcase name="testIoException" classname="calendar.model.testing.AdvancedControllerTest" time="0.001"/>
-  <testcase name="testGetCalendars" classname="calendar.model.testing.AdvancedControllerTest" time="0.0"/>
+  <testcase name="testIoException" classname="calendar.model.testing.AdvancedControllerTest" time="0.0"/>
+  <testcase name="testGetCalendars" classname="calendar.model.testing.AdvancedControllerTest" time="0.001"/>
   <testcase name="testEditCommandFlow" classname="calendar.model.testing.AdvancedControllerTest" time="0.0"/>
   <testcase name="testCreateCommandFlow" classname="calendar.model.testing.AdvancedControllerTest" time="0.0"/>
   <testcase name="testGetActiveCalenar" classname="calendar.model.testing.AdvancedControllerTest" time="0.0"/>

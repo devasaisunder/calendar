@@ -15,7 +15,7 @@ import java.util.Map;
  * Implements ViewListener to handle all user interactions from the view.
  * All business logic is handled here, not in the view.
  */
-public class CalendarGuiController implements ViewListener {
+public class CalendarGuiController implements CalendarController,ViewListener {
   private final CalendarContainer container;
   private final CalendarFeatures features;
   private final CalendarGuiView view;
@@ -42,7 +42,8 @@ public class CalendarGuiController implements ViewListener {
   /**
    * Starts the application by displaying the view and requesting initial data.
    */
-  public void go() {
+  @Override
+  public void run() {
     setupViewForDialogs();
     view.display();
     handleRefresh();

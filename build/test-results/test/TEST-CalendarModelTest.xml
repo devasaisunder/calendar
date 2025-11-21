@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CalendarModelTest" tests="46" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.01">
+<testsuite name="CalendarModelTest" tests="46" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:39:02" hostname="Devas-MacBook-Pro.local" time="0.011">
   <properties/>
-  <testcase name="testEventWithEventId" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testEventWithEventId" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testEditEventMultiple" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testNullEventInitializationWithSubjectNull" classname="CalendarModelTest" time="0.0"/>
-  <testcase name="testEditEventMultipleDescriptions" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testEditEventMultipleDescriptions" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testGetEventsDayLongFive" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testGetEventsDayLongFour" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEqualsEndDateTimeDifferent" classname="CalendarModelTest" time="0.0"/>
-  <testcase name="testAddNonConflictingEvents" classname="CalendarModelTest" time="0.001"/>
-  <testcase name="testEventToString" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testAddNonConflictingEvents" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testEventToString" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testGetEvent" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEventWithDescription" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testIsBusyMultipleEventsOneOverlap" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEditEventMultipleLocation" classname="CalendarModelTest" time="0.0"/>
-  <testcase name="testEventWithEventType" classname="CalendarModelTest" time="0.001"/>
-  <testcase name="testEditEventMultipleEndTime" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testEventWithEventType" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testEditEventMultipleEndTime" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testRemoveEvent" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testEventEquals" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEventHashCodeEquals" classname="CalendarModelTest" time="0.0"/>
-  <testcase name="testGetEventsReturnEmpty" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testGetEventsReturnEmpty" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testEditMultipleWithWrongProperty" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testAddEvent" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEditEventAllDayNotTriggered" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testEditEventSetEndAllDayTrue" classname="CalendarModelTest" time="0.0"/>
-  <testcase name="testEventWithLocation" classname="CalendarModelTest" time="0.001"/>
+  <testcase name="testEventWithLocation" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEventHashCodeNotEquals" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testIsBusyExactStartMatch" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEditSingleWithWrongProperty" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testIsBusyNotInAnyEvent" classname="CalendarModelTest" time="0.0"/>
-  <testcase name="testEventWithEventStatus" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testEventWithEventStatus" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testEqualsSubjectDifferent" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEventNotEquals" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testNullEventInitialization" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testIsBusyBetweenStartAndEnd" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEqualsStartDateTimeDifferent" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEditEventEndAllDayNotTriggered" classname="CalendarModelTest" time="0.0"/>
-  <testcase name="testEditEventSetAllDayTrue" classname="CalendarModelTest" time="0.0"/>
+  <testcase name="testEditEventSetAllDayTrue" classname="CalendarModelTest" time="0.001"/>
   <testcase name="testEventEqualsWithOtherObject" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testGetEventsDayLongTwo" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testAddConflictingEvents" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testWrongEventCreation" classname="CalendarModelTest" time="0.0"/>
-  <testcase name="testGetEventsDayLongThree" classname="CalendarModelTest" time="0.001"/>
+  <testcase name="testGetEventsDayLongThree" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testEditEventSingle" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testIsBusyNoEvents" classname="CalendarModelTest" time="0.0"/>
   <testcase name="testGetEventsDayLong" classname="CalendarModelTest" time="0.0"/>

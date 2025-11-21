@@ -127,11 +127,11 @@ public class CalendarRunner {
         }
 
         CalendarGuiView guiView = new CalendarGuiViewImpl();
-        calendar.controller.CalendarGuiController guiController =
+        calendar.controller.CalendarController guiController =
             new calendar.controller.CalendarGuiController(container, guiView);
 
         // Start application directly (no EventQueue)
-        guiController.go();
+        guiController.run();
 
       } catch (Exception e) {
         e.printStackTrace();

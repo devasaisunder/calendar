@@ -44,7 +44,7 @@ calendar,calendar.view,EventInfo,51,0,0,0,18,0,9,0,9,0
 calendar,calendar.view,TopPanel,283,0,16,0,64,0,22,0,14,0
 calendar,calendar.view,CalendarViewImpl,0,44,0,2,0,17,0,6,0,5
 calendar,calendar.view,DayPanel.new MouseListener() {...},22,0,0,0,7,0,6,0,6,0
-calendar,calendar.view,EventDialog,1569,0,94,0,331,0,68,0,21,0
+calendar,calendar.view,EventDialog,1575,0,94,0,331,0,68,0,21,0
 calendar,calendar.view,CalendarDialog,493,0,36,0,113,0,28,0,10,0
 calendar,calendar.view,BottomPanel,74,0,0,0,17,0,6,0,6,0
 calendar,calendar.controller,EditEventCommand,0,89,0,8,0,17,0,7,0,3

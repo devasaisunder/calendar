@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="EventPredicatesTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.002">
+<testsuite name="EventPredicatesTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:39:02" hostname="Devas-MacBook-Pro.local" time="0.002">
   <properties/>
   <testcase name="testBySeries" classname="EventPredicatesTest" time="0.001"/>
   <testcase name="testByStatus" classname="EventPredicatesTest" time="0.0"/>
-  <testcase name="testByEventType" classname="EventPredicatesTest" time="0.001"/>
+  <testcase name="testByEventType" classname="EventPredicatesTest" time="0.0"/>
   <testcase name="testByLocation" classname="EventPredicatesTest" time="0.0"/>
-  <testcase name="testBySubject" classname="EventPredicatesTest" time="0.0"/>
+  <testcase name="testBySubject" classname="EventPredicatesTest" time="0.001"/>
   <testcase name="testBetweenStartAndEnd" classname="EventPredicatesTest" time="0.0"/>
   <testcase name="testByEndDate" classname="EventPredicatesTest" time="0.0"/>
   <testcase name="testByEventId" classname="EventPredicatesTest" time="0.0"/>

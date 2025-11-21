@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CalendarContainerControllerTest" tests="35" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.105">
+<testsuite name="CalendarContainerControllerTest" tests="35" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:39:01" hostname="Devas-MacBook-Pro.local" time="0.094">
   <properties/>
-  <testcase name="testCalendarManagerUseCommandInvalidName" classname="CalendarContainerControllerTest" time="0.033"/>
-  <testcase name="testEditName" classname="CalendarContainerControllerTest" time="0.013"/>
+  <testcase name="testCalendarManagerUseCommandInvalidName" classname="CalendarContainerControllerTest" time="0.026"/>
+  <testcase name="testEditName" classname="CalendarContainerControllerTest" time="0.007"/>
   <testcase name="testAddCalendar" classname="CalendarContainerControllerTest" time="0.0"/>
-  <testcase name="testSetActiveCalendarInvalid" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="testSetActiveCalendarInvalid" classname="CalendarContainerControllerTest" time="0.0"/>
   <testcase name="testSetActiveCalendar" classname="CalendarContainerControllerTest" time="0.0"/>
   <testcase name="testGetActiveCalendarDefault" classname="CalendarContainerControllerTest" time="0.0"/>
   <testcase name="testCalendarManagerCreateInvalidCreate1" classname="CalendarContainerControllerTest" time="0.0"/>
-  <testcase name="testCalendarManagerCreateInvalidCreate2" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerCreateInvalidCreate2" classname="CalendarContainerControllerTest" time="0.001"/>
   <testcase name="testCalendarManagerCreateInvalidCreate3" classname="CalendarContainerControllerTest" time="0.0"/>
   <testcase name="testCalendarManagerCreateInvalidCreate4" classname="CalendarContainerControllerTest" time="0.0"/>
   <testcase name="testCalendarManagerUseCommandTestWithDefault" classname="CalendarContainerControllerTest" time="0.0"/>
-  <testcase name="testCalendarManagerCreateDuplicate" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerCreateDuplicate" classname="CalendarContainerControllerTest" time="0.001"/>
   <testcase name="testCalendarManagerUseCommandTest" classname="CalendarContainerControllerTest" time="0.001"/>
   <testcase name="testCalendarManagerCreateInvalidTimeZone" classname="CalendarContainerControllerTest" time="0.001"/>
-  <testcase name="testEditTimeZoneDuplicateName" classname="CalendarContainerControllerTest" time="0.02"/>
-  <testcase name="welcomeMessageTest" classname="CalendarContainerControllerTest" time="0.002"/>
+  <testcase name="testEditTimeZoneDuplicateName" classname="CalendarContainerControllerTest" time="0.024"/>
+  <testcase name="welcomeMessageTest" classname="CalendarContainerControllerTest" time="0.001"/>
   <testcase name="testEditBothSameTimeZone" classname="CalendarContainerControllerTest" time="0.001"/>
-  <testcase name="testEditInvalidEditCommand1" classname="CalendarContainerControllerTest" time="0.007"/>
+  <testcase name="testEditInvalidEditCommand1" classname="CalendarContainerControllerTest" time="0.006"/>
   <testcase name="testEditInvalidEditCommand2" classname="CalendarContainerControllerTest" time="0.003"/>
-  <testcase name="testEditInvalidEditCommand3" classname="CalendarContainerControllerTest" time="0.003"/>
+  <testcase name="testEditInvalidEditCommand3" classname="CalendarContainerControllerTest" time="0.002"/>
   <testcase name="testUpdateCalendarInvalidPropertyThrows" classname="CalendarContainerControllerTest" time="0.0"/>
-  <testcase name="testEditInvalidProperty" classname="CalendarContainerControllerTest" time="0.003"/>
-  <testcase name="useCommandTest2" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="testEditInvalidProperty" classname="CalendarContainerControllerTest" time="0.002"/>
+  <testcase name="useCommandTest2" classname="CalendarContainerControllerTest" time="0.0"/>
   <testcase name="testAddDuplicateCalendarThrows" classname="CalendarContainerControllerTest" time="0.0"/>
-  <testcase name="testCalendarManagerInvalidLengthUseCommand" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerInvalidLengthUseCommand" classname="CalendarContainerControllerTest" time="0.001"/>
   <testcase name="testCalendarManagerInvalidLengthUseCommand2" classname="CalendarContainerControllerTest" time="0.0"/>
-  <testcase name="testCalendarManagerCreate" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerCreate" classname="CalendarContainerControllerTest" time="0.001"/>
   <testcase name="testGetCalendarsReturnsCopy" classname="CalendarContainerControllerTest" time="0.0"/>
-  <testcase name="farewellMessageTest" classname="CalendarContainerControllerTest" time="0.002"/>
+  <testcase name="farewellMessageTest" classname="CalendarContainerControllerTest" time="0.001"/>
   <testcase name="testUpdateCalendarName" classname="CalendarContainerControllerTest" time="0.0"/>
-  <testcase name="testEditTimeZoneInvalid" classname="CalendarContainerControllerTest" time="0.003"/>
-  <testcase name="testEditTimeZone" classname="CalendarContainerControllerTest" time="0.007"/>
-  <testcase name="testUpdateCalendarTimeZone" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="testEditTimeZoneInvalid" classname="CalendarContainerControllerTest" time="0.002"/>
+  <testcase name="testEditTimeZone" classname="CalendarContainerControllerTest" time="0.008"/>
+  <testcase name="testUpdateCalendarTimeZone" classname="CalendarContainerControllerTest" time="0.0"/>
   <testcase name="testUpdateCalendarCatchBlock" classname="CalendarContainerControllerTest" time="0.0"/>
   <testcase name="useCommandTest" classname="CalendarContainerControllerTest" time="0.0"/>
   <system-out><![CDATA[Welcome to the calendar!

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="EnumDataTypeTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.003">
+<testsuite name="EnumDataTypeTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:39:02" hostname="Devas-MacBook-Pro.local" time="0.004">
   <properties/>
   <testcase name="testGetEventPropertyDescription" classname="EnumDataTypeTest" time="0.002"/>
   <testcase name="testGetEventPropertyStart" classname="EnumDataTypeTest" time="0.0"/>

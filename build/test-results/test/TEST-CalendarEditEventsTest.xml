@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CalendarEditEventsTest" tests="33" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.062">
+<testsuite name="CalendarEditEventsTest" tests="33" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:39:02" hostname="Devas-MacBook-Pro.local" time="0.047">
   <properties/>
-  <testcase name="testCalendarEditEventsSeriesMultipleEventsSeries" classname="CalendarEditEventsTest" time="0.012"/>
-  <testcase name="testCalendarEditEvents1EventStatus" classname="CalendarEditEventsTest" time="0.004"/>
+  <testcase name="testCalendarEditEventsSeriesMultipleEventsSeries" classname="CalendarEditEventsTest" time="0.01"/>
+  <testcase name="testCalendarEditEvents1EventStatus" classname="CalendarEditEventsTest" time="0.002"/>
   <testcase name="testCalendarEditEventsSeriesFilterTest" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventInvalidNewValue" classname="CalendarEditEventsTest" time="0.002"/>
-  <testcase name="testCalendarEditEventInvalidNewValueEndDate" classname="CalendarEditEventsTest" time="0.001"/>
+  <testcase name="testCalendarEditEventInvalidNewValue" classname="CalendarEditEventsTest" time="0.001"/>
+  <testcase name="testCalendarEditEventInvalidNewValueEndDate" classname="CalendarEditEventsTest" time="0.0"/>
   <testcase name="testCalendarEditEventInvalidNewValueInvalid1" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEvents1EventSubjectInvalid" classname="CalendarEditEventsTest" time="0.001"/>
+  <testcase name="testCalendarEditEvents1EventSubjectInvalid" classname="CalendarEditEventsTest" time="0.0"/>
   <testcase name="testCalendarEditEventsEventId" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEvents1Subject" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEventsSeriesFilter" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventsMultipleEventsSeriesBeforeStart" classname="CalendarEditEventsTest" time="0.008"/>
-  <testcase name="testCalendarEditEvents1StartAfterEnd" classname="CalendarEditEventsTest" time="0.001"/>
+  <testcase name="testCalendarEditEventsMultipleEventsSeriesBeforeStart" classname="CalendarEditEventsTest" time="0.003"/>
+  <testcase name="testCalendarEditEvents1StartAfterEnd" classname="CalendarEditEventsTest" time="0.004"/>
   <testcase name="testCalendarEditEventsMultipleEventsSeries" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventsPrint" classname="CalendarEditEventsTest" time="0.003"/>
+  <testcase name="testCalendarEditEventsPrint" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEvents1Location" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEventInvalidNewValueInvalidEvents" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventInvalidProperty" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventsMultipleEvents" classname="CalendarEditEventsTest" time="0.002"/>
+  <testcase name="testCalendarEditEventInvalidProperty" classname="CalendarEditEventsTest" time="0.0"/>
+  <testcase name="testCalendarEditEventsMultipleEvents" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEventInvalidNewValueInvalidSeries" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEvents1Description" classname="CalendarEditEventsTest" time="0.002"/>
+  <testcase name="testCalendarEditEvents1Description" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEvents1Start" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventsInvalidIndex4" classname="CalendarEditEventsTest" time="0.002"/>
-  <testcase name="testCalendarEditEventsSeriesInvalidIndex4" classname="CalendarEditEventsTest" time="0.0"/>
+  <testcase name="testCalendarEditEventsInvalidIndex4" classname="CalendarEditEventsTest" time="0.001"/>
+  <testcase name="testCalendarEditEventsSeriesInvalidIndex4" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEventsSeriesInvalid" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventInvalidIndex4" classname="CalendarEditEventsTest" time="0.003"/>
-  <testcase name="testCalendarEditEventInvalidIndex6" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventInvalidIndex8" classname="CalendarEditEventsTest" time="0.0"/>
+  <testcase name="testCalendarEditEventInvalidIndex4" classname="CalendarEditEventsTest" time="0.001"/>
+  <testcase name="testCalendarEditEventInvalidIndex6" classname="CalendarEditEventsTest" time="0.0"/>
+  <testcase name="testCalendarEditEventInvalidIndex8" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEventsSeries" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEvents1LocationUnknown" classname="CalendarEditEventsTest" time="0.001"/>
   <testcase name="testCalendarEditEventsSeriesSubject" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEventsEventsInvalid6" classname="CalendarEditEventsTest" time="0.001"/>
-  <testcase name="testCalendarEditEvents1End" classname="CalendarEditEventsTest" time="0.001"/>
+  <testcase name="testCalendarEditEventsEventsInvalid6" classname="CalendarEditEventsTest" time="0.0"/>
+  <testcase name="testCalendarEditEvents1End" classname="CalendarEditEventsTest" time="0.004"/>
   <testcase name="testCalendarPrintEvents" classname="CalendarEditEventsTest" time="0.001"/>
   <system-out><![CDATA[Welcome to the calendar!
 Use below mentioned commands to interact with the application...

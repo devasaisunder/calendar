@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CalendarContainerTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.003">
+<testsuite name="CalendarContainerTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:39:02" hostname="Devas-MacBook-Pro.local" time="0.003">
   <properties/>
   <testcase name="testCalendarManagerUpdateDuplicateName" classname="CalendarContainerTest" time="0.001"/>
-  <testcase name="testCalendarManagerUpdateInvalidCalendarName" classname="CalendarContainerTest" time="0.001"/>
+  <testcase name="testCalendarManagerUpdateInvalidCalendarName" classname="CalendarContainerTest" time="0.0"/>
   <testcase name="testCalendarManagerAddNewCalendar" classname="CalendarContainerTest" time="0.0"/>
   <testcase name="testCalendarManagerUpdateName" classname="CalendarContainerTest" time="0.0"/>
   <testcase name="testRemoveEvent" classname="CalendarContainerTest" time="0.0"/>
-  <testcase name="testCalendarManagerCreateDuplicateName" classname="CalendarContainerTest" time="0.001"/>
-  <testcase name="testCalendarManagerUpdateTimezone" classname="CalendarContainerTest" time="0.0"/>
+  <testcase name="testCalendarManagerCreateDuplicateName" classname="CalendarContainerTest" time="0.0"/>
+  <testcase name="testCalendarManagerUpdateTimezone" classname="CalendarContainerTest" time="0.001"/>
   <testcase name="testCalendarManagerUpdateInvalidTimezone" classname="CalendarContainerTest" time="0.0"/>
   <testcase name="testCalendarManagerInvalidSetActive" classname="CalendarContainerTest" time="0.0"/>
   <testcase name="testUpdateCalendarDuplicateNameThrowsAndRestores" classname="CalendarContainerTest" time="0.0"/>

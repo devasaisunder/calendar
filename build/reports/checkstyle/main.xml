@@ -59,10 +59,11 @@
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CopyMultipleEventsCalendarCommand.java">
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CalendarGuiController.java">
-<error line="100" severity="warning" message="Line is longer than 100 characters (found 103)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="120" severity="warning" message="Line is longer than 100 characters (found 105)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="164" column="5" severity="warning" message="Distance between variable &apos;timezone&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
-<error line="211" severity="warning" message="Line is longer than 100 characters (found 115)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="18" column="65" severity="warning" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="101" severity="warning" message="Line is longer than 100 characters (found 103)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="121" severity="warning" message="Line is longer than 100 characters (found 105)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="165" column="5" severity="warning" message="Distance between variable &apos;timezone&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="212" severity="warning" message="Line is longer than 100 characters (found 115)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CommandTokenizerImpl.java">
 </file>
