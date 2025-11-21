@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="EventPredicatesTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2025-11-21T01:42:05" hostname="Devas-MacBook-Pro.local" time="0.001">
+<testsuite name="EventPredicatesTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2025-11-21T02:20:58" hostname="Devas-MacBook-Pro.local" time="0.001">
   <properties/>
-  <testcase name="testBySeries" classname="EventPredicatesTest" time="0.001"/>
+  <testcase name="testBySeries" classname="EventPredicatesTest" time="0.0"/>
   <testcase name="testByStatus" classname="EventPredicatesTest" time="0.0"/>
   <testcase name="testByEventType" classname="EventPredicatesTest" time="0.0"/>
   <testcase name="testByLocation" classname="EventPredicatesTest" time="0.0"/>
@@ -10,7 +10,7 @@
   <testcase name="testByEndDate" classname="EventPredicatesTest" time="0.0"/>
   <testcase name="testByEventId" classname="EventPredicatesTest" time="0.0"/>
   <testcase name="testByStartDate" classname="EventPredicatesTest" time="0.0"/>
-  <testcase name="testBySeriesFullCoverage" classname="EventPredicatesTest" time="0.0"/>
+  <testcase name="testBySeriesFullCoverage" classname="EventPredicatesTest" time="0.001"/>
   <testcase name="testByDescription" classname="EventPredicatesTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

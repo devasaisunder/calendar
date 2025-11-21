@@ -36,9 +36,7 @@ public class CalendarGuiController implements ViewListener {
     this.selectedDate = LocalDate.now();
     
     // Register this controller as a listener to the view
-    if (view instanceof calendar.view.CalendarGuiViewImpl) {
-      ((calendar.view.CalendarGuiViewImpl) view).addViewListener(this);
-    }
+    view.addViewListener(this);
   }
 
   /**
@@ -53,7 +51,7 @@ public class CalendarGuiController implements ViewListener {
   @Override
   public void handleSwitchCalendar(String calendarName) {
     String result = features.switchCalendar(calendarName);
-    if (result != null && (result.startsWith("Error") || result.contains("Failed"))) {
+    if (isError(result)) {
       view.renderError(result);
     } else {
       handleRefresh();
@@ -63,7 +61,7 @@ public class CalendarGuiController implements ViewListener {
   @Override
   public void handleCreateCalendar(String name, String timezone) {
     String result = features.createCalendar(name, timezone);
-    if (result != null && (result.contains("Error") || result.contains("Failed"))) {
+    if (isError(result)) {
       view.renderError(result);
     } else {
       handleRefresh();
@@ -73,7 +71,7 @@ public class CalendarGuiController implements ViewListener {
   @Override
   public void handleEditCalendar(String calendarName, String property, String newValue) {
     String result = features.editCalendar(calendarName, property, newValue);
-    if (result != null && (result.contains("Error") || result.contains("Failed"))) {
+    if (isError(result)) {
       view.renderError(result);
     } else {
       handleRefresh();
@@ -105,7 +103,7 @@ public class CalendarGuiController implements ViewListener {
     try {
       String result = features.createEvent(subject, startDateTime, endDateTime, description,
           location, status, isRepeating, repeatDays, repeatEndDate);
-      if (result != null && (result.contains("Error") || result.contains("Failed"))) {
+      if (isError(result)) {
         view.renderError(result);
       } else {
         handleRefresh();
@@ -120,7 +118,7 @@ public class CalendarGuiController implements ViewListener {
                               LocalDateTime endDateTime, String newValue, String scope) {
     try {
       String result = features.editEvent(property, subject, startDateTime, endDateTime, newValue, scope);
-      if (result != null && (result.contains("Error") || result.contains("Failed"))) {
+      if (isError(result)) {
         view.renderError(result);
       } else {
         handleRefresh();
@@ -135,7 +133,7 @@ public class CalendarGuiController implements ViewListener {
                                  LocalDateTime endDateTime, String scope) {
     try {
       String result = features.deleteEvent(subject, startDateTime, endDateTime, scope);
-      if (result != null && (result.contains("Error") || result.contains("Failed"))) {
+      if (isError(result)) {
         view.renderError(result);
       } else {
         handleRefresh();
@@ -148,7 +146,7 @@ public class CalendarGuiController implements ViewListener {
   @Override
   public void handleExportCalendar(String fileName) {
     String result = features.exportCalendar(fileName);
-    if (result != null && (result.contains("Error") || result.contains("Failed"))) {
+    if (isError(result)) {
       view.renderError(result);
     }
     // No popup on success
@@ -156,11 +154,9 @@ public class CalendarGuiController implements ViewListener {
 
   @Override
   public void handleRefresh() {
-    // Update current month from view if available
-    if (view instanceof calendar.view.CalendarGuiViewImpl) {
-      currentMonth = ((calendar.view.CalendarGuiViewImpl) view).getCurrentMonth();
-      selectedDate = ((calendar.view.CalendarGuiViewImpl) view).getSelectedDate();
-    }
+    // Update current month and selected date from view
+    currentMonth = view.getCurrentMonth();
+    selectedDate = view.getSelectedDate();
 
     // Get data from model
     List<String> calendarNames = features.getCalendarNames();
@@ -177,12 +173,9 @@ public class CalendarGuiController implements ViewListener {
     view.setDayEvents(selectedDate, dayEvents);
 
     // Update timezone and selected date in top panel
-    if (view instanceof calendar.view.CalendarGuiViewImpl) {
-      calendar.view.CalendarGuiViewImpl impl = (calendar.view.CalendarGuiViewImpl) view;
-      impl.getTopPanel().updateTimezone(timezone);
-      impl.getTopPanel().updateSelectedDate(selectedDate);
-      impl.getTopPanel().updateMonthYear(currentMonth);
-    }
+    view.getTopPanel().updateTimezone(timezone);
+    view.getTopPanel().updateSelectedDate(selectedDate);
+    view.getTopPanel().updateMonthYear(currentMonth);
   }
 
   /**
@@ -201,10 +194,7 @@ public class CalendarGuiController implements ViewListener {
    * This allows dialogs to query data.
    */
   public void setupViewForDialogs() {
-    if (view instanceof calendar.view.CalendarGuiViewImpl) {
-      calendar.view.CalendarGuiViewImpl impl = (calendar.view.CalendarGuiViewImpl) view;
-      impl.setFeaturesForDialogs(features);
-    }
+    view.setFeaturesForDialogs(features);
   }
 
   /**
@@ -215,5 +205,9 @@ public class CalendarGuiController implements ViewListener {
   public LocalDate getSelectedDate() {
     return selectedDate;
   }
-}
 
+  // Helper to identify error results while avoiding direct null checks
+  private static boolean isError(String result) {
+    return result != null && (result.startsWith("Error") || result.contains("Failed") || result.contains("Error"));
+  }
+}
