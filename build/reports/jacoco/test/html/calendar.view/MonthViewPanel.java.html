@@ -131,80 +131,73 @@ public class MonthViewPanel extends JPanel {
 
 <span class="nc bnc" id="L132" title="All 2 branches missed.">    for (int day = 1; day &lt;= daysInMonth; day++) {</span>
 <span class="nc" id="L133">      LocalDate date = currentMonth.withDayOfMonth(day);</span>
-<span class="nc" id="L134">      JPanel dayPanel = createDayButton(date, currentMonthEvents, calendarColor);</span>
-<span class="nc" id="L135">      calendarPanel.add(dayPanel);</span>
+<span class="nc" id="L134">      JPanel dayPanel = new DayPanel(date, currentMonthEvents.getOrDefault(date, new ArrayList&lt;&gt;()),</span>
+<span class="nc" id="L135">          date.equals(selectedDate), calendarColor, dateSelectionCallback);</span>
+<span class="nc" id="L136">      calendarPanel.add(dayPanel);</span>
     }
 
-<span class="nc" id="L138">    calendarPanel.revalidate();</span>
-<span class="nc" id="L139">    calendarPanel.repaint();</span>
-<span class="nc" id="L140">  }</span>
+<span class="nc" id="L139">    calendarPanel.revalidate();</span>
+<span class="nc" id="L140">    calendarPanel.repaint();</span>
+<span class="nc" id="L141">  }</span>
 
   private JPanel createDayButton(LocalDate date, Map&lt;LocalDate, List&lt;EventInfo&gt;&gt; allEvents,
                                     Color calendarColor) {
-<span class="nc" id="L144">    JPanel dayPanel = new JPanel(new BorderLayout());</span>
-<span class="nc" id="L145">    dayPanel.setPreferredSize(new Dimension(100, 100));</span>
-<span class="nc" id="L146">    dayPanel.setBorder(BorderFactory.createLineBorder(</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        date.equals(selectedDate) ? Color.BLUE : Color.GRAY,</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">        date.equals(selectedDate) ? 3 : 1));</span>
+    // Kept for backward compatibility but replaced by DayPanel in refreshMonthView
+<span class="nc" id="L146">    JPanel dayPanel = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L147">    dayPanel.setPreferredSize(new Dimension(100, 100));</span>
+<span class="nc" id="L148">    dayPanel.setBorder(BorderFactory.createLineBorder(</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        date.equals(selectedDate) ? Color.BLUE : Color.GRAY,</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        date.equals(selectedDate) ? 3 : 1));</span>
 
     // Day number label at top
-<span class="nc" id="L151">    JLabel dayLabel = new JLabel(String.valueOf(date.getDayOfMonth()), SwingConstants.CENTER);</span>
-<span class="nc" id="L152">    dayLabel.setFont(dayLabel.getFont().deriveFont(14f));</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">    if (date.equals(LocalDate.now())) {</span>
-<span class="nc" id="L154">      dayLabel.setForeground(Color.RED);</span>
+<span class="nc" id="L153">    JLabel dayLabel = new JLabel(String.valueOf(date.getDayOfMonth()), SwingConstants.CENTER);</span>
+<span class="nc" id="L154">    dayLabel.setFont(dayLabel.getFont().deriveFont(14f));</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">    if (date.equals(LocalDate.now())) {</span>
+<span class="nc" id="L156">      dayLabel.setForeground(Color.RED);</span>
     }
-<span class="nc" id="L156">    dayPanel.add(dayLabel, BorderLayout.NORTH);</span>
+<span class="nc" id="L158">    dayPanel.add(dayLabel, BorderLayout.NORTH);</span>
 
     // Events panel
-<span class="nc" id="L159">    JPanel eventsPanel = new JPanel();</span>
-<span class="nc" id="L160">    eventsPanel.setLayout(new BoxLayout(eventsPanel, BoxLayout.Y_AXIS));</span>
-<span class="nc" id="L161">    eventsPanel.setOpaque(false);</span>
-<span class="nc" id="L162">    eventsPanel.setBorder(new EmptyBorder(2, 2, 2, 2));</span>
+<span class="nc" id="L161">    JPanel eventsPanel = new JPanel();</span>
+<span class="nc" id="L162">    eventsPanel.setLayout(new BoxLayout(eventsPanel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L163">    eventsPanel.setOpaque(false);</span>
+<span class="nc" id="L164">    eventsPanel.setBorder(new EmptyBorder(2, 2, 2, 2));</span>
 
-<span class="nc" id="L164">    List&lt;EventInfo&gt; dayEvents = allEvents.getOrDefault(date, new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L165">    int maxEventsToShow = 3; // Show max 3 events, then &quot;X more&quot;</span>
-<span class="nc" id="L166">    int eventsToShow = Math.min(dayEvents.size(), maxEventsToShow);</span>
+<span class="nc" id="L166">    List&lt;EventInfo&gt; dayEvents = allEvents.getOrDefault(date, new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L167">    int maxEventsToShow = 3; // Show max 3 events, then &quot;X more&quot;</span>
+<span class="nc" id="L168">    int eventsToShow = Math.min(dayEvents.size(), maxEventsToShow);</span>
 
-<span class="nc bnc" id="L168" title="All 2 branches missed.">    for (int i = 0; i &lt; eventsToShow; i++) {</span>
-<span class="nc" id="L169">      EventInfo event = dayEvents.get(i);</span>
-<span class="nc" id="L170">      String eventText = event.getSubject();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">    for (int i = 0; i &lt; eventsToShow; i++) {</span>
+<span class="nc" id="L171">      EventInfo event = dayEvents.get(i);</span>
+<span class="nc" id="L172">      String eventText = event.getSubject();</span>
       // Truncate long event names
-<span class="nc bnc" id="L172" title="All 2 branches missed.">      if (eventText.length() &gt; 20) {</span>
-<span class="nc" id="L173">        eventText = eventText.substring(0, 17) + &quot;...&quot;;</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">      if (eventText.length() &gt; 20) {</span>
+<span class="nc" id="L175">        eventText = eventText.substring(0, 17) + &quot;...&quot;;</span>
       }
-<span class="nc" id="L175">      JLabel eventLabel = new JLabel(eventText);</span>
-<span class="nc" id="L176">      eventLabel.setOpaque(true);</span>
-<span class="nc" id="L177">      eventLabel.setBackground(new Color(255, 235, 59)); // Yellow like in the image</span>
-<span class="nc" id="L178">      eventLabel.setForeground(Color.BLACK);</span>
-<span class="nc" id="L179">      eventLabel.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));</span>
-<span class="nc" id="L180">      eventLabel.setFont(eventLabel.getFont().deriveFont(9f));</span>
-<span class="nc" id="L181">      eventLabel.setAlignmentX(0.0f);</span>
-<span class="nc" id="L182">      eventLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 18));</span>
-<span class="nc" id="L183">      eventsPanel.add(eventLabel);</span>
+<span class="nc" id="L177">      JLabel eventLabel = new JLabel(eventText);</span>
+<span class="nc" id="L178">      eventLabel.setOpaque(true);</span>
+<span class="nc" id="L179">      eventLabel.setBackground(new Color(255, 235, 59)); // Yellow like in the image</span>
+<span class="nc" id="L180">      eventLabel.setForeground(Color.BLACK);</span>
+<span class="nc" id="L181">      eventLabel.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));</span>
+<span class="nc" id="L182">      eventLabel.setFont(eventLabel.getFont().deriveFont(9f));</span>
+<span class="nc" id="L183">      eventLabel.setAlignmentX(0.0f);</span>
+<span class="nc" id="L184">      eventLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 18));</span>
+<span class="nc" id="L185">      eventsPanel.add(eventLabel);</span>
     }
 
-<span class="nc bnc" id="L186" title="All 2 branches missed.">    if (dayEvents.size() &gt; maxEventsToShow) {</span>
-<span class="nc" id="L187">      JLabel moreLabel = new JLabel((dayEvents.size() - maxEventsToShow) + &quot; more&quot;);</span>
-<span class="nc" id="L188">      moreLabel.setFont(moreLabel.getFont().deriveFont(8f));</span>
-<span class="nc" id="L189">      moreLabel.setForeground(Color.GRAY);</span>
-<span class="nc" id="L190">      eventsPanel.add(moreLabel);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">    if (dayEvents.size() &gt; maxEventsToShow) {</span>
+<span class="nc" id="L189">      JLabel moreLabel = new JLabel((dayEvents.size() - maxEventsToShow) + &quot; more&quot;);</span>
+<span class="nc" id="L190">      moreLabel.setFont(moreLabel.getFont().deriveFont(8f));</span>
+<span class="nc" id="L191">      moreLabel.setForeground(Color.GRAY);</span>
+<span class="nc" id="L192">      eventsPanel.add(moreLabel);</span>
     }
 
-<span class="nc" id="L193">    dayPanel.add(eventsPanel, BorderLayout.CENTER);</span>
-<span class="nc" id="L194">    dayPanel.setBackground(Color.WHITE);</span>
+<span class="nc" id="L195">    dayPanel.add(eventsPanel, BorderLayout.CENTER);</span>
+<span class="nc" id="L196">    dayPanel.setBackground(Color.WHITE);</span>
 //    dayPanel.setOpaque(true);
 
-    // Make the panel clickable
-<span class="nc" id="L198">    dayPanel.addMouseListener(new java.awt.event.MouseAdapter() {</span>
-      @Override
-      public void mouseClicked(java.awt.event.MouseEvent e) {
-<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (dateSelectionCallback != null) {</span>
-<span class="nc" id="L202">          dateSelectionCallback.accept(date);</span>
-        }
-<span class="nc" id="L204">      }</span>
-    });
 
-<span class="nc" id="L207">    return dayPanel;</span>
+<span class="nc" id="L200">    return dayPanel;</span>
   }
 
   /**
@@ -216,8 +209,7 @@ public class MonthViewPanel extends JPanel {
    */
   public JPanel getDayPanel(LocalDate date) {
     // This is a helper method - the actual click handling is done in the main view
-<span class="nc" id="L219">    return null;</span>
+<span class="nc" id="L212">    return null;</span>
   }
 }
-
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

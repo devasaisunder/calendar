@@ -59,9 +59,10 @@
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CopyMultipleEventsCalendarCommand.java">
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CalendarGuiController.java">
-<error line="102" severity="warning" message="Line is longer than 100 characters (found 103)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="122" severity="warning" message="Line is longer than 100 characters (found 105)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
-<error line="168" column="5" severity="warning" message="Distance between variable &apos;timezone&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="100" severity="warning" message="Line is longer than 100 characters (found 103)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="120" severity="warning" message="Line is longer than 100 characters (found 105)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="164" column="5" severity="warning" message="Distance between variable &apos;timezone&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="211" severity="warning" message="Line is longer than 100 characters (found 115)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CommandTokenizerImpl.java">
 </file>
@@ -173,6 +174,8 @@
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/BottomPanel.java">
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/CalendarGuiView.java">
+<error line="79" severity="warning" message="Line is longer than 100 characters (found 106)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="80" severity="warning" message="Line is longer than 100 characters (found 107)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/TopPanel.java">
 </file>
@@ -184,6 +187,16 @@
 <error line="196" severity="warning" message="Line is longer than 100 characters (found 104)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/ViewListener.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/DayPanel.java">
+<error line="21" column="3" severity="warning" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck"/>
+<error line="61" severity="warning" message="Empty blocks should have no spaces. Empty blocks                                    may only be represented as {} when not part of a                                    multi-block statement (4.1.3)" source="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck"/>
+<error line="62" severity="warning" message="Empty blocks should have no spaces. Empty blocks                                    may only be represented as {} when not part of a                                    multi-block statement (4.1.3)" source="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck"/>
+<error line="62" column="7" severity="warning" message="&apos;METHOD_DEF&apos; should be separated from previous line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck"/>
+<error line="63" severity="warning" message="Empty blocks should have no spaces. Empty blocks                                    may only be represented as {} when not part of a                                    multi-block statement (4.1.3)" source="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck"/>
+<error line="63" column="7" severity="warning" message="&apos;METHOD_DEF&apos; should be separated from previous line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck"/>
+<error line="64" severity="warning" message="Empty blocks should have no spaces. Empty blocks                                    may only be represented as {} when not part of a                                    multi-block statement (4.1.3)" source="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck"/>
+<error line="64" column="7" severity="warning" message="&apos;METHOD_DEF&apos; should be separated from previous line." source="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck"/>
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/DayViewPanel.java">
 </file>
@@ -201,6 +214,7 @@
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/CalendarView.java">
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/MonthViewPanel.java">
+<error line="197" column="1" severity="warning" message="Comment has incorrect indentation level 0, expected is 4, indentation should be the same level as line 200." source="com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck"/>
 </file>
 <file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/CalendarViewImpl.java">
 </file>

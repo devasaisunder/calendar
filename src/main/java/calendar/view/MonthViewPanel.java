@@ -131,7 +131,8 @@ public class MonthViewPanel extends JPanel {
 
     for (int day = 1; day <= daysInMonth; day++) {
       LocalDate date = currentMonth.withDayOfMonth(day);
-      JPanel dayPanel = createDayButton(date, currentMonthEvents, calendarColor);
+      JPanel dayPanel = new DayPanel(date, currentMonthEvents.getOrDefault(date, new ArrayList<>()),
+          date.equals(selectedDate), calendarColor, dateSelectionCallback);
       calendarPanel.add(dayPanel);
     }
 
@@ -141,6 +142,7 @@ public class MonthViewPanel extends JPanel {
 
   private JPanel createDayButton(LocalDate date, Map<LocalDate, List<EventInfo>> allEvents,
                                     Color calendarColor) {
+    // Kept for backward compatibility but replaced by DayPanel in refreshMonthView
     JPanel dayPanel = new JPanel(new BorderLayout());
     dayPanel.setPreferredSize(new Dimension(100, 100));
     dayPanel.setBorder(BorderFactory.createLineBorder(
@@ -194,15 +196,6 @@ public class MonthViewPanel extends JPanel {
     dayPanel.setBackground(Color.WHITE);
 //    dayPanel.setOpaque(true);
 
-    // Make the panel clickable
-    dayPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-      @Override
-      public void mouseClicked(java.awt.event.MouseEvent e) {
-        if (dateSelectionCallback != null) {
-          dateSelectionCallback.accept(date);
-        }
-      }
-    });
 
     return dayPanel;
   }
@@ -219,4 +212,3 @@ public class MonthViewPanel extends JPanel {
     return null;
   }
 }
-

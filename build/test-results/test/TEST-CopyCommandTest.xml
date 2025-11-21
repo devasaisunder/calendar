@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CopyCommandTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2025-11-21T02:20:58" hostname="Devas-MacBook-Pro.local" time="0.003">
+<testsuite name="CopyCommandTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2025-11-21T21:30:10" hostname="Devas-MacBook-Pro.local" time="0.006">
   <properties/>
-  <testcase name="testPartialSeriesCopy" classname="CopyCommandTest" time="0.0"/>
-  <testcase name="testCopyEvent" classname="CopyCommandTest" time="0.0"/>
-  <testcase name="testCopyFromSameCalendarToDifferentDate" classname="CopyCommandTest" time="0.001"/>
-  <testcase name="testCopyInvalidCommands" classname="CopyCommandTest" time="0.0"/>
+  <testcase name="testPartialSeriesCopy" classname="CopyCommandTest" time="0.002"/>
+  <testcase name="testCopyEvent" classname="CopyCommandTest" time="0.001"/>
+  <testcase name="testCopyFromSameCalendarToDifferentDate" classname="CopyCommandTest" time="0.0"/>
+  <testcase name="testCopyInvalidCommands" classname="CopyCommandTest" time="0.001"/>
   <testcase name="testCopyInvalidCommandsThree" classname="CopyCommandTest" time="0.0"/>
-  <testcase name="testCopyEventsToDifferentTimeZoneInvalid" classname="CopyCommandTest" time="0.001"/>
+  <testcase name="testCopyEventsToDifferentTimeZoneInvalid" classname="CopyCommandTest" time="0.0"/>
   <testcase name="testCopyFromSameCalendarToSameDate" classname="CopyCommandTest" time="0.0"/>
   <testcase name="testCopyInvalidCommandsTwo" classname="CopyCommandTest" time="0.0"/>
   <testcase name="testCopyEventsToDifferentTimeZoneValid" classname="CopyCommandTest" time="0.0"/>
   <testcase name="testCopyInvalidCommandsFour" classname="CopyCommandTest" time="0.0"/>
-  <testcase name="testCopyEventsTypeTwoValid" classname="CopyCommandTest" time="0.0"/>
+  <testcase name="testCopyEventsTypeTwoValid" classname="CopyCommandTest" time="0.001"/>
   <testcase name="testCopyEventToDifferentTimeZone" classname="CopyCommandTest" time="0.0"/>
   <testcase name="testCopyInvalidCommandsMultiple" classname="CopyCommandTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
