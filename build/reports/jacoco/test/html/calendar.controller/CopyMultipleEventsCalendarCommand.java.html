@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CopyMultipleEventsCalendarCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">CopyMultipleEventsCalendarCommand.java</span></div><h1>CopyMultipleEventsCalendarCommand.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.CopyMultipleEventsCommandData;
+import calendar.controller.handlers.CopyMultipleEventsHandler;
+import calendar.model.interfaces.CalendarContainer;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+/**
+ * Command class responsible for copying multiple events from a
+ * source calendar (the active calendar) to a target calendar.
+ * This class handles parsing, while CopyMultipleEventsHandler handles the logic.
+ */
+public class CopyMultipleEventsCalendarCommand implements Command {
+
+  private final CopyMultipleEventsHandler handler;
+
+  /**
+   * Constructor for copying multiple events from a source calendar to target calendar.
+   * It takes in the Calendar Manager to get information about source and target calendars.
+   *
+   * @param calendarManager the calendar manager using which this copy events is performed
+   */
+<span class="fc" id="L25">  public CopyMultipleEventsCalendarCommand(CalendarContainer calendarManager) {</span>
+<span class="fc" id="L26">    this.handler = new CopyMultipleEventsHandler(calendarManager);</span>
+<span class="fc" id="L27">  }</span>
+
+  @Override
+  public String execute(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L31">    CopyMultipleEventsCommandData data = parse(parsedCommand);</span>
+<span class="fc" id="L32">    return handler.handle(data);</span>
+  }
+
+  /**
+   * Parses the command input into a CopyMultipleEventsCommandData object.
+   *
+   * @param parsedCommand the parsed command tokens
+   * @return CopyMultipleEventsCommandData containing parsed information
+   */
+  public CopyMultipleEventsCommandData parse(List&lt;String&gt; parsedCommand) {
+<span class="fc bfc" id="L42" title="All 4 branches covered.">    if ((parsedCommand.size() != 8 &amp;&amp; parsedCommand.size() != 10)</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        || !checkValidCommand(parsedCommand)) {</span>
+<span class="fc" id="L44">      throw new IllegalArgumentException(</span>
+          &quot;Invalid copy events command.&quot;
+<span class="fc" id="L46">              + System.lineSeparator()</span>
+              + &quot;Usage: copy events on &lt;dateString&gt; --target &lt;calendarName&gt; to &lt;dateString&gt; &quot;
+<span class="fc" id="L48">              + System.lineSeparator()</span>
+              + &quot;or copy events between &lt;dateString&gt; and &lt;dateString&gt; &quot;
+              + &quot;--target &lt;calendarName&gt; to &lt;dateString&gt;&quot;);
+    }
+
+<span class="fc bfc" id="L53" title="All 2 branches covered.">    if (parsedCommand.size() == 8) {</span>
+<span class="fc" id="L54">      return parseOnCase(parsedCommand);</span>
+    } else {
+<span class="fc" id="L56">      return parseBetweenCase(parsedCommand);</span>
+    }
+  }
+
+  private CopyMultipleEventsCommandData parseOnCase(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L61">    LocalDate sourceStart = parseDate(parsedCommand.get(3));</span>
+<span class="fc" id="L62">    LocalDate targetStart = parseDate(parsedCommand.get(7));</span>
+<span class="fc" id="L63">    String targetCal = parsedCommand.get(5);</span>
+<span class="fc" id="L64">    return new CopyMultipleEventsCommandData(sourceStart, targetStart, targetCal);</span>
+  }
+
+  private CopyMultipleEventsCommandData parseBetweenCase(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L68">    LocalDate sourceStart = parseDate(parsedCommand.get(3));</span>
+<span class="fc" id="L69">    LocalDate sourceEnd = parseDate(parsedCommand.get(5));</span>
+<span class="fc" id="L70">    LocalDate targetStart = parseDate(parsedCommand.get(9));</span>
+<span class="fc" id="L71">    String targetCal = parsedCommand.get(7);</span>
+<span class="fc" id="L72">    return new CopyMultipleEventsCommandData(sourceStart, sourceEnd, targetStart, targetCal);</span>
+  }
+
+  private LocalDate parseDate(String dateString) {
+<span class="fc" id="L76">    return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;));</span>
+  }
+
+  private boolean checkValidCommand(List&lt;String&gt; parsedCommand) {
+<span class="fc bfc" id="L80" title="All 2 branches covered.">    if (parsedCommand.size() == 8) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">      return parsedCommand.get(2).equalsIgnoreCase(&quot;on&quot;)</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">          &amp;&amp; parsedCommand.get(4).equalsIgnoreCase(&quot;--target&quot;)</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">          &amp;&amp; parsedCommand.get(6).equalsIgnoreCase(&quot;to&quot;);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">    } else if (parsedCommand.size() == 10) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">      return parsedCommand.get(2).equalsIgnoreCase(&quot;between&quot;)</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">          &amp;&amp; parsedCommand.get(4).equalsIgnoreCase(&quot;and&quot;)</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">          &amp;&amp; parsedCommand.get(6).equalsIgnoreCase(&quot;--target&quot;)</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">          &amp;&amp; parsedCommand.get(8).equalsIgnoreCase(&quot;to&quot;);</span>
+    }
+<span class="nc" id="L90">    return false;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

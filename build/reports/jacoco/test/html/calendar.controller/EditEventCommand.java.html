@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EditEventCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">EditEventCommand.java</span></div><h1>EditEventCommand.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.EditEventCommandData;
+import calendar.controller.handlers.EditEventHandler;
+import calendar.model.interfaces.CalendarEditable;
+import java.time.LocalDateTime;
+import java.util.List;
+
+/**
+ * Represents the command used to edit an existing event in the calendar.
+ * It is called when the user input starts with &quot;edit event&quot;.
+ * This class handles parsing, while EditEventHandler handles the logic.
+ */
+public class EditEventCommand implements Command {
+
+  private final EditEventHandler handler;
+
+  /**
+   * We are passing the active calendar in the constructor.
+   * It is the calendar on which the current operation is to be performed.
+   *
+   * @param calendarModel current active calendar.
+   */
+<span class="fc" id="L24">  public EditEventCommand(CalendarEditable calendarModel) {</span>
+<span class="fc" id="L25">    this.handler = new EditEventHandler(calendarModel);</span>
+<span class="fc" id="L26">  }</span>
+
+  /**
+   * Parses the command and delegates to the handler.
+   *
+   * @param parsedCommand list of user input values.
+   * @return a string of edited events.
+   */
+  @Override
+  public String execute(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L36">    EditEventCommandData data = parse(parsedCommand);</span>
+<span class="fc" id="L37">    return handler.handle(data);</span>
+  }
+
+  /**
+   * Parses the command input into an EditEventCommandData object.
+   *
+   * @param parsedCommand the parsed command tokens
+   * @return EditEventCommandData containing parsed information
+   */
+  public EditEventCommandData parse(List&lt;String&gt; parsedCommand) {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">    if (parsedCommand.size() &lt; 10) {</span>
+<span class="fc" id="L48">      throw new IllegalArgumentException(&quot;Invalid command format&quot;);</span>
+    }
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">    if (!&quot;from&quot;.equalsIgnoreCase(parsedCommand.get(4))</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        || !&quot;to&quot;.equalsIgnoreCase(parsedCommand.get(6))</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        || !&quot;with&quot;.equalsIgnoreCase(parsedCommand.get(8))) {</span>
+<span class="fc" id="L54">      throw new IllegalArgumentException(&quot;Invalid command syntax&quot;);</span>
+    }
+<span class="fc" id="L56">    String propertyToUpdate = parsedCommand.get(2);</span>
+<span class="fc" id="L57">    String subject = parsedCommand.get(3);</span>
+<span class="fc" id="L58">    LocalDateTime startDateTime = LocalDateTime.parse(parsedCommand.get(5));</span>
+<span class="fc" id="L59">    LocalDateTime endDateTime = LocalDateTime.parse(parsedCommand.get(7));</span>
+<span class="fc" id="L60">    String newPropertyValue = parsedCommand.get(9);</span>
+
+<span class="fc" id="L62">    return new EditEventCommandData(propertyToUpdate, subject, startDateTime,</span>
+        endDateTime, newPropertyValue);
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

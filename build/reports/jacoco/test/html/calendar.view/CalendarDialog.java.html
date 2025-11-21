@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalendarDialog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.view</a> &gt; <span class="el_source">CalendarDialog.java</span></div><h1>CalendarDialog.java</h1><pre class="source lang-java linenums">package calendar.view;
+
+import java.awt.BorderLayout;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+/**
+ * Dialog for creating and editing calendars.
+ */
+<span class="nc" id="L23">public class CalendarDialog {</span>
+  private static List&lt;String&gt; getAllZoneIds() {
+<span class="nc" id="L25">    Set&lt;String&gt; zoneIds = ZoneId.getAvailableZoneIds();</span>
+<span class="nc" id="L26">    List&lt;String&gt; sortedZoneIds = new ArrayList&lt;&gt;(zoneIds);</span>
+<span class="nc" id="L27">    Collections.sort(sortedZoneIds);</span>
+<span class="nc" id="L28">    return sortedZoneIds;</span>
+  }
+
+  /**
+   * Shows a dialog for creating a new calendar.
+   *
+   * @param parent the parent frame
+   * @param onCreate callback with (name, timezone) when create is clicked
+   * @param onSuccess callback when dialog should refresh
+   */
+  public static void showCreateDialog(JFrame parent, BiConsumer&lt;String, String&gt; onCreate,
+                                      Runnable onSuccess) {
+<span class="nc" id="L40">    JDialog dialog = new JDialog(parent, &quot;Create New Calendar&quot;, true);</span>
+<span class="nc" id="L41">    dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L42">    dialog.setSize(400, 250);</span>
+
+<span class="nc" id="L44">    JPanel panel = new JPanel();</span>
+<span class="nc" id="L45">    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L46">    panel.setBorder(new EmptyBorder(20, 20, 20, 20));</span>
+
+<span class="nc" id="L48">    panel.add(new JLabel(&quot;Calendar Name:&quot;));</span>
+<span class="nc" id="L49">    JTextField nameField = new JTextField(20);</span>
+<span class="nc" id="L50">    panel.add(nameField);</span>
+
+<span class="nc" id="L52">    panel.add(new JLabel(&quot;Timezone:&quot;));</span>
+<span class="nc" id="L53">    List&lt;String&gt; zoneIds = getAllZoneIds();</span>
+<span class="nc" id="L54">    JComboBox&lt;String&gt; timezoneCombo = new JComboBox&lt;&gt;(zoneIds.toArray(new String[0]));</span>
+<span class="nc" id="L55">    timezoneCombo.setEditable(false);</span>
+    // Set default to system timezone
+<span class="nc" id="L57">    String systemTimezone = ZoneId.systemDefault().getId();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">    if (zoneIds.contains(systemTimezone)) {</span>
+<span class="nc" id="L59">      timezoneCombo.setSelectedItem(systemTimezone);</span>
+    }
+<span class="nc" id="L61">    panel.add(timezoneCombo);</span>
+
+<span class="nc" id="L63">    JPanel buttonPanel = new JPanel(new java.awt.FlowLayout());</span>
+<span class="nc" id="L64">    JButton createButton = new JButton(&quot;Create&quot;);</span>
+<span class="nc" id="L65">    createButton.addActionListener(e -&gt; {</span>
+      try {
+<span class="nc" id="L67">        String name = nameField.getText().trim();</span>
+<span class="nc" id="L68">        String timezone = (String) timezoneCombo.getSelectedItem();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (name.isEmpty()) {</span>
+<span class="nc" id="L70">          javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Calendar name cannot be empty&quot;,</span>
+              &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L72">          return;</span>
+        }
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (onCreate != null) {</span>
+<span class="nc" id="L75">          onCreate.accept(name, timezone);</span>
+<span class="nc" id="L76">          dialog.dispose();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">          if (onSuccess != null) {</span>
+<span class="nc" id="L78">            onSuccess.run();</span>
+          }
+        }
+<span class="nc" id="L81">      } catch (Exception ex) {</span>
+<span class="nc" id="L82">        javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Invalid timezone: &quot; + ex.getMessage(),</span>
+            &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L84">      }</span>
+<span class="nc" id="L85">    });</span>
+<span class="nc" id="L86">    buttonPanel.add(createButton);</span>
+
+<span class="nc" id="L88">    JButton cancelButton = new JButton(&quot;Cancel&quot;);</span>
+<span class="nc" id="L89">    cancelButton.addActionListener(e -&gt; dialog.dispose());</span>
+<span class="nc" id="L90">    buttonPanel.add(cancelButton);</span>
+
+<span class="nc" id="L92">    panel.add(buttonPanel);</span>
+<span class="nc" id="L93">    dialog.add(panel);</span>
+<span class="nc" id="L94">    dialog.setLocationRelativeTo(parent);</span>
+<span class="nc" id="L95">    dialog.setVisible(true);</span>
+<span class="nc" id="L96">  }</span>
+
+  /**
+   * Functional interface for editing calendars.
+   */
+  @FunctionalInterface
+  public interface EditCalendarCallback {
+    void edit(String calendarName, String property, String newValue,
+              java.util.function.Consumer&lt;String&gt; resultHandler);
+  }
+
+  /**
+   * Shows a dialog for editing a calendar.
+   *
+   * @param parent the parent frame
+   * @param getActiveCalendarName supplier for active calendar name
+   * @param getCurrentTimezone supplier for current timezone
+   * @param onEdit callback to handle calendar editing
+   * @param onSuccess callback when dialog should refresh
+   */
+  public static void showEditDialog(JFrame parent, java.util.function.Supplier&lt;String&gt; getActiveCalendarName,
+                                    java.util.function.Supplier&lt;String&gt; getCurrentTimezone,
+                                    EditCalendarCallback onEdit, Runnable onSuccess) {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">    String activeCalendarName = getActiveCalendarName != null ? getActiveCalendarName.get() : null;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">    String currentTimezone = getCurrentTimezone != null ? getCurrentTimezone.get() : null;</span>
+    
+<span class="nc bnc" id="L122" title="All 2 branches missed.">    if (activeCalendarName == null) {</span>
+<span class="nc" id="L123">      javax.swing.JOptionPane.showMessageDialog(parent, &quot;No calendar selected&quot;, &quot;Error&quot;,</span>
+          javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L125">      return;</span>
+    }
+
+<span class="nc" id="L128">    JDialog dialog = new JDialog(parent, &quot;Edit Calendar&quot;, true);</span>
+<span class="nc" id="L129">    dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L130">    dialog.setSize(400, 300);</span>
+
+<span class="nc" id="L132">    JPanel panel = new JPanel();</span>
+<span class="nc" id="L133">    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L134">    panel.setBorder(new EmptyBorder(20, 20, 20, 20));</span>
+
+<span class="nc" id="L136">    panel.add(new JLabel(&quot;Property to Edit:&quot;));</span>
+<span class="nc" id="L137">    JComboBox&lt;String&gt; propertyCombo = new JComboBox&lt;&gt;(new String[]{&quot;name&quot;, &quot;timezone&quot;});</span>
+<span class="nc" id="L138">    panel.add(propertyCombo);</span>
+
+<span class="nc" id="L140">    panel.add(new JLabel(&quot;New Value:&quot;));</span>
+<span class="nc" id="L141">    JTextField valueField = new JTextField(20);</span>
+<span class="nc" id="L142">    JComboBox&lt;String&gt; timezoneCombo = new JComboBox&lt;&gt;();</span>
+<span class="nc" id="L143">    List&lt;String&gt; zoneIds = getAllZoneIds();</span>
+<span class="nc" id="L144">    timezoneCombo.setModel(new javax.swing.DefaultComboBoxModel&lt;&gt;(</span>
+<span class="nc" id="L145">        zoneIds.toArray(new String[0])));</span>
+<span class="nc" id="L146">    timezoneCombo.setEditable(false);</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">    if (currentTimezone != null &amp;&amp; zoneIds.contains(currentTimezone)) {</span>
+<span class="nc" id="L148">      timezoneCombo.setSelectedItem(currentTimezone);</span>
+    }
+<span class="nc" id="L150">    timezoneCombo.setVisible(false);</span>
+<span class="nc" id="L151">    panel.add(valueField);</span>
+<span class="nc" id="L152">    panel.add(timezoneCombo);</span>
+
+    // Show/hide appropriate field based on property selection
+<span class="nc" id="L155">    propertyCombo.addActionListener(e -&gt; {</span>
+<span class="nc" id="L156">      String property = (String) propertyCombo.getSelectedItem();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">      if (&quot;timezone&quot;.equals(property)) {</span>
+<span class="nc" id="L158">        valueField.setVisible(false);</span>
+<span class="nc" id="L159">        timezoneCombo.setVisible(true);</span>
+      } else {
+<span class="nc" id="L161">        valueField.setVisible(true);</span>
+<span class="nc" id="L162">        timezoneCombo.setVisible(false);</span>
+      }
+<span class="nc" id="L164">    });</span>
+
+<span class="nc" id="L166">    JPanel buttonPanel = new JPanel(new java.awt.FlowLayout());</span>
+<span class="nc" id="L167">    JButton saveButton = new JButton(&quot;Save&quot;);</span>
+<span class="nc" id="L168">    saveButton.addActionListener(e -&gt; {</span>
+      try {
+<span class="nc" id="L170">        String property = (String) propertyCombo.getSelectedItem();</span>
+        String newValue;
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        if (&quot;timezone&quot;.equals(property)) {</span>
+<span class="nc" id="L173">          newValue = (String) timezoneCombo.getSelectedItem();</span>
+        } else {
+<span class="nc" id="L175">          newValue = valueField.getText().trim();</span>
+        }
+<span class="nc bnc" id="L177" title="All 4 branches missed.">        if (newValue == null || newValue.isEmpty()) {</span>
+<span class="nc" id="L178">          javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Value cannot be empty&quot;, &quot;Error&quot;,</span>
+              javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L180">          return;</span>
+        }
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        if (onEdit != null) {</span>
+<span class="nc" id="L183">          onEdit.edit(activeCalendarName, property, newValue, (result) -&gt; {</span>
+<span class="nc bnc" id="L184" title="All 6 branches missed.">            if (result != null &amp;&amp; (result.contains(&quot;Error&quot;) || result.contains(&quot;Failed&quot;))) {</span>
+<span class="nc" id="L185">              javax.swing.JOptionPane.showMessageDialog(dialog, result, &quot;Error&quot;,</span>
+                  javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else {
+<span class="nc" id="L188">              dialog.dispose();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">              if (onSuccess != null) {</span>
+<span class="nc" id="L190">                onSuccess.run();</span>
+              }
+            }
+<span class="nc" id="L193">          });</span>
+        }
+<span class="nc" id="L195">      } catch (Exception ex) {</span>
+<span class="nc" id="L196">        javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Failed to edit calendar: &quot; + ex.getMessage(),</span>
+            &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L198">      }</span>
+<span class="nc" id="L199">    });</span>
+<span class="nc" id="L200">    buttonPanel.add(saveButton);</span>
+
+<span class="nc" id="L202">    JButton cancelButton = new JButton(&quot;Cancel&quot;);</span>
+<span class="nc" id="L203">    cancelButton.addActionListener(e -&gt; dialog.dispose());</span>
+<span class="nc" id="L204">    buttonPanel.add(cancelButton);</span>
+
+<span class="nc" id="L206">    panel.add(buttonPanel);</span>
+<span class="nc" id="L207">    dialog.add(panel);</span>
+<span class="nc" id="L208">    dialog.setLocationRelativeTo(parent);</span>
+<span class="nc" id="L209">    dialog.setVisible(true);</span>
+<span class="nc" id="L210">  }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

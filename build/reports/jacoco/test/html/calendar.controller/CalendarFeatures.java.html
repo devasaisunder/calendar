@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalendarFeatures.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">CalendarFeatures.java</span></div><h1>CalendarFeatures.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.CreateCalendarCommandData;
+import calendar.controller.commanddata.CreateCommandData;
+import calendar.controller.commanddata.DeleteEventCommandData;
+import calendar.controller.commanddata.DeleteMultipleEventsCommandData;
+import calendar.controller.commanddata.DeleteSeriesCommandData;
+import calendar.controller.commanddata.EditCalendarCommandData;
+import calendar.controller.commanddata.EditEventCommandData;
+import calendar.controller.commanddata.EditMultipleEventsCommandData;
+import calendar.controller.commanddata.EditSeriesCommandData;
+import calendar.controller.commanddata.ExportCommandData;
+import calendar.controller.handlers.CreateCalendarHandler;
+import calendar.controller.handlers.CreateEventHandler;
+import calendar.controller.handlers.DeleteEventHandler;
+import calendar.controller.handlers.DeleteMultipleEventsHandler;
+import calendar.controller.handlers.DeleteSeriesHandler;
+import calendar.controller.handlers.EditCalendarHandler;
+import calendar.controller.handlers.EditEventHandler;
+import calendar.controller.handlers.EditMultipleEventsHandler;
+import calendar.controller.handlers.EditSeriesHandler;
+import calendar.controller.handlers.ExportEventHandler;
+import calendar.model.interfaces.AdvancedCalendar;
+import calendar.model.interfaces.CalendarContainer;
+import calendar.model.interfaces.EventReadOnly;
+import calendar.view.EventInfo;
+import calendar.view.Features;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * Implementation of Features interface for calendar operations.
+ * This class handles all model interactions and provides data to the view.
+ */
+public class CalendarFeatures implements Features {
+  private final CalendarContainer container;
+
+  /**
+   * Constructor for CalendarFeatures.
+   *
+   * @param container the calendar container
+   */
+<span class="nc" id="L49">  public CalendarFeatures(CalendarContainer container) {</span>
+<span class="nc" id="L50">    this.container = Objects.requireNonNull(container);</span>
+<span class="nc" id="L51">  }</span>
+
+  @Override
+  public String createCalendar(String name, String timezone) {
+    try {
+<span class="nc" id="L56">      ZoneId zoneId = ZoneId.of(timezone);</span>
+<span class="nc" id="L57">      CreateCalendarHandler handler = new CreateCalendarHandler(container);</span>
+<span class="nc" id="L58">      CreateCalendarCommandData data = new CreateCalendarCommandData(name, zoneId);</span>
+<span class="nc" id="L59">      return handler.handle(data);</span>
+<span class="nc" id="L60">    } catch (Exception e) {</span>
+<span class="nc" id="L61">      return &quot;Error: Failed to create calendar: &quot; + e.getMessage();</span>
+    }
+  }
+
+  @Override
+  public String editCalendar(String calendarName, String property, String newValue) {
+    try {
+<span class="nc" id="L68">      EditCalendarHandler handler = new EditCalendarHandler(container);</span>
+<span class="nc" id="L69">      EditCalendarCommandData data = new EditCalendarCommandData(calendarName, property, newValue);</span>
+<span class="nc" id="L70">      return handler.handle(data);</span>
+<span class="nc" id="L71">    } catch (Exception e) {</span>
+<span class="nc" id="L72">      return &quot;Error: Failed to edit calendar: &quot; + e.getMessage();</span>
+    }
+  }
+
+  @Override
+  public String switchCalendar(String calendarName) {
+    try {
+<span class="nc" id="L79">      container.setActiveCalendar(calendarName);</span>
+<span class="nc" id="L80">      return &quot;Switched to calendar: &quot; + calendarName;</span>
+<span class="nc" id="L81">    } catch (Exception e) {</span>
+<span class="nc" id="L82">      return &quot;Error: Failed to switch calendar: &quot; + e.getMessage();</span>
+    }
+  }
+
+  @Override
+  public String createEvent(String subject, LocalDateTime startDateTime, LocalDateTime endDateTime,
+                            String description, String location, String status,
+                            boolean isRepeating, String repeatDays, LocalDate repeatEndDate) {
+    try {
+<span class="nc" id="L91">      AdvancedCalendar activeCalendar = container.getActiveCalendar();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">      if (activeCalendar == null) {</span>
+<span class="nc" id="L93">        return &quot;Error: No active calendar&quot;;</span>
+      }
+
+<span class="nc" id="L96">      CreateEventHandler handler = new CreateEventHandler(activeCalendar.getCalendar());</span>
+      CreateCommandData data;
+
+<span class="nc bnc" id="L99" title="All 6 branches missed.">      if (isRepeating &amp;&amp; repeatDays != null &amp;&amp; repeatEndDate != null) {</span>
+<span class="nc" id="L100">        data = new CreateCommandData(subject, startDateTime, endDateTime,</span>
+<span class="nc" id="L101">            repeatDays, &quot;until&quot;, repeatEndDate.format(</span>
+<span class="nc" id="L102">                java.time.format.DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;)), true);</span>
+      } else {
+<span class="nc" id="L104">        data = new CreateCommandData(subject, startDateTime, endDateTime, true);</span>
+      }
+
+<span class="nc" id="L107">      String result = handler.handle(data);</span>
+
+      // Update event properties if needed
+<span class="nc" id="L110">      List&lt;EventReadOnly&gt; createdEvents = activeCalendar.getCalendar()</span>
+<span class="nc" id="L111">          .getEvents(startDateTime, endDateTime.plusDays(30));</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">      for (EventReadOnly event : createdEvents) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (event.getSubject().equals(subject)</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">            &amp;&amp; event.getStartDateTime().equals(startDateTime)) {</span>
+<span class="nc" id="L115">          List&lt;EventReadOnly&gt; eventsToEdit = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L116">          eventsToEdit.add(event);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">          if (!description.equals(&quot;No description given&quot;)) {</span>
+<span class="nc" id="L118">            activeCalendar.getCalendar().editEvent(eventsToEdit, &quot;description&quot;, description);</span>
+          }
+<span class="nc bnc" id="L120" title="All 2 branches missed.">          if (!location.equals(&quot;UNKNOWN&quot;)) {</span>
+<span class="nc" id="L121">            activeCalendar.getCalendar().editEvent(eventsToEdit, &quot;location&quot;, location);</span>
+          }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">          if (!status.equals(&quot;UNKNOWN&quot;)) {</span>
+<span class="nc" id="L124">            activeCalendar.getCalendar().editEvent(eventsToEdit, &quot;status&quot;, status);</span>
+          }
+          break;
+        }
+<span class="nc" id="L128">      }</span>
+
+<span class="nc" id="L130">      return result;</span>
+<span class="nc" id="L131">    } catch (Exception e) {</span>
+<span class="nc" id="L132">      return &quot;Error: Failed to create event: &quot; + e.getMessage();</span>
+    }
+  }
+
+  @Override
+  public String editEvent(String property, String subject, LocalDateTime startDateTime,
+                          LocalDateTime endDateTime, String newValue, String scope) {
+    try {
+<span class="nc" id="L140">      AdvancedCalendar activeCalendar = container.getActiveCalendar();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">      if (activeCalendar == null) {</span>
+<span class="nc" id="L142">        return &quot;Error: No active calendar&quot;;</span>
+      }
+
+      String result;
+<span class="nc bnc" id="L146" title="All 2 branches missed.">      if (&quot;single&quot;.equals(scope)) {</span>
+<span class="nc" id="L147">        EditEventHandler handler = new EditEventHandler(activeCalendar.getCalendar());</span>
+<span class="nc" id="L148">        EditEventCommandData data = new EditEventCommandData(</span>
+            property, subject, startDateTime, endDateTime, newValue);
+<span class="nc" id="L150">        result = handler.handle(data);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">      } else if (&quot;from&quot;.equals(scope)) {</span>
+<span class="nc" id="L152">        EditMultipleEventsHandler handler = new EditMultipleEventsHandler(</span>
+<span class="nc" id="L153">            activeCalendar.getCalendar());</span>
+<span class="nc" id="L154">        EditMultipleEventsCommandData data = new EditMultipleEventsCommandData(</span>
+            property, subject, startDateTime, newValue);
+<span class="nc" id="L156">        result = handler.handle(data);</span>
+<span class="nc" id="L157">      } else {</span>
+<span class="nc" id="L158">        EditSeriesHandler handler = new EditSeriesHandler(activeCalendar.getCalendar());</span>
+<span class="nc" id="L159">        EditSeriesCommandData data = new EditSeriesCommandData(</span>
+            property, subject, startDateTime, newValue);
+<span class="nc" id="L161">        result = handler.handle(data);</span>
+      }
+<span class="nc" id="L163">      return result;</span>
+<span class="nc" id="L164">    } catch (Exception e) {</span>
+<span class="nc" id="L165">      return &quot;Error: Failed to edit event: &quot; + e.getMessage();</span>
+    }
+  }
+
+  @Override
+  public String exportCalendar(String fileName) {
+    try {
+<span class="nc" id="L172">      AdvancedCalendar activeCalendar = container.getActiveCalendar();</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">      if (activeCalendar == null) {</span>
+<span class="nc" id="L174">        return &quot;Error: No active calendar&quot;;</span>
+      }
+<span class="nc" id="L176">      ExportEventHandler handler = new ExportEventHandler(activeCalendar.getCalendar());</span>
+<span class="nc" id="L177">      ExportCommandData data = new ExportCommandData(fileName);</span>
+<span class="nc" id="L178">      return handler.handle(data);</span>
+<span class="nc" id="L179">    } catch (Exception e) {</span>
+<span class="nc" id="L180">      return &quot;Error: Failed to export: &quot; + e.getMessage();</span>
+    }
+  }
+
+  @Override
+  public List&lt;String&gt; getCalendarNames() {
+<span class="nc" id="L186">    return new ArrayList&lt;&gt;(container.getCalendars().keySet());</span>
+  }
+
+  @Override
+  public String getActiveCalendarName() {
+<span class="nc" id="L191">    AdvancedCalendar activeCalendar = container.getActiveCalendar();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">    return activeCalendar != null ? activeCalendar.getName() : null;</span>
+  }
+
+  @Override
+  public Map&lt;LocalDate, List&lt;EventInfo&gt;&gt; getEventsForMonth(LocalDate month) {
+<span class="nc" id="L197">    Map&lt;LocalDate, List&lt;EventInfo&gt;&gt; result = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L198">    AdvancedCalendar activeCalendar = container.getActiveCalendar();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">    if (activeCalendar == null) {</span>
+<span class="nc" id="L200">      return result;</span>
+    }
+
+<span class="nc" id="L203">    LocalDate firstDay = month.withDayOfMonth(1);</span>
+<span class="nc" id="L204">    LocalDate lastDay = month.withDayOfMonth(month.lengthOfMonth());</span>
+<span class="nc" id="L205">    LocalDateTime start = firstDay.atStartOfDay();</span>
+<span class="nc" id="L206">    LocalDateTime end = lastDay.atTime(23, 59, 59);</span>
+
+<span class="nc" id="L208">    List&lt;EventReadOnly&gt; events = activeCalendar.getCalendar().getEvents(start, end);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">    for (EventReadOnly event : events) {</span>
+<span class="nc" id="L210">      LocalDate eventDate = event.getStartDateTime().toLocalDate();</span>
+<span class="nc" id="L211">      result.computeIfAbsent(eventDate, k -&gt; new ArrayList&lt;&gt;())</span>
+<span class="nc" id="L212">          .add(convertToEventInfo(event));</span>
+<span class="nc" id="L213">    }</span>
+
+<span class="nc" id="L215">    return result;</span>
+  }
+
+  @Override
+  public List&lt;EventInfo&gt; getEventsForDay(LocalDate date) {
+<span class="nc" id="L220">    List&lt;EventInfo&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L221">    AdvancedCalendar activeCalendar = container.getActiveCalendar();</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">    if (activeCalendar == null) {</span>
+<span class="nc" id="L223">      return result;</span>
+    }
+
+<span class="nc" id="L226">    LocalDateTime dayStart = date.atStartOfDay();</span>
+<span class="nc" id="L227">    LocalDateTime dayEnd = date.atTime(23, 59, 59);</span>
+<span class="nc" id="L228">    List&lt;EventReadOnly&gt; events = activeCalendar.getCalendar().getEvents(dayStart, dayEnd);</span>
+
+<span class="nc bnc" id="L230" title="All 2 branches missed.">    for (EventReadOnly event : events) {</span>
+<span class="nc" id="L231">      result.add(convertToEventInfo(event));</span>
+<span class="nc" id="L232">    }</span>
+
+<span class="nc" id="L234">    return result;</span>
+  }
+
+  @Override
+  public String getActiveCalendarTimezone() {
+<span class="nc" id="L239">    AdvancedCalendar activeCalendar = container.getActiveCalendar();</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">    return activeCalendar != null ? activeCalendar.getZoneId().getId() : null;</span>
+  }
+
+  @Override
+  public String deleteEvent(String subject, LocalDateTime startDateTime,
+                            LocalDateTime endDateTime, String scope) {
+    try {
+<span class="nc" id="L247">      AdvancedCalendar activeCalendar = container.getActiveCalendar();</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">      if (activeCalendar == null) {</span>
+<span class="nc" id="L249">        return &quot;Error: No active calendar&quot;;</span>
+      }
+
+      String result;
+<span class="nc bnc" id="L253" title="All 2 branches missed.">      if (&quot;single&quot;.equals(scope)) {</span>
+<span class="nc" id="L254">        DeleteEventHandler handler = new DeleteEventHandler(activeCalendar.getCalendar());</span>
+<span class="nc" id="L255">        DeleteEventCommandData data = new DeleteEventCommandData(</span>
+            subject, startDateTime, endDateTime);
+<span class="nc" id="L257">        result = handler.handle(data);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">      } else if (&quot;from&quot;.equals(scope)) {</span>
+<span class="nc" id="L259">        DeleteMultipleEventsHandler handler = new DeleteMultipleEventsHandler(</span>
+<span class="nc" id="L260">            activeCalendar.getCalendar());</span>
+<span class="nc" id="L261">        DeleteMultipleEventsCommandData data = new DeleteMultipleEventsCommandData(</span>
+            subject, startDateTime);
+<span class="nc" id="L263">        result = handler.handle(data);</span>
+<span class="nc" id="L264">      } else {</span>
+<span class="nc" id="L265">        DeleteSeriesHandler handler = new DeleteSeriesHandler(activeCalendar.getCalendar());</span>
+<span class="nc" id="L266">        DeleteSeriesCommandData data = new DeleteSeriesCommandData(subject, startDateTime);</span>
+<span class="nc" id="L267">        result = handler.handle(data);</span>
+      }
+<span class="nc" id="L269">      return result;</span>
+<span class="nc" id="L270">    } catch (Exception e) {</span>
+<span class="nc" id="L271">      return &quot;Error: Failed to delete event: &quot; + e.getMessage();</span>
+    }
+  }
+
+  /**
+   * Converts an EventReadOnly to EventInfo for the view.
+   *
+   * @param event the event to convert
+   * @return EventInfo object
+   */
+  private EventInfo convertToEventInfo(EventReadOnly event) {
+<span class="nc" id="L282">    return new EventInfo(</span>
+<span class="nc" id="L283">        event.getSubject(),</span>
+<span class="nc" id="L284">        event.getStartDateTime(),</span>
+<span class="nc" id="L285">        event.getEndDateTime(),</span>
+<span class="nc" id="L286">        event.getDescription(),</span>
+<span class="nc" id="L287">        event.getLocation().name(),</span>
+<span class="nc" id="L288">        event.getEventStatus().name(),</span>
+<span class="nc" id="L289">        event.isAllDay(),</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">        event.getEventType() == calendar.model.datatypes.TypeOfEvent.SERIES</span>
+    );
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

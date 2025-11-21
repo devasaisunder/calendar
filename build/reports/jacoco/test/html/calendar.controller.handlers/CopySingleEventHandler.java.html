@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CopySingleEventHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller.handlers</a> &gt; <span class="el_source">CopySingleEventHandler.java</span></div><h1>CopySingleEventHandler.java</h1><pre class="source lang-java linenums">package calendar.controller.handlers;
+
+import static calendar.controller.CopySingleEventCalendarCommand.getOutputString;
+
+import calendar.controller.commanddata.CopySingleEventCommandData;
+import calendar.model.Event;
+import calendar.model.interfaces.AdvancedCalendar;
+import calendar.model.interfaces.CalendarContainer;
+import calendar.model.interfaces.EventReadOnly;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Handler class that performs the logic for copying single events.
+ * Takes parsed command data and interacts with the model.
+ */
+public class CopySingleEventHandler {
+
+  private final CalendarContainer calendarManager;
+
+  /**
+   * Constructor for CopySingleEventHandler.
+   *
+   * @param calendarManager the calendar container to interact with
+   */
+<span class="fc" id="L29">  public CopySingleEventHandler(CalendarContainer calendarManager) {</span>
+<span class="fc" id="L30">    this.calendarManager = Objects.requireNonNull(calendarManager);</span>
+<span class="fc" id="L31">  }</span>
+
+  /**
+   * Executes the copy single event logic based on the parsed command data.
+   *
+   * @param data the parsed command data
+   * @return the result string
+   */
+  public String handle(CopySingleEventCommandData data) {
+<span class="fc" id="L40">    AdvancedCalendar sourceCalendar = calendarManager.getActiveCalendar();</span>
+<span class="fc" id="L41">    AdvancedCalendar targetCalendar = getTargetCalendar(data.getTargetCalendarName());</span>
+
+<span class="fc" id="L43">    List&lt;EventReadOnly&gt; eventsToCopy = findEvents(sourceCalendar, data.getEventName(),</span>
+<span class="fc" id="L44">        data.getSourceStart());</span>
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">    if (eventsToCopy.isEmpty()) {</span>
+<span class="fc" id="L47">      return &quot;No matching event found to copy in: &quot; + sourceCalendar.getName();</span>
+    }
+
+<span class="fc" id="L50">    return copyEventsToTarget(eventsToCopy, targetCalendar, data.getTargetStart());</span>
+  }
+
+  private AdvancedCalendar getTargetCalendar(String name) {
+<span class="fc" id="L54">    AdvancedCalendar cal = calendarManager.getCalendars().get(name);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">    if (cal == null) {</span>
+<span class="nc" id="L56">      throw new IllegalArgumentException(&quot;Target calendar does not exist: &quot; + name);</span>
+    }
+<span class="fc" id="L58">    return cal;</span>
+  }
+
+  private List&lt;EventReadOnly&gt; findEvents(AdvancedCalendar calendar,
+                                         String name, LocalDateTime time) {
+<span class="fc" id="L63">    List&lt;EventReadOnly&gt; eventsToCopy = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L64">    List&lt;EventReadOnly&gt; list = calendar</span>
+<span class="fc" id="L65">        .getAllEvents()</span>
+<span class="fc" id="L66">        .getOrDefault(time.toLocalDate(), new ArrayList&lt;&gt;());</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">    if (list.isEmpty()) {</span>
+<span class="fc" id="L68">      return eventsToCopy;</span>
+    }
+<span class="fc bfc" id="L70" title="All 2 branches covered.">    for (EventReadOnly event : list) {</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">      if (event.getSubject().equalsIgnoreCase(name)) {</span>
+<span class="fc" id="L72">        eventsToCopy.add(event);</span>
+      }
+<span class="fc" id="L74">    }</span>
+<span class="fc" id="L75">    return eventsToCopy;</span>
+  }
+
+  private String copyEventsToTarget(List&lt;EventReadOnly&gt; events,
+                                    AdvancedCalendar targetCal, LocalDateTime targetStart) {
+
+<span class="fc" id="L81">    List&lt;EventReadOnly&gt; copiedEvents = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">    for (EventReadOnly e : events) {</span>
+<span class="fc" id="L83">      LocalDateTime targetStartDateTime = targetStart;</span>
+<span class="fc" id="L84">      Duration duration = Duration.between(e.getStartDateTime(), e.getEndDateTime());</span>
+<span class="fc" id="L85">      LocalDateTime targetEndDateTime = targetStartDateTime.plus(duration);</span>
+
+<span class="fc" id="L87">      EventReadOnly toCopy = new Event.EventBuilder(e)</span>
+<span class="fc" id="L88">          .setStartDateTime(targetStartDateTime).setEndDateTime(targetEndDateTime).build();</span>
+
+<span class="fc" id="L90">      copiedEvents.add(toCopy);</span>
+<span class="fc" id="L91">    }</span>
+<span class="fc" id="L92">    return handleOutput(copiedEvents);</span>
+  }
+
+  private String handleOutput(List&lt;EventReadOnly&gt; copiedEvents) {
+<span class="fc" id="L96">    return getOutputString(copiedEvents);</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

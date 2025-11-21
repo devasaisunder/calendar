@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UseCalendarCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">UseCalendarCommand.java</span></div><h1>UseCalendarCommand.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.UseCalendarCommandData;
+import calendar.controller.handlers.UseCalendarHandler;
+import calendar.model.interfaces.CalendarContainer;
+import java.util.List;
+
+/**
+ * Performs the parsing to extract the information from the user input list.
+ * This class handles parsing, while UseCalendarHandler handles the logic.
+ */
+public class UseCalendarCommand implements Command {
+  private final UseCalendarHandler handler;
+
+  /**
+   * We are passing the calendar Manager which has all the calendars.
+   *
+   * @param calendarManager current calendar manager.
+   */
+<span class="fc" id="L20">  public UseCalendarCommand(CalendarContainer calendarManager) {</span>
+<span class="fc" id="L21">    this.handler = new UseCalendarHandler(calendarManager);</span>
+<span class="fc" id="L22">  }</span>
+
+  @Override
+  public String execute(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L26">    UseCalendarCommandData data = parse(parsedCommand);</span>
+<span class="fc" id="L27">    return handler.handle(data);</span>
+  }
+
+  /**
+   * Parses the command input into a UseCalendarCommandData object.
+   *
+   * @param parsedCommand the parsed command tokens
+   * @return UseCalendarCommandData containing parsed information
+   */
+  public UseCalendarCommandData parse(List&lt;String&gt; parsedCommand) {
+<span class="fc bfc" id="L37" title="All 4 branches covered.">    if (parsedCommand.size() != 4 || !parsedCommand.get(2).equalsIgnoreCase(&quot;--name&quot;)) {</span>
+<span class="fc" id="L38">      throw new IllegalArgumentException(&quot;Invalid command. &quot;</span>
+          + &quot;Usage: use calendar --name &lt;name-of-calendar&gt;&quot;);
+    }
+<span class="fc" id="L41">    String name = parsedCommand.get(3);</span>
+<span class="fc" id="L42">    return new UseCalendarCommandData(name);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

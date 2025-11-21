@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MonthViewPanel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.view</a> &gt; <span class="el_source">MonthViewPanel.java</span></div><h1>MonthViewPanel.java</h1><pre class="source lang-java linenums">package calendar.view;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+/**
+ * Month view panel component displaying the calendar grid.
+ */
+public class MonthViewPanel extends JPanel {
+<span class="nc" id="L23">  private static final String[] DAYS_OF_WEEK = {&quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;};</span>
+<span class="nc" id="L24">  private static final DateTimeFormatter MONTH_YEAR_FORMAT =</span>
+<span class="nc" id="L25">      DateTimeFormatter.ofPattern(&quot;MMMM yyyy&quot;);</span>
+  
+  private JPanel calendarPanel;
+  private LocalDate currentMonth;
+  private LocalDate selectedDate;
+  private Map&lt;LocalDate, List&lt;EventInfo&gt;&gt; currentMonthEvents;
+  private Map&lt;String, Color&gt; calendarColors;
+  private Color currentCalendarColor;
+  private java.util.function.Consumer&lt;LocalDate&gt; dateSelectionCallback;
+
+  /**
+   * Constructor for MonthViewPanel.
+   */
+  public MonthViewPanel() {
+<span class="nc" id="L39">    super(new BorderLayout());</span>
+<span class="nc" id="L40">    setBorder(BorderFactory.createTitledBorder(&quot;Month View&quot;));</span>
+<span class="nc" id="L41">    calendarPanel = new JPanel(new GridLayout(0, 7));</span>
+<span class="nc" id="L42">    add(calendarPanel, BorderLayout.CENTER);</span>
+<span class="nc" id="L43">    this.currentMonthEvents = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L44">    this.calendarColors = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L45">    this.selectedDate = java.time.LocalDate.now();</span>
+<span class="nc" id="L46">    this.currentMonth = java.time.LocalDate.now();</span>
+<span class="nc" id="L47">  }</span>
+
+  /**
+   * Sets the callback for date selection.
+   *
+   * @param callback the callback to call when a date is selected
+   */
+  public void setDateSelectionCallback(java.util.function.Consumer&lt;LocalDate&gt; callback) {
+<span class="nc" id="L55">    this.dateSelectionCallback = callback;</span>
+<span class="nc" id="L56">  }</span>
+
+  /**
+   * Sets the selected date.
+   *
+   * @param date the selected date
+   */
+  public void setSelectedDate(LocalDate date) {
+<span class="nc" id="L64">    this.selectedDate = date;</span>
+    // Refresh to update highlighting if we're viewing the same month
+<span class="nc bnc" id="L66" title="All 4 branches missed.">    if (currentMonth != null &amp;&amp; date.getYear() == currentMonth.getYear()</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        &amp;&amp; date.getMonth() == currentMonth.getMonth()) {</span>
+<span class="nc" id="L68">      refreshMonthView();</span>
+    }
+<span class="nc" id="L70">  }</span>
+
+  /**
+   * Sets the calendar color for the active calendar.
+   *
+   * @param color the calendar color
+   */
+  public void setCalendarColor(Color color) {
+<span class="nc" id="L78">    this.currentCalendarColor = color;</span>
+<span class="nc" id="L79">  }</span>
+
+  /**
+   * Updates the month view.
+   *
+   * @param month the month to display
+   * @param events the events for the month
+   */
+  public void updateMonthView(LocalDate month, Map&lt;LocalDate, List&lt;EventInfo&gt;&gt; events) {
+<span class="nc" id="L88">    this.currentMonth = month;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">    this.currentMonthEvents = events != null ? events : new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L90">    refreshMonthView();</span>
+<span class="nc" id="L91">  }</span>
+
+  /**
+   * Updates the selected date (for highlighting).
+   *
+   * @param date the newly selected date
+   */
+  public void updateSelectedDate(LocalDate date) {
+<span class="nc" id="L99">    this.selectedDate = date;</span>
+    // Refresh to update highlighting
+<span class="nc" id="L101">    refreshMonthView();</span>
+<span class="nc" id="L102">  }</span>
+
+  private void refreshMonthView() {
+<span class="nc bnc" id="L105" title="All 2 branches missed.">    if (calendarPanel == null) {</span>
+<span class="nc" id="L106">      return;</span>
+    }
+<span class="nc" id="L108">    calendarPanel.removeAll();</span>
+
+    // Add day headers
+<span class="nc bnc" id="L111" title="All 2 branches missed.">    for (String day : DAYS_OF_WEEK) {</span>
+<span class="nc" id="L112">      JLabel header = new JLabel(day, SwingConstants.CENTER);</span>
+<span class="nc" id="L113">      header.setBorder(BorderFactory.createLineBorder(Color.GRAY));</span>
+<span class="nc" id="L114">      header.setOpaque(true);</span>
+<span class="nc" id="L115">      header.setBackground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L116">      calendarPanel.add(header);</span>
+    }
+
+    // Get first day of month and adjust to start of week (Sunday = 0)
+<span class="nc" id="L120">    LocalDate firstDay = currentMonth.withDayOfMonth(1);</span>
+<span class="nc" id="L121">    int dayOfWeek = firstDay.getDayOfWeek().getValue() % 7; // Convert to 0-6 (Sun-Sat)</span>
+
+    // Add empty cells for days before month starts
+<span class="nc bnc" id="L124" title="All 2 branches missed.">    for (int i = 0; i &lt; dayOfWeek; i++) {</span>
+<span class="nc" id="L125">      calendarPanel.add(new JPanel());</span>
+    }
+
+    // Add day cells
+<span class="nc" id="L129">    int daysInMonth = currentMonth.lengthOfMonth();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">    Color calendarColor = currentCalendarColor != null ? currentCalendarColor : Color.WHITE;</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">    for (int day = 1; day &lt;= daysInMonth; day++) {</span>
+<span class="nc" id="L133">      LocalDate date = currentMonth.withDayOfMonth(day);</span>
+<span class="nc" id="L134">      JPanel dayPanel = createDayButton(date, currentMonthEvents, calendarColor);</span>
+<span class="nc" id="L135">      calendarPanel.add(dayPanel);</span>
+    }
+
+<span class="nc" id="L138">    calendarPanel.revalidate();</span>
+<span class="nc" id="L139">    calendarPanel.repaint();</span>
+<span class="nc" id="L140">  }</span>
+
+  private JPanel createDayButton(LocalDate date, Map&lt;LocalDate, List&lt;EventInfo&gt;&gt; allEvents,
+                                    Color calendarColor) {
+<span class="nc" id="L144">    JPanel dayPanel = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L145">    dayPanel.setPreferredSize(new Dimension(100, 100));</span>
+<span class="nc" id="L146">    dayPanel.setBorder(BorderFactory.createLineBorder(</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        date.equals(selectedDate) ? Color.BLUE : Color.GRAY,</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        date.equals(selectedDate) ? 3 : 1));</span>
+
+    // Day number label at top
+<span class="nc" id="L151">    JLabel dayLabel = new JLabel(String.valueOf(date.getDayOfMonth()), SwingConstants.CENTER);</span>
+<span class="nc" id="L152">    dayLabel.setFont(dayLabel.getFont().deriveFont(14f));</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">    if (date.equals(LocalDate.now())) {</span>
+<span class="nc" id="L154">      dayLabel.setForeground(Color.RED);</span>
+    }
+<span class="nc" id="L156">    dayPanel.add(dayLabel, BorderLayout.NORTH);</span>
+
+    // Events panel
+<span class="nc" id="L159">    JPanel eventsPanel = new JPanel();</span>
+<span class="nc" id="L160">    eventsPanel.setLayout(new BoxLayout(eventsPanel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L161">    eventsPanel.setOpaque(false);</span>
+<span class="nc" id="L162">    eventsPanel.setBorder(new EmptyBorder(2, 2, 2, 2));</span>
+
+<span class="nc" id="L164">    List&lt;EventInfo&gt; dayEvents = allEvents.getOrDefault(date, new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L165">    int maxEventsToShow = 3; // Show max 3 events, then &quot;X more&quot;</span>
+<span class="nc" id="L166">    int eventsToShow = Math.min(dayEvents.size(), maxEventsToShow);</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">    for (int i = 0; i &lt; eventsToShow; i++) {</span>
+<span class="nc" id="L169">      EventInfo event = dayEvents.get(i);</span>
+<span class="nc" id="L170">      String eventText = event.getSubject();</span>
+      // Truncate long event names
+<span class="nc bnc" id="L172" title="All 2 branches missed.">      if (eventText.length() &gt; 20) {</span>
+<span class="nc" id="L173">        eventText = eventText.substring(0, 17) + &quot;...&quot;;</span>
+      }
+<span class="nc" id="L175">      JLabel eventLabel = new JLabel(eventText);</span>
+<span class="nc" id="L176">      eventLabel.setOpaque(true);</span>
+<span class="nc" id="L177">      eventLabel.setBackground(new Color(255, 235, 59)); // Yellow like in the image</span>
+<span class="nc" id="L178">      eventLabel.setForeground(Color.BLACK);</span>
+<span class="nc" id="L179">      eventLabel.setBorder(BorderFactory.createEmptyBorder(2, 4, 2, 4));</span>
+<span class="nc" id="L180">      eventLabel.setFont(eventLabel.getFont().deriveFont(9f));</span>
+<span class="nc" id="L181">      eventLabel.setAlignmentX(0.0f);</span>
+<span class="nc" id="L182">      eventLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 18));</span>
+<span class="nc" id="L183">      eventsPanel.add(eventLabel);</span>
+    }
+
+<span class="nc bnc" id="L186" title="All 2 branches missed.">    if (dayEvents.size() &gt; maxEventsToShow) {</span>
+<span class="nc" id="L187">      JLabel moreLabel = new JLabel((dayEvents.size() - maxEventsToShow) + &quot; more&quot;);</span>
+<span class="nc" id="L188">      moreLabel.setFont(moreLabel.getFont().deriveFont(8f));</span>
+<span class="nc" id="L189">      moreLabel.setForeground(Color.GRAY);</span>
+<span class="nc" id="L190">      eventsPanel.add(moreLabel);</span>
+    }
+
+<span class="nc" id="L193">    dayPanel.add(eventsPanel, BorderLayout.CENTER);</span>
+<span class="nc" id="L194">    dayPanel.setBackground(Color.WHITE);</span>
+<span class="nc" id="L195">    dayPanel.setOpaque(true);</span>
+
+    // Make the panel clickable
+<span class="nc" id="L198">    dayPanel.addMouseListener(new java.awt.event.MouseAdapter() {</span>
+      @Override
+      public void mouseClicked(java.awt.event.MouseEvent e) {
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (dateSelectionCallback != null) {</span>
+<span class="nc" id="L202">          dateSelectionCallback.accept(date);</span>
+        }
+<span class="nc" id="L204">      }</span>
+    });
+
+<span class="nc" id="L207">    return dayPanel;</span>
+  }
+
+  /**
+   * Gets the day panel at the specified date.
+   * Used for adding click listeners.
+   *
+   * @param date the date
+   * @return the day panel, or null if not found
+   */
+  public JPanel getDayPanel(LocalDate date) {
+    // This is a helper method - the actual click handling is done in the main view
+<span class="nc" id="L219">    return null;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

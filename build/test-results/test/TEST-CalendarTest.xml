@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CalendarTest" tests="51" skipped="0" failures="0" errors="0" timestamp="2025-11-21T01:42:05" hostname="Devas-MacBook-Pro.local" time="0.055">
+  <properties/>
+  <testcase name="testException" classname="CalendarTest" time="0.0"/>
+  <testcase name="testCreateInvalidCommand" classname="CalendarTest" time="0.0"/>
+  <testcase name="testAllDayEventSingle" classname="CalendarTest" time="0.0"/>
+  <testcase name="testCreateEventOnRepetition" classname="CalendarTest" time="0.001"/>
+  <testcase name="testCreateInvalidCommandTwo" classname="CalendarTest" time="0.0"/>
+  <testcase name="testInvalidNumberInRepeats" classname="CalendarTest" time="0.0"/>
+  <testcase name="testCreateSingleEventMultipleWordSubjectDifferentAssertion" classname="CalendarTest" time="0.0"/>
+  <testcase name="testPrintCommandInvalidThree" classname="CalendarTest" time="0.004"/>
+  <testcase name="testAddEventsMultipleZeroTimes" classname="CalendarTest" time="0.001"/>
+  <testcase name="testAllDayEventUntilMultiple" classname="CalendarTest" time="0.0"/>
+  <testcase name="testSingleConflictMultiple" classname="CalendarTest" time="0.001"/>
+  <testcase name="testMultiDaysSingleEvent" classname="CalendarTest" time="0.0"/>
+  <testcase name="testAllDayEventTimesMultiple" classname="CalendarTest" time="0.0"/>
+  <testcase name="testExportCommand" classname="CalendarTest" time="0.006"/>
+  <testcase name="testAllDayEventUntilMultipleTwo" classname="CalendarTest" time="0.001"/>
+  <testcase name="testInvalidDateFormat" classname="CalendarTest" time="0.001"/>
+  <testcase name="testCreateSingleEventMultipleWordSubject" classname="CalendarTest" time="0.0"/>
+  <testcase name="testShowStatusTestBusy" classname="CalendarTest" time="0.001"/>
+  <testcase name="testEditSingleThree" classname="CalendarTest" time="0.001"/>
+  <testcase name="testValidThroughFile" classname="CalendarTest" time="0.019"/>
+  <testcase name="testInvalidShowStatusTwo" classname="CalendarTest" time="0.001"/>
+  <testcase name="testThroughControllerString" classname="CalendarTest" time="0.0"/>
+  <testcase name="testInvalidShowStatus" classname="CalendarTest" time="0.0"/>
+  <testcase name="testInvalidThroughFile" classname="CalendarTest" time="0.003"/>
+  <testcase name="testCreateMultipleEventsUntilDate" classname="CalendarTest" time="0.001"/>
+  <testcase name="testInvalidExportCommand" classname="CalendarTest" time="0.0"/>
+  <testcase name="testPrintCommandFrom" classname="CalendarTest" time="0.001"/>
+  <testcase name="testPrintCommandInvalidOne" classname="CalendarTest" time="0.002"/>
+  <testcase name="testPrintCommandInvalidTwo" classname="CalendarTest" time="0.0"/>
+  <testcase name="testPrintCommandInvalidFour" classname="CalendarTest" time="0.001"/>
+  <testcase name="testCreateSingleEvent" classname="CalendarTest" time="0.0"/>
+  <testcase name="testEditSingle" classname="CalendarTest" time="0.001"/>
+  <testcase name="testCreateInvalidCommandFive" classname="CalendarTest" time="0.0"/>
+  <testcase name="testCreateInvalidCommandFour" classname="CalendarTest" time="0.001"/>
+  <testcase name="testCreateSingleEventDifferentAssertion" classname="CalendarTest" time="0.001"/>
+  <testcase name="testAllDayEvent" classname="CalendarTest" time="0.0"/>
+  <testcase name="testShowStatusTestBusyAgain" classname="CalendarTest" time="0.001"/>
+  <testcase name="testSingleConflictSingle" classname="CalendarTest" time="0.0"/>
+  <testcase name="testShowStatusTestAvailable" classname="CalendarTest" time="0.0"/>
+  <testcase name="testAddEventUntilBeforeStart" classname="CalendarTest" time="0.0"/>
+  <testcase name="testMultiDaysSingleEventTwo" classname="CalendarTest" time="0.001"/>
+  <testcase name="testAddEventEndBeforeStart" classname="CalendarTest" time="0.0"/>
+  <testcase name="testInvalidExportCommandTwo" classname="CalendarTest" time="0.0"/>
+  <testcase name="testInvalidDayInDayString" classname="CalendarTest" time="0.0"/>
+  <testcase name="testSingleConflictMultipleUntil" classname="CalendarTest" time="0.0"/>
+  <testcase name="testEditSingleTwo" classname="CalendarTest" time="0.001"/>
+  <testcase name="testCreateInvalidCommandThree" classname="CalendarTest" time="0.0"/>
+  <testcase name="testInvalidShowStatusAgain" classname="CalendarTest" time="0.0"/>
+  <testcase name="testCreateMultipleEventsDifferentAssertion" classname="CalendarTest" time="0.0"/>
+  <testcase name="testCreateMultipleEvents" classname="CalendarTest" time="0.001"/>
+  <testcase name="testPrintCommand" classname="CalendarTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

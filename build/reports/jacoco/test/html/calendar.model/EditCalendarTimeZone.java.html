@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EditCalendarTimeZone.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.model</a> &gt; <span class="el_source">EditCalendarTimeZone.java</span></div><h1>EditCalendarTimeZone.java</h1><pre class="source lang-java linenums">package calendar.model;
+
+import calendar.model.interfaces.AdvancedCalendar;
+import calendar.model.interfaces.EditCalendar;
+import calendar.model.interfaces.EventReadOnly;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.zone.ZoneRulesException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Command used to edit the time zone of the calendar.
+ * When a timezone changes all the start and end times of the events.
+ * will be updated with the time in new time zone.
+ */
+<span class="fc" id="L17">public class EditCalendarTimeZone implements EditCalendar {</span>
+  @Override
+  public AdvancedCalendar edit(AdvancedCalendar calendar, String newValue) {
+<span class="fc" id="L20">    ZoneId sourceZone = calendar.getZoneId();</span>
+    ZoneId targetZone;
+    try {
+<span class="fc" id="L23">      targetZone = ZoneId.of(newValue);</span>
+<span class="fc" id="L24">    } catch (ZoneRulesException e) {</span>
+<span class="fc" id="L25">      throw new IllegalArgumentException(&quot;New time zone is Invalid&quot;);</span>
+<span class="fc" id="L26">    }</span>
+
+
+<span class="fc bfc" id="L29" title="All 2 branches covered.">    if (sourceZone.equals(targetZone)) {</span>
+<span class="fc" id="L30">      throw new IllegalArgumentException(&quot;The specified time zone is &quot;</span>
+          + &quot;same as the existing calendar timezone.&quot;);
+    }
+
+
+<span class="fc" id="L35">    List&lt;EventReadOnly&gt; events = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">    calendar.getCalendar().forEachEvent(events::add);</span>
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">    for (EventReadOnly event : events) {</span>
+<span class="fc" id="L39">      LocalDateTime newStartDateTime = event</span>
+<span class="fc" id="L40">          .getStartDateTime()</span>
+<span class="fc" id="L41">          .atZone(sourceZone)</span>
+<span class="fc" id="L42">          .withZoneSameInstant(targetZone)</span>
+<span class="fc" id="L43">          .toLocalDateTime();</span>
+
+<span class="fc" id="L45">      LocalDateTime newEndDateTime = event</span>
+<span class="fc" id="L46">          .getEndDateTime()</span>
+<span class="fc" id="L47">          .atZone(sourceZone)</span>
+<span class="fc" id="L48">          .withZoneSameInstant(targetZone)</span>
+<span class="fc" id="L49">          .toLocalDateTime();</span>
+
+<span class="fc" id="L51">      EventReadOnly newEvent = new Event.EventBuilder(event)</span>
+<span class="fc" id="L52">          .setStartDateTime(newStartDateTime)</span>
+<span class="fc" id="L53">          .setEndDateTime(newEndDateTime)</span>
+<span class="fc" id="L54">          .build();</span>
+
+<span class="fc" id="L56">      calendar.getCalendar().removeEvent(event);</span>
+<span class="fc" id="L57">      calendar.getCalendar().addEvent(newEvent);</span>
+<span class="fc" id="L58">    }</span>
+<span class="fc" id="L59">    return new AdvancedCalendarImpl.AdvancedCalendarBuilder(calendar)</span>
+<span class="fc" id="L60">        .setZoneId(targetZone)</span>
+<span class="fc" id="L61">        .build();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

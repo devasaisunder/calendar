@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayViewPanel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.view</a> &gt; <span class="el_source">DayViewPanel.java</span></div><h1>DayViewPanel.java</h1><pre class="source lang-java linenums">package calendar.view;
+
+import java.awt.BorderLayout;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
+
+/**
+ * Day view panel component displaying events for the selected day.
+ */
+public class DayViewPanel extends JPanel {
+<span class="nc" id="L18">  private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;);</span>
+<span class="nc" id="L19">  private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern(&quot;HH:mm&quot;);</span>
+  
+  private JLabel dayLabel;
+  private JTextArea dayEventsArea;
+  private LocalDate selectedDate;
+  private List&lt;EventInfo&gt; currentDayEvents;
+
+  /**
+   * Constructor for DayViewPanel.
+   */
+  public DayViewPanel() {
+<span class="nc" id="L30">    super(new BorderLayout());</span>
+<span class="nc" id="L31">    setBorder(BorderFactory.createTitledBorder(&quot;Day View&quot;));</span>
+<span class="nc" id="L32">    setPreferredSize(new java.awt.Dimension(300, 0));</span>
+<span class="nc" id="L33">    initializeComponents();</span>
+<span class="nc" id="L34">    this.currentDayEvents = new java.util.ArrayList&lt;&gt;();</span>
+<span class="nc" id="L35">  }</span>
+
+  private void initializeComponents() {
+<span class="nc" id="L38">    dayLabel = new JLabel(&quot;Selected Date: &quot; + LocalDate.now().format(DATE_FORMAT));</span>
+<span class="nc" id="L39">    dayLabel.setFont(dayLabel.getFont().deriveFont(14f));</span>
+
+<span class="nc" id="L41">    dayEventsArea = new JTextArea(15, 25);</span>
+<span class="nc" id="L42">    dayEventsArea.setEditable(false);</span>
+<span class="nc" id="L43">    dayEventsArea.setLineWrap(true);</span>
+<span class="nc" id="L44">    dayEventsArea.setWrapStyleWord(true);</span>
+<span class="nc" id="L45">    JScrollPane scrollPane = new JScrollPane(dayEventsArea);</span>
+
+<span class="nc" id="L47">    add(dayLabel, BorderLayout.NORTH);</span>
+<span class="nc" id="L48">    add(scrollPane, BorderLayout.CENTER);</span>
+<span class="nc" id="L49">  }</span>
+
+  /**
+   * Updates the day view with events.
+   *
+   * @param date the date to display
+   * @param events the events for that day
+   */
+  public void updateDayView(LocalDate date, List&lt;EventInfo&gt; events) {
+<span class="nc" id="L58">    this.selectedDate = date;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">    this.currentDayEvents = events != null ? events : new java.util.ArrayList&lt;&gt;();</span>
+<span class="nc" id="L60">    refreshDayView();</span>
+<span class="nc" id="L61">  }</span>
+
+  private void refreshDayView() {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">    if (dayEventsArea == null) {</span>
+<span class="nc" id="L65">      return;</span>
+    }
+
+<span class="nc" id="L68">    StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L69">    sb.append(&quot;Events on &quot;).append(selectedDate.format(DATE_FORMAT)).append(&quot;\n\n&quot;);</span>
+
+<span class="nc bnc" id="L71" title="All 4 branches missed.">    if (currentDayEvents == null || currentDayEvents.isEmpty()) {</span>
+<span class="nc" id="L72">      sb.append(&quot;No events scheduled.&quot;);</span>
+    } else {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">      for (EventInfo event : currentDayEvents) {</span>
+<span class="nc" id="L75">        sb.append(&quot;• &quot;).append(event.getSubject()).append(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (!event.isAllDay()) {</span>
+<span class="nc" id="L77">          sb.append(&quot;  Time: &quot;)</span>
+<span class="nc" id="L78">              .append(event.getStartDateTime().toLocalTime().format(TIME_FORMAT))</span>
+<span class="nc" id="L79">              .append(&quot; - &quot;)</span>
+<span class="nc" id="L80">              .append(event.getEndDateTime().toLocalTime().format(TIME_FORMAT))</span>
+<span class="nc" id="L81">              .append(&quot;\n&quot;);</span>
+        } else {
+<span class="nc" id="L83">          sb.append(&quot;  All Day Event\n&quot;);</span>
+        }
+<span class="nc bnc" id="L85" title="All 4 branches missed.">        if (event.getLocation() != null &amp;&amp; !event.getLocation().equals(&quot;UNKNOWN&quot;)) {</span>
+<span class="nc" id="L86">          sb.append(&quot;  Location: &quot;).append(event.getLocation()).append(&quot;\n&quot;);</span>
+        }
+<span class="nc bnc" id="L88" title="All 4 branches missed.">        if (event.getDescription() != null &amp;&amp; !event.getDescription().isEmpty()</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">            &amp;&amp; !event.getDescription().equals(&quot;No description given&quot;)) {</span>
+<span class="nc" id="L90">          sb.append(&quot;  Description: &quot;).append(event.getDescription()).append(&quot;\n&quot;);</span>
+        }
+<span class="nc" id="L92">        sb.append(&quot;\n&quot;);</span>
+<span class="nc" id="L93">      }</span>
+    }
+
+<span class="nc" id="L96">    dayEventsArea.setText(sb.toString());</span>
+    
+<span class="nc bnc" id="L98" title="All 2 branches missed.">    if (dayLabel != null) {</span>
+<span class="nc" id="L99">      dayLabel.setText(&quot;Selected Date: &quot; + selectedDate.format(DATE_FORMAT));</span>
+    }
+<span class="nc" id="L101">  }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

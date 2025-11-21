@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventProperties.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.model.datatypes</a> &gt; <span class="el_source">EventProperties.java</span></div><h1>EventProperties.java</h1><pre class="source lang-java linenums">package calendar.model.datatypes;
+
+/**
+ * Enum for all the fields of the events.
+ */
+<span class="fc" id="L6">public enum EventProperties {</span>
+<span class="fc" id="L7">  SUBJECT,</span>
+<span class="fc" id="L8">  START_DATA_TIME,</span>
+<span class="fc" id="L9">  END_DATA_TIME,</span>
+<span class="fc" id="L10">  DESCRIPTION,</span>
+<span class="fc" id="L11">  LOCATION,</span>
+<span class="fc" id="L12">  EVENT_STATUS;</span>
+
+  /**
+   * Used to map a string input to an enum.
+   *
+   * @param property string input.
+   * @return a valid enum corresponding to the string input.
+   */
+  public EventProperties getEventProperty(String property) {
+<span class="fc bfc" id="L21" title="All 7 branches covered.">    switch (property.toLowerCase()) {</span>
+      case &quot;subject&quot;:
+<span class="fc" id="L23">        return EventProperties.SUBJECT;</span>
+      case &quot;start&quot;:
+<span class="fc" id="L25">        return EventProperties.START_DATA_TIME;</span>
+      case &quot;end&quot;:
+<span class="fc" id="L27">        return EventProperties.END_DATA_TIME;</span>
+      case &quot;description&quot;:
+<span class="fc" id="L29">        return EventProperties.DESCRIPTION;</span>
+      case &quot;location&quot;:
+<span class="fc" id="L31">        return EventProperties.LOCATION;</span>
+      case &quot;status&quot;:
+<span class="fc" id="L33">        return EventProperties.EVENT_STATUS;</span>
+      default:
+<span class="fc" id="L35">        throw new IllegalArgumentException(&quot;Invalid Property: &quot; + property);</span>
+    }
+
+  }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

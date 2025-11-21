@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeleteEventHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller.handlers</a> &gt; <span class="el_source">DeleteEventHandler.java</span></div><h1>DeleteEventHandler.java</h1><pre class="source lang-java linenums">package calendar.controller.handlers;
+
+import calendar.controller.CalendarFilter;
+import calendar.controller.EventPredicates;
+import calendar.controller.commanddata.DeleteEventCommandData;
+import calendar.model.interfaces.CalendarEditable;
+import calendar.model.interfaces.EventReadOnly;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Handler class that performs the logic for deleting a single event.
+ * Takes parsed command data and interacts with the model.
+ */
+public class DeleteEventHandler {
+
+  private final CalendarEditable calendarModel;
+
+  /**
+   * Constructor for DeleteEventHandler.
+   *
+   * @param calendarModel the calendar model to interact with
+   */
+<span class="nc" id="L24">  public DeleteEventHandler(CalendarEditable calendarModel) {</span>
+<span class="nc" id="L25">    this.calendarModel = Objects.requireNonNull(calendarModel);</span>
+<span class="nc" id="L26">  }</span>
+
+  /**
+   * Executes the delete event logic based on the parsed command data.
+   *
+   * @param data the parsed command data
+   * @return the result string
+   */
+  public String handle(DeleteEventCommandData data) {
+<span class="nc" id="L35">    CalendarFilter filter = new CalendarFilter(calendarModel);</span>
+<span class="nc" id="L36">    List&lt;EventReadOnly&gt; filteredEvents = filter.filter(EventPredicates.bySubject(data.getSubject())</span>
+<span class="nc" id="L37">        .and(EventPredicates.byStartDate(data.getStartDateTime()))</span>
+<span class="nc" id="L38">        .and(EventPredicates.byEndDate(data.getEndDateTime())));</span>
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">    if (filteredEvents.isEmpty()) {</span>
+<span class="nc" id="L41">      return &quot;No events found to delete&quot;;</span>
+    }
+
+<span class="nc" id="L44">    StringBuilder output = new StringBuilder();</span>
+<span class="nc" id="L45">    output.append(&quot;Deleted event:&quot;).append(System.lineSeparator());</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">    for (EventReadOnly event : filteredEvents) {</span>
+<span class="nc" id="L47">      calendarModel.removeEvent(event);</span>
+<span class="nc" id="L48">      output.append(event.toString()).append(System.lineSeparator());</span>
+<span class="nc" id="L49">    }</span>
+<span class="nc" id="L50">    return output.toString();</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

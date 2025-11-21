@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalendarContainerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.model</a> &gt; <span class="el_source">CalendarContainerImpl.java</span></div><h1>CalendarContainerImpl.java</h1><pre class="source lang-java linenums">package calendar.model;
+
+import calendar.model.interfaces.AdvancedCalendar;
+import calendar.model.interfaces.CalendarContainer;
+import calendar.model.interfaces.EditCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Manages multiple calendars and allows adding, updating,
+ * deleting, and switching between active calendars.
+ */
+public class CalendarContainerImpl implements CalendarContainer {
+
+  private final Map&lt;String, AdvancedCalendar&gt; calendars;
+  private AdvancedCalendar activeCalendar;
+
+  /**
+   * Creates a new CalendarManager with an empty set of calendars.
+   */
+<span class="fc" id="L21">  public CalendarContainerImpl() {</span>
+<span class="fc" id="L22">    calendars = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L23">  }</span>
+
+  @Override
+  public void addCalendar(String name, AdvancedCalendar advancedCalendar) {
+<span class="fc bfc" id="L27" title="All 2 branches covered.">    if (calendars.containsKey(name)) {</span>
+<span class="fc" id="L28">      throw new IllegalArgumentException(&quot;Calendar with name &quot; + name + &quot; already exists&quot;);</span>
+    }
+<span class="fc" id="L30">    calendars.put(name, advancedCalendar);</span>
+<span class="fc" id="L31">  }</span>
+
+
+  @Override
+  public void updateCalendar(String name, String property, String newValue) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">    if (!calendars.containsKey(name)) {</span>
+<span class="fc" id="L37">      throw new IllegalArgumentException(&quot;Calendar with name &quot; + name + &quot; does not exist&quot;);</span>
+    }
+<span class="fc" id="L39">    AdvancedCalendar oldCalendar = this.calendars.get(name);</span>
+<span class="fc" id="L40">    Map&lt;String, EditCalendar&gt; modifyCalendarMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L41">    modifyCalendarMap.put(&quot;name&quot;, new EditCalendarName());</span>
+<span class="fc" id="L42">    modifyCalendarMap.put(&quot;timezone&quot;, new EditCalendarTimeZone());</span>
+<span class="fc" id="L43">    AdvancedCalendar calendar = calendars.get(name);</span>
+<span class="fc" id="L44">    EditCalendar editCall = modifyCalendarMap.getOrDefault(property, null);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">    if (editCall == null) {</span>
+<span class="fc" id="L46">      throw new IllegalArgumentException(&quot;Invalid property value for property &quot; + property);</span>
+    }
+
+<span class="fc" id="L49">    AdvancedCalendar newCalendar = editCall.edit(calendar, newValue);</span>
+    try {
+<span class="fc" id="L51">      this.deleteCalendar(name);</span>
+<span class="fc" id="L52">      this.addCalendar(newCalendar.getName(), newCalendar);</span>
+<span class="fc" id="L53">    } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L54">      this.addCalendar(oldCalendar.getName(), oldCalendar);</span>
+<span class="fc" id="L55">      throw new IllegalArgumentException(&quot;Calendar with the given name already exists&quot; + newValue);</span>
+<span class="fc" id="L56">    }</span>
+<span class="fc" id="L57">  }</span>
+
+  private void deleteCalendar(String name) {
+<span class="fc" id="L60">    calendars.remove(name);</span>
+<span class="fc" id="L61">  }</span>
+
+
+  @Override
+  public AdvancedCalendar getActiveCalendar() {
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    if (activeCalendar == null) {</span>
+<span class="fc" id="L67">      return this.calendars.get(&quot;default&quot;);</span>
+    }
+<span class="fc" id="L69">    return this.activeCalendar;</span>
+  }
+
+  @Override
+  public void setActiveCalendar(String name) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">    if (!calendars.containsKey(name)) {</span>
+<span class="fc" id="L75">      throw new IllegalArgumentException(&quot;Calendar with name &quot; + name + &quot; does not exist&quot;);</span>
+    }
+<span class="fc" id="L77">    this.activeCalendar = calendars.get(name);</span>
+<span class="fc" id="L78">  }</span>
+
+  @Override
+  public Map&lt;String, AdvancedCalendar&gt; getCalendars() {
+<span class="fc" id="L82">    return new HashMap&lt;&gt;(this.calendars);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

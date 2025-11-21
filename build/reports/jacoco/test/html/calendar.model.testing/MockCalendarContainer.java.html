@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MockCalendarContainer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.model.testing</a> &gt; <span class="el_source">MockCalendarContainer.java</span></div><h1>MockCalendarContainer.java</h1><pre class="source lang-java linenums">package calendar.model.testing;
+
+import calendar.model.interfaces.AdvancedCalendar;
+import calendar.model.interfaces.CalendarContainer;
+import java.io.IOException;
+import java.util.Map;
+
+/**
+ * A mock implementation of CalendarContainer used for testing controller interactions.
+ */
+public class MockCalendarContainer implements CalendarContainer {
+
+  private final Appendable log;
+
+  /**
+   * Creates a mock calendar container that logs called methods to the given Appendable.
+   *
+   * @param log the output to record method calls
+   */
+<span class="fc" id="L20">  public MockCalendarContainer(Appendable log) {</span>
+<span class="fc" id="L21">    this.log = log;</span>
+<span class="fc" id="L22">  }</span>
+
+  @Override
+  public void addCalendar(String name, AdvancedCalendar advancedCalendar) {
+<span class="fc" id="L26">    appendToLog(&quot;Call reached addCalendar&quot;);</span>
+<span class="fc" id="L27">  }</span>
+
+  @Override
+  public void updateCalendar(String name, String property, String newValue) {
+<span class="fc" id="L31">    appendToLog(&quot;Call reached updateCalendar&quot;);</span>
+<span class="fc" id="L32">  }</span>
+
+  @Override
+  public AdvancedCalendar getActiveCalendar() {
+<span class="fc" id="L36">    appendToLog(&quot;Call reached getActiveCalendar&quot;);</span>
+<span class="fc" id="L37">    return null;</span>
+  }
+
+  @Override
+  public void setActiveCalendar(String name) {
+<span class="fc" id="L42">    appendToLog(&quot;Call reached setActiveCalendar&quot;);</span>
+<span class="fc" id="L43">  }</span>
+
+  @Override
+  public Map&lt;String, AdvancedCalendar&gt; getCalendars() {
+<span class="fc" id="L47">    appendToLog(&quot;Call reached getCalendars&quot;);</span>
+<span class="fc" id="L48">    return Map.of();</span>
+  }
+
+  private void appendToLog(String message) {
+    try {
+<span class="fc" id="L53">      log.append(message);</span>
+<span class="fc" id="L54">    } catch (IOException e) {</span>
+<span class="fc" id="L55">      throw new IllegalArgumentException(&quot;Could not write to log&quot;);</span>
+<span class="fc" id="L56">    }</span>
+<span class="fc" id="L57">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

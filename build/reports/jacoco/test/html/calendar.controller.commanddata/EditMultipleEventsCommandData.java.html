@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EditMultipleEventsCommandData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller.commanddata</a> &gt; <span class="el_source">EditMultipleEventsCommandData.java</span></div><h1>EditMultipleEventsCommandData.java</h1><pre class="source lang-java linenums">package calendar.controller.commanddata;
+
+import java.time.LocalDateTime;
+
+/**
+ * Data transfer object for EditMultipleEventsCommand parsed data.
+ */
+public class EditMultipleEventsCommandData {
+  private final String propertyToUpdate;
+  private final String subject;
+  private final LocalDateTime startDateTime;
+  private final String newPropertyValue;
+
+  /**
+   * Constructor for EditMultipleEventsCommandData.
+   *
+   * @param propertyToUpdate the property to update
+   * @param subject the event subject
+   * @param startDateTime the start date and time
+   * @param newPropertyValue the new value for the property
+   */
+  public EditMultipleEventsCommandData(String propertyToUpdate, String subject,
+<span class="fc" id="L23">                                      LocalDateTime startDateTime, String newPropertyValue) {</span>
+<span class="fc" id="L24">    this.propertyToUpdate = propertyToUpdate;</span>
+<span class="fc" id="L25">    this.subject = subject;</span>
+<span class="fc" id="L26">    this.startDateTime = startDateTime;</span>
+<span class="fc" id="L27">    this.newPropertyValue = newPropertyValue;</span>
+<span class="fc" id="L28">  }</span>
+
+  public String getPropertyToUpdate() {
+<span class="fc" id="L31">    return propertyToUpdate;</span>
+  }
+
+  public String getSubject() {
+<span class="fc" id="L35">    return subject;</span>
+  }
+
+  public LocalDateTime getStartDateTime() {
+<span class="fc" id="L39">    return startDateTime;</span>
+  }
+
+  public String getNewPropertyValue() {
+<span class="fc" id="L43">    return newPropertyValue;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

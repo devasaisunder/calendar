@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExportEventHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller.handlers</a> &gt; <span class="el_source">ExportEventHandler.java</span></div><h1>ExportEventHandler.java</h1><pre class="source lang-java linenums">package calendar.controller.handlers;
+
+import calendar.controller.CsvExporter;
+import calendar.controller.FileExporter;
+import calendar.controller.IcalExporter;
+import calendar.controller.commanddata.ExportCommandData;
+import calendar.model.interfaces.CalendarEditable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * Handler class that performs the logic for exporting events.
+ * Takes parsed command data and interacts with the model.
+ */
+public class ExportEventHandler {
+
+  private final CalendarEditable calendarModel;
+  private final Map&lt;String, FileExporter&gt; fileExporter;
+
+  /**
+   * Constructor for ExportEventHandler.
+   *
+   * @param calendarModel the calendar model to interact with
+   */
+<span class="fc" id="L26">  public ExportEventHandler(CalendarEditable calendarModel) {</span>
+<span class="fc" id="L27">    this.calendarModel = Objects.requireNonNull(calendarModel);</span>
+<span class="fc" id="L28">    this.fileExporter = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L29">    fileExporter.put(&quot;csv&quot;, new CsvExporter());</span>
+<span class="fc" id="L30">    fileExporter.put(&quot;ical&quot;, new IcalExporter());</span>
+<span class="fc" id="L31">  }</span>
+
+  /**
+   * Executes the export logic based on the parsed command data.
+   *
+   * @param data the parsed command data
+   * @return the result string
+   */
+  public String handle(ExportCommandData data) {
+<span class="fc" id="L40">    String fileName = data.getFileName();</span>
+<span class="fc" id="L41">    String fileType = fileName.substring(fileName.lastIndexOf('.') + 1);</span>
+<span class="fc" id="L42">    FileExporter exporter = fileExporter.getOrDefault(fileType, null);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    if (exporter == null) {</span>
+<span class="fc" id="L44">      throw new IllegalArgumentException(&quot;Invalid file type.&quot; + fileType);</span>
+    }
+<span class="fc" id="L46">    String path = exporter.export(fileName, calendarModel.getAllEvents());</span>
+<span class="fc" id="L47">    return &quot;Successfully exported to: &quot; + path;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

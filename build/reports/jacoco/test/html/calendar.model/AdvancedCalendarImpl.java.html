@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdvancedCalendarImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.model</a> &gt; <span class="el_source">AdvancedCalendarImpl.java</span></div><h1>AdvancedCalendarImpl.java</h1><pre class="source lang-java linenums">package calendar.model;
+
+import calendar.model.interfaces.AdvancedCalendar;
+import calendar.model.interfaces.CalendarEditable;
+import calendar.model.interfaces.EventReadOnly;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Consumer;
+
+/**
+ * Represents an advanced calendar that supports time zones and can perform
+ * all standard calendar operations like adding, editing, and removing events.
+ */
+public class AdvancedCalendarImpl implements AdvancedCalendar {
+  private final String name;
+  private final ZoneId zoneId;
+  private final CalendarEditable calendar;
+
+  /**
+   * Creates a new advanced calendar with the given editable calendar, name, and time zone.
+   *
+   * @param calendar the base editable calendar
+   * @param name     the name of the calendar
+   * @param zoneId   the time zone for this calendar
+   */
+<span class="fc" id="L30">  private AdvancedCalendarImpl(CalendarEditable calendar, String name, ZoneId zoneId) {</span>
+<span class="fc" id="L31">    this.calendar = Objects.requireNonNull(calendar);</span>
+<span class="fc" id="L32">    this.name = name;</span>
+<span class="fc" id="L33">    this.zoneId = zoneId;</span>
+<span class="fc" id="L34">  }</span>
+
+  /**
+   * Adds a new event to the calendar.
+   *
+   * @param event the event to add
+   * @throws IllegalArgumentException if the event already exists
+   */
+  @Override
+  public EventReadOnly addEvent(EventReadOnly event) {
+<span class="fc" id="L44">    return calendar.addEvent(event);</span>
+  }
+
+  /**
+   * Edits one or more existing events by modifying a specified property.
+   *
+   * @param events   the list of events to modify
+   * @param property the property to edit like subject
+   * @param newValue the new value to assign to the property
+   * @throws IllegalArgumentException      if no events match the given criteria
+   * @throws UnsupportedOperationException if the property name is invalid
+   */
+  @Override
+  public List&lt;EventReadOnly&gt; editEvent(List&lt;EventReadOnly&gt; events, String property,
+                                       String newValue) {
+<span class="fc" id="L59">    return calendar.editEvent(events, property, newValue);</span>
+  }
+
+  /**
+   * Removes an event from the calendar.
+   *
+   * @param event the event to remove
+   */
+  @Override
+  public void removeEvent(EventReadOnly event) {
+<span class="fc" id="L69">    calendar.removeEvent(event);</span>
+<span class="fc" id="L70">  }</span>
+
+  /**
+   * Checks whether the status in calendar is busy at the given date and time.
+   *
+   * @param dateTime the date and time to check
+   * @return true if busy at the given time else false.
+   */
+  @Override
+  public boolean isBusy(LocalDateTime dateTime) {
+<span class="fc" id="L80">    return calendar.isBusy(dateTime);</span>
+  }
+
+  /**
+   * Executes the provided consumer for every event in the calendar.
+   * Used mainly for filtering and passing each event to the filter predicate.
+   *
+   * @param consumer the consumer that processes each event.
+   */
+  @Override
+  public void forEachEvent(Consumer&lt;EventReadOnly&gt; consumer) {
+<span class="fc" id="L91">    calendar.forEachEvent(consumer);</span>
+<span class="fc" id="L92">  }</span>
+
+  /**
+   * Retrieves all events that occur between the given start and end times.
+   *
+   * @param startDateTime the start date and time of the range.
+   * @param endDateTime   the end date and time of the range.
+   * @return a list of events occurring in the given range, empty if no events.
+   */
+  @Override
+  public List&lt;EventReadOnly&gt; getEvents(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+<span class="fc" id="L103">    return calendar.getEvents(startDateTime, endDateTime);</span>
+  }
+
+  @Override
+  public Map&lt;LocalDate, List&lt;EventReadOnly&gt;&gt; getAllEvents() {
+<span class="fc" id="L108">    return calendar.getAllEvents();</span>
+  }
+
+  @Override
+  public String getName() {
+<span class="fc" id="L113">    return this.name;</span>
+  }
+
+  @Override
+  public ZoneId getZoneId() {
+<span class="fc" id="L118">    return this.zoneId;</span>
+  }
+
+  @Override
+  public CalendarEditable getCalendar() {
+<span class="fc" id="L123">    return this.calendar;</span>
+  }
+
+  /**
+   * Builder class to create instances of AdvancedCalendarImpl.
+   */
+  public static class AdvancedCalendarBuilder {
+    private CalendarEditable calendar;
+    private String name;
+    private ZoneId zoneId;
+
+    /**
+     * Creates a builder with a name and time zone.
+     *
+     * @param name   the calendar name
+     * @param zoneId the time zone
+     */
+<span class="fc" id="L140">    public AdvancedCalendarBuilder(String name, ZoneId zoneId) {</span>
+<span class="fc" id="L141">      this.calendar = new CalendarImpl();</span>
+<span class="fc" id="L142">      this.name = name;</span>
+<span class="fc" id="L143">      this.zoneId = zoneId;</span>
+<span class="fc" id="L144">    }</span>
+
+    /**
+     * Creates a builder from an existing advanced calendar.
+     *
+     * @param advancedCalendar the existing advanced calendar
+     */
+<span class="fc" id="L151">    public AdvancedCalendarBuilder(AdvancedCalendar advancedCalendar) {</span>
+<span class="fc" id="L152">      this.calendar = Objects.requireNonNull(advancedCalendar.getCalendar());</span>
+<span class="fc" id="L153">      this.name = Objects.requireNonNull(advancedCalendar.getName());</span>
+<span class="fc" id="L154">      this.zoneId = Objects.requireNonNull(advancedCalendar.getZoneId());</span>
+<span class="fc" id="L155">    }</span>
+
+    /**
+     * Sets the base editable calendar.
+     *
+     * @param calendar the editable calendar to use
+     * @return this builder instance
+     */
+    public AdvancedCalendarBuilder setCalendar(CalendarEditable calendar) {
+<span class="fc" id="L164">      this.calendar = calendar;</span>
+<span class="fc" id="L165">      return this;</span>
+    }
+
+    /**
+     * Sets the name of the calendar.
+     *
+     * @param name the name to use
+     * @return this builder instance
+     */
+    public AdvancedCalendarBuilder setName(String name) {
+<span class="fc" id="L175">      this.name = name;</span>
+<span class="fc" id="L176">      return this;</span>
+    }
+
+    /**
+     * Sets the time zone for the calendar.
+     *
+     * @param zoneId the time zone
+     * @return this builder instance
+     */
+    public AdvancedCalendarBuilder setZoneId(ZoneId zoneId) {
+<span class="fc" id="L186">      this.zoneId = zoneId;</span>
+<span class="fc" id="L187">      return this;</span>
+    }
+
+    /**
+     * Builds and returns the AdvancedCalendarImpl object.
+     *
+     * @return a new AdvancedCalendarImpl instance
+     */
+    public AdvancedCalendarImpl build() {
+<span class="fc" id="L196">      return new AdvancedCalendarImpl(calendar, name, zoneId);</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

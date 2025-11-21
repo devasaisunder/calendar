@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TopPanel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.view</a> &gt; <span class="el_source">TopPanel.java</span></div><h1>TopPanel.java</h1><pre class="source lang-java linenums">package calendar.view;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+/**
+ * Top panel component for calendar selection, navigation, and timezone display.
+ */
+public class TopPanel extends JPanel {
+<span class="nc" id="L20">  private static final DateTimeFormatter MONTH_YEAR_FORMAT =</span>
+<span class="nc" id="L21">      DateTimeFormatter.ofPattern(&quot;MMMM yyyy&quot;);</span>
+<span class="nc" id="L22">  private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;);</span>
+  
+  private JComboBox&lt;String&gt; calendarComboBox;
+  private JLabel monthYearLabel;
+  private JLabel selectedDateLabel;
+  private JLabel timezoneLabel;
+  private Features features;
+  private LocalDate currentMonth;
+  private LocalDate selectedDate;
+  private JButton createCalendarButton;
+  private JButton editCalendarButton;
+  private JButton prevButton;
+  private JButton nextButton;
+
+  /**
+   * Constructor for TopPanel.
+   */
+  public TopPanel() {
+<span class="nc" id="L40">    super(new BorderLayout());</span>
+<span class="nc" id="L41">    setBorder(new EmptyBorder(10, 10, 10, 10));</span>
+<span class="nc" id="L42">    this.currentMonth = LocalDate.now();</span>
+<span class="nc" id="L43">    this.selectedDate = LocalDate.now();</span>
+<span class="nc" id="L44">    initializeComponents();</span>
+<span class="nc" id="L45">  }</span>
+
+  private void initializeComponents() {
+    // Calendar selection panel (left)
+<span class="nc" id="L49">    JPanel calendarSelectPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));</span>
+<span class="nc" id="L50">    calendarSelectPanel.add(new JLabel(&quot;Calendar:&quot;));</span>
+<span class="nc" id="L51">    calendarComboBox = new JComboBox&lt;&gt;();</span>
+<span class="nc" id="L52">    calendarSelectPanel.add(calendarComboBox);</span>
+
+<span class="nc" id="L54">    createCalendarButton = new JButton(&quot;New Calendar&quot;);</span>
+<span class="nc" id="L55">    calendarSelectPanel.add(createCalendarButton);</span>
+
+<span class="nc" id="L57">    editCalendarButton = new JButton(&quot;Edit Calendar&quot;);</span>
+<span class="nc" id="L58">    calendarSelectPanel.add(editCalendarButton);</span>
+
+<span class="nc" id="L60">    add(calendarSelectPanel, BorderLayout.WEST);</span>
+
+    // Month navigation panel (center)
+<span class="nc" id="L63">    JPanel navPanel = new JPanel(new FlowLayout());</span>
+<span class="nc" id="L64">    prevButton = new JButton(&quot;◀ Previous&quot;);</span>
+<span class="nc" id="L65">    navPanel.add(prevButton);</span>
+
+<span class="nc" id="L67">    monthYearLabel = new JLabel(&quot;&quot;, SwingConstants.CENTER);</span>
+<span class="nc" id="L68">    monthYearLabel.setFont(monthYearLabel.getFont().deriveFont(18f));</span>
+<span class="nc" id="L69">    monthYearLabel.setText(currentMonth.format(MONTH_YEAR_FORMAT));</span>
+<span class="nc" id="L70">    navPanel.add(monthYearLabel);</span>
+
+<span class="nc" id="L72">    nextButton = new JButton(&quot;Next ▶&quot;);</span>
+<span class="nc" id="L73">    navPanel.add(nextButton);</span>
+
+<span class="nc" id="L75">    add(navPanel, BorderLayout.CENTER);</span>
+
+    // Right panel with selected date and timezone
+<span class="nc" id="L78">    JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));</span>
+<span class="nc" id="L79">    selectedDateLabel = new JLabel(&quot;Selected: &quot; + selectedDate.format(DATE_FORMAT));</span>
+<span class="nc" id="L80">    selectedDateLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));</span>
+<span class="nc" id="L81">    rightPanel.add(selectedDateLabel);</span>
+
+<span class="nc" id="L83">    timezoneLabel = new JLabel(&quot;Timezone: -&quot;);</span>
+<span class="nc" id="L84">    rightPanel.add(timezoneLabel);</span>
+
+<span class="nc" id="L86">    add(rightPanel, BorderLayout.EAST);</span>
+<span class="nc" id="L87">  }</span>
+
+  /**
+   * Sets the Features interface for this panel.
+   *
+   * @param features the Features interface
+   */
+  public void setFeatures(Features features) {
+<span class="nc" id="L95">    this.features = features;</span>
+<span class="nc" id="L96">  }</span>
+
+  /**
+   * Gets the calendar combo box.
+   *
+   * @return the calendar combo box
+   */
+  public JComboBox&lt;String&gt; getCalendarComboBox() {
+<span class="nc" id="L104">    return calendarComboBox;</span>
+  }
+
+  /**
+   * Gets the create calendar button.
+   *
+   * @return the create calendar button
+   */
+  public JButton getCreateCalendarButton() {
+<span class="nc" id="L113">    return createCalendarButton;</span>
+  }
+
+  /**
+   * Gets the edit calendar button.
+   *
+   * @return the edit calendar button
+   */
+  public JButton getEditCalendarButton() {
+<span class="nc" id="L122">    return editCalendarButton;</span>
+  }
+
+  /**
+   * Gets the previous month button.
+   *
+   * @return the previous month button
+   */
+  public JButton getPrevButton() {
+<span class="nc" id="L131">    return prevButton;</span>
+  }
+
+  /**
+   * Gets the next month button.
+   *
+   * @return the next month button
+   */
+  public JButton getNextButton() {
+<span class="nc" id="L140">    return nextButton;</span>
+  }
+
+  /**
+   * Updates the calendar combo box.
+   *
+   * @param calendarNames the list of calendar names
+   * @param activeCalendarName the active calendar name
+   */
+  public void updateCalendarComboBox(List&lt;String&gt; calendarNames, String activeCalendarName) {
+<span class="nc bnc" id="L150" title="All 2 branches missed.">    if (calendarComboBox == null) {</span>
+<span class="nc" id="L151">      return;</span>
+    }
+<span class="nc" id="L153">    calendarComboBox.removeAllItems();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">    for (String name : calendarNames) {</span>
+<span class="nc" id="L155">      calendarComboBox.addItem(name);</span>
+<span class="nc" id="L156">    }</span>
+<span class="nc bnc" id="L157" title="All 4 branches missed.">    if (activeCalendarName != null &amp;&amp; calendarNames.contains(activeCalendarName)) {</span>
+<span class="nc" id="L158">      calendarComboBox.setSelectedItem(activeCalendarName);</span>
+    }
+<span class="nc" id="L160">  }</span>
+
+  /**
+   * Updates the month year label.
+   *
+   * @param month the current month
+   */
+  public void updateMonthYear(LocalDate month) {
+<span class="nc" id="L168">    this.currentMonth = month;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">    if (monthYearLabel != null) {</span>
+<span class="nc" id="L170">      monthYearLabel.setText(month.format(MONTH_YEAR_FORMAT));</span>
+    }
+<span class="nc" id="L172">  }</span>
+
+  /**
+   * Updates the selected date label.
+   *
+   * @param date the selected date
+   */
+  public void updateSelectedDate(LocalDate date) {
+<span class="nc" id="L180">    this.selectedDate = date;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">    if (selectedDateLabel != null) {</span>
+<span class="nc" id="L182">      selectedDateLabel.setText(&quot;Selected: &quot; + date.format(DATE_FORMAT));</span>
+    }
+<span class="nc" id="L184">  }</span>
+
+  /**
+   * Updates the timezone label.
+   *
+   * @param timezone the timezone string
+   */
+  public void updateTimezone(String timezone) {
+<span class="nc bnc" id="L192" title="All 2 branches missed.">    if (timezoneLabel != null) {</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">      timezoneLabel.setText(&quot;Timezone: &quot; + (timezone != null ? timezone : &quot;-&quot;));</span>
+    }
+<span class="nc" id="L195">  }</span>
+
+  /**
+   * Gets the current month.
+   *
+   * @return the current month
+   */
+  public LocalDate getCurrentMonth() {
+<span class="nc" id="L203">    return currentMonth;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

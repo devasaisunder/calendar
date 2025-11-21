@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="EnumDataTypeTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2025-11-21T01:42:05" hostname="Devas-MacBook-Pro.local" time="0.002">
+  <properties/>
+  <testcase name="testGetEventPropertyDescription" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventPropertyStart" classname="EnumDataTypeTest" time="0.001"/>
+  <testcase name="testGetEventStatusPublic" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventStatusRandom" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventPropertyStatus" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetLocationPhysical" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testUserStatusValues" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventPropertyLocation" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetLocationOnline" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventPropertyCaseInsensitive" classname="EnumDataTypeTest" time="0.001"/>
+  <testcase name="testGetLocationUnknown" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventPropertyEnd" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventStatusPrivate" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventProperty_invalidProperty" classname="EnumDataTypeTest" time="0.0"/>
+  <testcase name="testGetEventPropertySubject" classname="EnumDataTypeTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

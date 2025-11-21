@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CalendarContainerControllerTest" tests="35" skipped="0" failures="0" errors="0" timestamp="2025-11-21T01:42:04" hostname="Devas-MacBook-Pro.local" time="0.086">
+  <properties/>
+  <testcase name="testCalendarManagerUseCommandInvalidName" classname="CalendarContainerControllerTest" time="0.036"/>
+  <testcase name="testEditName" classname="CalendarContainerControllerTest" time="0.006"/>
+  <testcase name="testAddCalendar" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testSetActiveCalendarInvalid" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testSetActiveCalendar" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testGetActiveCalendarDefault" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerCreateInvalidCreate1" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerCreateInvalidCreate2" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerCreateInvalidCreate3" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="testCalendarManagerCreateInvalidCreate4" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerUseCommandTestWithDefault" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerCreateDuplicate" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerUseCommandTest" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="testCalendarManagerCreateInvalidTimeZone" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testEditTimeZoneDuplicateName" classname="CalendarContainerControllerTest" time="0.014"/>
+  <testcase name="welcomeMessageTest" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="testEditBothSameTimeZone" classname="CalendarContainerControllerTest" time="0.002"/>
+  <testcase name="testEditInvalidEditCommand1" classname="CalendarContainerControllerTest" time="0.002"/>
+  <testcase name="testEditInvalidEditCommand2" classname="CalendarContainerControllerTest" time="0.003"/>
+  <testcase name="testEditInvalidEditCommand3" classname="CalendarContainerControllerTest" time="0.002"/>
+  <testcase name="testUpdateCalendarInvalidPropertyThrows" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testEditInvalidProperty" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="useCommandTest2" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testAddDuplicateCalendarThrows" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerInvalidLengthUseCommand" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testCalendarManagerInvalidLengthUseCommand2" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="testCalendarManagerCreate" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testGetCalendarsReturnsCopy" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="farewellMessageTest" classname="CalendarContainerControllerTest" time="0.001"/>
+  <testcase name="testUpdateCalendarName" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testEditTimeZoneInvalid" classname="CalendarContainerControllerTest" time="0.003"/>
+  <testcase name="testEditTimeZone" classname="CalendarContainerControllerTest" time="0.007"/>
+  <testcase name="testUpdateCalendarTimeZone" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="testUpdateCalendarCatchBlock" classname="CalendarContainerControllerTest" time="0.0"/>
+  <testcase name="useCommandTest" classname="CalendarContainerControllerTest" time="0.0"/>
+  <system-out><![CDATA[Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+Calendar name edited successfully
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+Now you are using calendar Work
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Exiting!!
+Thank you for using this program!
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+!!***The specified time zone is same as the existing calendar timezone.***!!
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+Now you are using calendar Work
+Created a Series Event: 
+Subject: Multiple Events, Start: 2025-06-26T10:00, End: 2025-06-26T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-29T10:00, End: 2025-06-29T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-30T10:00, End: 2025-06-30T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-03T10:00, End: 2025-07-03T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-06T10:00, End: 2025-07-06T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+
+!!***Invalid edit calendar command. Usage: edit calendar --name <name-of-calendar> --property <property-name> <new-property-value>***!!
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+Now you are using calendar Work
+Created a Series Event: 
+Subject: Multiple Events, Start: 2025-06-26T10:00, End: 2025-06-26T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-29T10:00, End: 2025-06-29T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-30T10:00, End: 2025-06-30T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-03T10:00, End: 2025-07-03T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-06T10:00, End: 2025-07-06T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+
+!!***Invalid edit calendar command. Usage: edit calendar --name <name-of-calendar> --property <property-name> <new-property-value>***!!
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+Now you are using calendar Work
+Created a Series Event: 
+Subject: Multiple Events, Start: 2025-06-26T10:00, End: 2025-06-26T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-29T10:00, End: 2025-06-29T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-30T10:00, End: 2025-06-30T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-03T10:00, End: 2025-07-03T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-06T10:00, End: 2025-07-06T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+
+!!***Invalid edit calendar command. Usage: edit calendar --name <name-of-calendar> --property <property-name> <new-property-value>***!!
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+Now you are using calendar Work
+Created a Series Event: 
+Subject: Multiple Events, Start: 2025-06-26T10:00, End: 2025-06-26T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-29T10:00, End: 2025-06-29T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-30T10:00, End: 2025-06-30T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-03T10:00, End: 2025-07-03T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-06T10:00, End: 2025-07-06T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+
+!!***New time zone is Invalid***!!
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Exiting!!
+Thank you for using this program!
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+Now you are using calendar Work
+Created a Series Event: 
+Subject: Multiple Events, Start: 2025-06-26T10:00, End: 2025-06-26T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-29T10:00, End: 2025-06-29T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-30T10:00, End: 2025-06-30T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-03T10:00, End: 2025-07-03T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-06T10:00, End: 2025-07-06T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+
+!!***New time zone is Invalid***!!
+
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name Work has been successfully created
+Now you are using calendar Work
+Created a Series Event: 
+Subject: Multiple Events, Start: 2025-06-26T10:00, End: 2025-06-26T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-29T10:00, End: 2025-06-29T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-06-30T10:00, End: 2025-06-30T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-03T10:00, End: 2025-07-03T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Multiple Events, Start: 2025-07-06T10:00, End: 2025-07-06T11:00, Description: No description given, Type: SERIES, AllDayEvent: false
+
+Calendar timezone edited successfully
+> Multiple Events starting on 2025-06-26 at 19:30, ending on 2025-06-26 at 20:30
+> Multiple Events starting on 2025-06-29 at 19:30, ending on 2025-06-29 at 20:30
+> Multiple Events starting on 2025-06-30 at 19:30, ending on 2025-06-30 at 20:30
+> Multiple Events starting on 2025-07-03 at 19:30, ending on 2025-07-03 at 20:30
+> Multiple Events starting on 2025-07-06 at 19:30, ending on 2025-07-06 at 20:30
+
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

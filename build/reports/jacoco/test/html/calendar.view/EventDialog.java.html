@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventDialog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.view</a> &gt; <span class="el_source">EventDialog.java</span></div><h1>EventDialog.java</h1><pre class="source lang-java linenums">package calendar.view;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+import javax.swing.border.EmptyBorder;
+
+/**
+ * Dialog for creating and editing events.
+ */
+<span class="nc" id="L27">public class EventDialog {</span>
+<span class="nc" id="L28">  private static final java.time.format.DateTimeFormatter TIME_FORMAT =</span>
+<span class="nc" id="L29">      java.time.format.DateTimeFormatter.ofPattern(&quot;HH:mm&quot;);</span>
+
+  /**
+   * Functional interface for creating events.
+   */
+  @FunctionalInterface
+  public interface CreateEventCallback {
+    void create(String subject, LocalDateTime startDateTime, LocalDateTime endDateTime,
+                String description, String location, String status,
+                boolean isRepeating, String repeatDays, LocalDate repeatEndDate,
+                java.util.function.Consumer&lt;String&gt; resultHandler);
+  }
+
+  /**
+   * Shows a dialog for creating a new event.
+   *
+   * @param parent the parent frame
+   * @param selectedDate the currently selected date
+   * @param onCreate callback to handle event creation
+   * @param onSuccess callback when dialog should refresh
+   */
+  public static void showCreateDialog(JFrame parent, LocalDate selectedDate,
+                                      CreateEventCallback onCreate, Runnable onSuccess) {
+<span class="nc" id="L52">    JDialog dialog = new JDialog(parent, &quot;Create Event&quot;, true);</span>
+<span class="nc" id="L53">    dialog.setSize(500, 650);</span>
+<span class="nc" id="L54">    dialog.setLayout(new BorderLayout());</span>
+
+<span class="nc" id="L56">    JPanel panel = new JPanel();</span>
+<span class="nc" id="L57">    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L58">    panel.setBorder(new EmptyBorder(20, 20, 20, 20));</span>
+
+    // Subject
+<span class="nc" id="L61">    panel.add(new JLabel(&quot;Subject:&quot;));</span>
+<span class="nc" id="L62">    JTextField subjectField = new JTextField(30);</span>
+<span class="nc" id="L63">    panel.add(subjectField);</span>
+
+    // Date picker
+<span class="nc" id="L66">    panel.add(new JLabel(&quot;Date:&quot;));</span>
+<span class="nc" id="L67">    SpinnerDateModel dateModel = new SpinnerDateModel(</span>
+<span class="nc" id="L68">        java.sql.Date.valueOf(selectedDate),</span>
+        null, null, java.util.Calendar.DAY_OF_MONTH);
+<span class="nc" id="L70">    JSpinner dateSpinner = new JSpinner(dateModel);</span>
+<span class="nc" id="L71">    JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, &quot;yyyy-MM-dd&quot;);</span>
+<span class="nc" id="L72">    dateSpinner.setEditor(dateEditor);</span>
+<span class="nc" id="L73">    panel.add(dateSpinner);</span>
+
+    // All day checkbox
+<span class="nc" id="L76">    JPanel allDayPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));</span>
+<span class="nc" id="L77">    JCheckBox allDayCheck = new JCheckBox(&quot;All Day Event&quot;);</span>
+<span class="nc" id="L78">    allDayPanel.add(allDayCheck);</span>
+<span class="nc" id="L79">    panel.add(allDayPanel);</span>
+
+    // Start time
+<span class="nc" id="L82">    panel.add(new JLabel(&quot;Start Time:&quot;));</span>
+<span class="nc" id="L83">    java.util.Calendar startCal = java.util.Calendar.getInstance();</span>
+<span class="nc" id="L84">    startCal.set(java.util.Calendar.HOUR_OF_DAY, 9);</span>
+<span class="nc" id="L85">    startCal.set(java.util.Calendar.MINUTE, 0);</span>
+<span class="nc" id="L86">    startCal.set(java.util.Calendar.SECOND, 0);</span>
+<span class="nc" id="L87">    startCal.set(java.util.Calendar.MILLISECOND, 0);</span>
+<span class="nc" id="L88">    SpinnerDateModel startTimeModel = new SpinnerDateModel(</span>
+<span class="nc" id="L89">        startCal.getTime(), null, null, java.util.Calendar.HOUR_OF_DAY);</span>
+<span class="nc" id="L90">    JSpinner startTimeSpinner = new JSpinner(startTimeModel);</span>
+<span class="nc" id="L91">    JSpinner.DateEditor startTimeEditor = new JSpinner.DateEditor(startTimeSpinner, &quot;HH:mm&quot;);</span>
+<span class="nc" id="L92">    startTimeSpinner.setEditor(startTimeEditor);</span>
+<span class="nc" id="L93">    panel.add(startTimeSpinner);</span>
+
+    // End time
+<span class="nc" id="L96">    panel.add(new JLabel(&quot;End Time:&quot;));</span>
+<span class="nc" id="L97">    java.util.Calendar endCal = java.util.Calendar.getInstance();</span>
+<span class="nc" id="L98">    endCal.set(java.util.Calendar.HOUR_OF_DAY, 10);</span>
+<span class="nc" id="L99">    endCal.set(java.util.Calendar.MINUTE, 0);</span>
+<span class="nc" id="L100">    endCal.set(java.util.Calendar.SECOND, 0);</span>
+<span class="nc" id="L101">    endCal.set(java.util.Calendar.MILLISECOND, 0);</span>
+<span class="nc" id="L102">    SpinnerDateModel endTimeModel = new SpinnerDateModel(</span>
+<span class="nc" id="L103">        endCal.getTime(), null, null, java.util.Calendar.HOUR_OF_DAY);</span>
+<span class="nc" id="L104">    JSpinner endTimeSpinner = new JSpinner(endTimeModel);</span>
+<span class="nc" id="L105">    JSpinner.DateEditor endTimeEditor = new JSpinner.DateEditor(endTimeSpinner, &quot;HH:mm&quot;);</span>
+<span class="nc" id="L106">    endTimeSpinner.setEditor(endTimeEditor);</span>
+<span class="nc" id="L107">    panel.add(endTimeSpinner);</span>
+
+    // Description
+<span class="nc" id="L110">    panel.add(new JLabel(&quot;Description:&quot;));</span>
+<span class="nc" id="L111">    JTextArea descriptionArea = new JTextArea(3, 30);</span>
+<span class="nc" id="L112">    descriptionArea.setLineWrap(true);</span>
+<span class="nc" id="L113">    descriptionArea.setWrapStyleWord(true);</span>
+<span class="nc" id="L114">    JScrollPane descScroll = new JScrollPane(descriptionArea);</span>
+<span class="nc" id="L115">    panel.add(descScroll);</span>
+
+    // Location
+<span class="nc" id="L118">    panel.add(new JLabel(&quot;Location:&quot;));</span>
+<span class="nc" id="L119">    JComboBox&lt;String&gt; locationCombo = new JComboBox&lt;&gt;(</span>
+        new String[]{&quot;UNKNOWN&quot;, &quot;PHYSICAL&quot;, &quot;ONLINE&quot;});
+<span class="nc" id="L121">    panel.add(locationCombo);</span>
+
+    // Status
+<span class="nc" id="L124">    panel.add(new JLabel(&quot;Status:&quot;));</span>
+<span class="nc" id="L125">    JComboBox&lt;String&gt; statusCombo = new JComboBox&lt;&gt;(</span>
+        new String[]{&quot;UNKNOWN&quot;, &quot;PUBLIC&quot;, &quot;PRIVATE&quot;});
+<span class="nc" id="L127">    panel.add(statusCombo);</span>
+
+    // Recurring event options
+<span class="nc" id="L130">    panel.add(new JLabel(&quot;Repeat:&quot;));</span>
+<span class="nc" id="L131">    JCheckBox recurringCheck = new JCheckBox(&quot;Repeat&quot;);</span>
+<span class="nc" id="L132">    panel.add(recurringCheck);</span>
+
+    // Day of week checkboxes
+<span class="nc" id="L135">    JPanel daysPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));</span>
+<span class="nc" id="L136">    daysPanel.add(new JLabel(&quot;Repeat on:&quot;));</span>
+<span class="nc" id="L137">    JCheckBox monCheck = new JCheckBox(&quot;Mon&quot;);</span>
+<span class="nc" id="L138">    JCheckBox tueCheck = new JCheckBox(&quot;Tue&quot;);</span>
+<span class="nc" id="L139">    JCheckBox wedCheck = new JCheckBox(&quot;Wed&quot;);</span>
+<span class="nc" id="L140">    JCheckBox thuCheck = new JCheckBox(&quot;Thu&quot;);</span>
+<span class="nc" id="L141">    JCheckBox friCheck = new JCheckBox(&quot;Fri&quot;);</span>
+<span class="nc" id="L142">    JCheckBox satCheck = new JCheckBox(&quot;Sat&quot;);</span>
+<span class="nc" id="L143">    JCheckBox sunCheck = new JCheckBox(&quot;Sun&quot;);</span>
+<span class="nc" id="L144">    daysPanel.add(monCheck);</span>
+<span class="nc" id="L145">    daysPanel.add(tueCheck);</span>
+<span class="nc" id="L146">    daysPanel.add(wedCheck);</span>
+<span class="nc" id="L147">    daysPanel.add(thuCheck);</span>
+<span class="nc" id="L148">    daysPanel.add(friCheck);</span>
+<span class="nc" id="L149">    daysPanel.add(satCheck);</span>
+<span class="nc" id="L150">    daysPanel.add(sunCheck);</span>
+<span class="nc" id="L151">    daysPanel.setEnabled(false);</span>
+<span class="nc" id="L152">    panel.add(daysPanel);</span>
+
+    // End date for recurring events
+<span class="nc" id="L155">    panel.add(new JLabel(&quot;End Date (for recurring events):&quot;));</span>
+<span class="nc" id="L156">    SpinnerDateModel endDateModel = new SpinnerDateModel(</span>
+<span class="nc" id="L157">        java.sql.Date.valueOf(selectedDate.plusMonths(1)),</span>
+        null, null, java.util.Calendar.DAY_OF_MONTH);
+<span class="nc" id="L159">    JSpinner endDateSpinner = new JSpinner(endDateModel);</span>
+<span class="nc" id="L160">    JSpinner.DateEditor endDateEditor = new JSpinner.DateEditor(endDateSpinner, &quot;yyyy-MM-dd&quot;);</span>
+<span class="nc" id="L161">    endDateSpinner.setEditor(endDateEditor);</span>
+<span class="nc" id="L162">    endDateSpinner.setEnabled(false);</span>
+<span class="nc" id="L163">    panel.add(endDateSpinner);</span>
+
+    // Enable/disable time fields based on all day
+<span class="nc" id="L166">    allDayCheck.addActionListener(e -&gt; {</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">      boolean enabled = !allDayCheck.isSelected();</span>
+<span class="nc" id="L168">      startTimeSpinner.setEnabled(enabled);</span>
+<span class="nc" id="L169">      endTimeSpinner.setEnabled(enabled);</span>
+<span class="nc" id="L170">    });</span>
+
+    // Enable/disable recurring options
+<span class="nc" id="L173">    recurringCheck.addActionListener(e -&gt; {</span>
+<span class="nc" id="L174">      boolean enabled = recurringCheck.isSelected();</span>
+<span class="nc" id="L175">      daysPanel.setEnabled(enabled);</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">      for (java.awt.Component comp : daysPanel.getComponents()) {</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (comp instanceof JCheckBox) {</span>
+<span class="nc" id="L178">          comp.setEnabled(enabled);</span>
+        }
+      }
+<span class="nc" id="L181">      endDateSpinner.setEnabled(enabled);</span>
+<span class="nc" id="L182">    });</span>
+
+<span class="nc" id="L184">    JPanel buttonPanel = new JPanel(new FlowLayout());</span>
+<span class="nc" id="L185">    JButton createButton = new JButton(&quot;Create&quot;);</span>
+<span class="nc" id="L186">    createButton.addActionListener(e -&gt; {</span>
+      try {
+<span class="nc" id="L188">        String subject = subjectField.getText().trim();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        if (subject.isEmpty()) {</span>
+<span class="nc" id="L190">          javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Subject cannot be empty&quot;,</span>
+              &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L192">          return;</span>
+        }
+
+        // Get date from spinner
+<span class="nc" id="L196">        java.util.Date dateValue = (java.util.Date) dateSpinner.getValue();</span>
+<span class="nc" id="L197">        LocalDate date = new java.sql.Date(dateValue.getTime()).toLocalDate();</span>
+
+<span class="nc" id="L199">        boolean allDay = allDayCheck.isSelected();</span>
+        LocalTime startTime;
+        LocalTime endTime;
+
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        if (allDay) {</span>
+<span class="nc" id="L204">          startTime = LocalTime.of(8, 0);</span>
+<span class="nc" id="L205">          endTime = LocalTime.of(17, 0);</span>
+        } else {
+<span class="nc" id="L207">          java.util.Date startTimeValue = (java.util.Date) startTimeSpinner.getValue();</span>
+<span class="nc" id="L208">          java.util.Date endTimeValue = (java.util.Date) endTimeSpinner.getValue();</span>
+<span class="nc" id="L209">          java.util.Calendar cal = java.util.Calendar.getInstance();</span>
+<span class="nc" id="L210">          cal.setTime(startTimeValue);</span>
+<span class="nc" id="L211">          startTime = LocalTime.of(cal.get(java.util.Calendar.HOUR_OF_DAY),</span>
+<span class="nc" id="L212">              cal.get(java.util.Calendar.MINUTE));</span>
+<span class="nc" id="L213">          cal.setTime(endTimeValue);</span>
+<span class="nc" id="L214">          endTime = LocalTime.of(cal.get(java.util.Calendar.HOUR_OF_DAY),</span>
+<span class="nc" id="L215">              cal.get(java.util.Calendar.MINUTE));</span>
+        }
+
+<span class="nc" id="L218">        LocalDateTime startDateTime = LocalDateTime.of(date, startTime);</span>
+<span class="nc" id="L219">        LocalDateTime endDateTime = LocalDateTime.of(date, endTime);</span>
+
+<span class="nc bnc" id="L221" title="All 2 branches missed.">        if (endDateTime.isBefore(startDateTime)) {</span>
+<span class="nc" id="L222">          javax.swing.JOptionPane.showMessageDialog(dialog, &quot;End time cannot be before start time&quot;,</span>
+              &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L224">          return;</span>
+        }
+
+<span class="nc" id="L227">        String description = descriptionArea.getText().trim();</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">        if (description.isEmpty()) {</span>
+<span class="nc" id="L229">          description = &quot;No description given&quot;;</span>
+        }
+
+<span class="nc" id="L232">        String location = (String) locationCombo.getSelectedItem();</span>
+<span class="nc" id="L233">        String status = (String) statusCombo.getSelectedItem();</span>
+
+<span class="nc" id="L235">        boolean isRepeating = recurringCheck.isSelected();</span>
+<span class="nc" id="L236">        String repeatDays = null;</span>
+<span class="nc" id="L237">        LocalDate repeatEndDate = null;</span>
+
+<span class="nc bnc" id="L239" title="All 2 branches missed.">        if (isRepeating) {</span>
+          // Build days string from checkboxes
+<span class="nc" id="L241">          StringBuilder daysBuilder = new StringBuilder();</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">          if (monCheck.isSelected()) {</span>
+<span class="nc" id="L243">            daysBuilder.append(&quot;M&quot;);</span>
+          }
+<span class="nc bnc" id="L245" title="All 2 branches missed.">          if (tueCheck.isSelected()) {</span>
+<span class="nc" id="L246">            daysBuilder.append(&quot;T&quot;);</span>
+          }
+<span class="nc bnc" id="L248" title="All 2 branches missed.">          if (wedCheck.isSelected()) {</span>
+<span class="nc" id="L249">            daysBuilder.append(&quot;W&quot;);</span>
+          }
+<span class="nc bnc" id="L251" title="All 2 branches missed.">          if (thuCheck.isSelected()) {</span>
+<span class="nc" id="L252">            daysBuilder.append(&quot;R&quot;);</span>
+          }
+<span class="nc bnc" id="L254" title="All 2 branches missed.">          if (friCheck.isSelected()) {</span>
+<span class="nc" id="L255">            daysBuilder.append(&quot;F&quot;);</span>
+          }
+<span class="nc bnc" id="L257" title="All 2 branches missed.">          if (satCheck.isSelected()) {</span>
+<span class="nc" id="L258">            daysBuilder.append(&quot;S&quot;);</span>
+          }
+<span class="nc bnc" id="L260" title="All 2 branches missed.">          if (sunCheck.isSelected()) {</span>
+<span class="nc" id="L261">            daysBuilder.append(&quot;U&quot;);</span>
+          }
+
+<span class="nc" id="L264">          repeatDays = daysBuilder.toString();</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">          if (repeatDays.isEmpty()) {</span>
+<span class="nc" id="L266">            javax.swing.JOptionPane.showMessageDialog(dialog,</span>
+                &quot;Please select at least one day for recurring events&quot;, &quot;Error&quot;,
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L269">            return;</span>
+          }
+
+          // Get end date from spinner
+<span class="nc" id="L273">          java.util.Date endDateValue = (java.util.Date) endDateSpinner.getValue();</span>
+<span class="nc" id="L274">          repeatEndDate = new java.sql.Date(endDateValue.getTime()).toLocalDate();</span>
+        }
+
+<span class="nc bnc" id="L277" title="All 2 branches missed.">        if (onCreate != null) {</span>
+<span class="nc" id="L278">          onCreate.create(subject, startDateTime, endDateTime, description, location, status,</span>
+              isRepeating, repeatDays, repeatEndDate, (result) -&gt; {
+<span class="nc bnc" id="L280" title="All 6 branches missed.">                if (result != null &amp;&amp; (result.contains(&quot;Error&quot;) || result.contains(&quot;Failed&quot;))) {</span>
+<span class="nc" id="L281">                  javax.swing.JOptionPane.showMessageDialog(dialog, result, &quot;Error&quot;,</span>
+                      javax.swing.JOptionPane.ERROR_MESSAGE);
+                } else {
+<span class="nc" id="L284">                  dialog.dispose();</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                  if (onSuccess != null) {</span>
+<span class="nc" id="L286">                    onSuccess.run();</span>
+                  }
+                }
+<span class="nc" id="L289">              });</span>
+        }
+<span class="nc" id="L291">      } catch (Exception ex) {</span>
+<span class="nc" id="L292">        javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Failed to create event: &quot; + ex.getMessage(),</span>
+            &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L294">      }</span>
+<span class="nc" id="L295">    });</span>
+<span class="nc" id="L296">    buttonPanel.add(createButton);</span>
+
+<span class="nc" id="L298">    JButton cancelButton = new JButton(&quot;Cancel&quot;);</span>
+<span class="nc" id="L299">    cancelButton.addActionListener(e -&gt; dialog.dispose());</span>
+<span class="nc" id="L300">    buttonPanel.add(cancelButton);</span>
+
+<span class="nc" id="L302">    JScrollPane scrollPane = new JScrollPane(panel);</span>
+<span class="nc" id="L303">    dialog.add(scrollPane, BorderLayout.CENTER);</span>
+<span class="nc" id="L304">    dialog.add(buttonPanel, BorderLayout.SOUTH);</span>
+<span class="nc" id="L305">    dialog.setLocationRelativeTo(parent);</span>
+<span class="nc" id="L306">    dialog.setVisible(true);</span>
+<span class="nc" id="L307">  }</span>
+
+  /**
+   * Functional interface for getting events for a day.
+   */
+  @FunctionalInterface
+  public interface GetEventsCallback {
+    List&lt;EventInfo&gt; getEventsForDay(LocalDate date);
+  }
+
+  /**
+   * Functional interface for editing events.
+   */
+  @FunctionalInterface
+  public interface EditEventCallback {
+    void edit(String property, String subject, LocalDateTime startDateTime,
+              LocalDateTime endDateTime, String newValue, String scope,
+              java.util.function.Consumer&lt;String&gt; resultHandler);
+  }
+
+  /**
+   * Functional interface for deleting events.
+   */
+  @FunctionalInterface
+  public interface DeleteEventCallback {
+    void delete(String subject, LocalDateTime startDateTime, LocalDateTime endDateTime,
+                String scope, java.util.function.Consumer&lt;String&gt; resultHandler);
+  }
+
+  /**
+   * Shows a dialog for editing or deleting an event.
+   *
+   * @param parent the parent frame
+   * @param getEvents callback to get events for a day
+   * @param selectedDate the currently selected date
+   * @param onEdit callback to handle event editing
+   * @param onDelete callback to handle event deletion
+   * @param onSuccess callback when event is edited/deleted successfully
+   */
+  public static void showEditDialog(JFrame parent, GetEventsCallback getEvents,
+                                    LocalDate selectedDate, EditEventCallback onEdit,
+                                    DeleteEventCallback onDelete, Runnable onSuccess) {
+<span class="nc bnc" id="L349" title="All 2 branches missed.">    if (getEvents == null) {</span>
+<span class="nc" id="L350">      javax.swing.JOptionPane.showMessageDialog(parent, &quot;Features not available&quot;, &quot;Error&quot;,</span>
+          javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L352">      return;</span>
+    }
+
+<span class="nc" id="L355">    List&lt;EventInfo&gt; events = getEvents.getEventsForDay(selectedDate);</span>
+<span class="nc bnc" id="L356" title="All 4 branches missed.">    if (events == null || events.isEmpty()) {</span>
+<span class="nc" id="L357">      javax.swing.JOptionPane.showMessageDialog(parent, &quot;No events on selected date&quot;, &quot;Error&quot;,</span>
+          javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L359">      return;</span>
+    }
+
+    // Show event selection dialog
+<span class="nc" id="L363">    String[] eventStrings = new String[events.size()];</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">    for (int i = 0; i &lt; events.size(); i++) {</span>
+<span class="nc" id="L365">      EventInfo event = events.get(i);</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">      String timeStr = event.isAllDay() ? &quot;All Day&quot;</span>
+<span class="nc" id="L367">          : event.getStartDateTime().toLocalTime().format(TIME_FORMAT);</span>
+<span class="nc" id="L368">      eventStrings[i] = timeStr + &quot; - &quot; + event.getSubject();</span>
+    }
+
+<span class="nc" id="L371">    String selected = (String) javax.swing.JOptionPane.showInputDialog(</span>
+        parent,
+        &quot;Select event to edit or delete:&quot;,
+        &quot;Event Actions&quot;,
+        javax.swing.JOptionPane.QUESTION_MESSAGE,
+        null,
+        eventStrings,
+        eventStrings[0]);
+
+<span class="nc bnc" id="L380" title="All 2 branches missed.">    if (selected == null) {</span>
+<span class="nc" id="L381">      return;</span>
+    }
+
+<span class="nc" id="L384">    int index = -1;</span>
+<span class="nc bnc" id="L385" title="All 2 branches missed.">    for (int i = 0; i &lt; eventStrings.length; i++) {</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">      if (eventStrings[i].equals(selected)) {</span>
+<span class="nc" id="L387">        index = i;</span>
+<span class="nc" id="L388">        break;</span>
+      }
+    }
+
+<span class="nc bnc" id="L392" title="All 2 branches missed.">    if (index == -1) {</span>
+<span class="nc" id="L393">      return;</span>
+    }
+
+<span class="nc" id="L396">    EventInfo selectedEvent = events.get(index);</span>
+<span class="nc" id="L397">    showEventActionDialog(parent, selectedEvent, onEdit, onDelete, onSuccess);</span>
+<span class="nc" id="L398">  }</span>
+
+  /**
+   * Shows a dialog to choose between edit and delete actions.
+   *
+   * @param parent the parent frame
+   * @param event the selected event
+   * @param onEdit callback to handle event editing
+   * @param onDelete callback to handle event deletion
+   * @param onSuccess callback when action is completed successfully
+   */
+  private static void showEventActionDialog(JFrame parent, EventInfo event,
+                                            EditEventCallback onEdit, DeleteEventCallback onDelete,
+                                            Runnable onSuccess) {
+<span class="nc" id="L412">    JDialog dialog = new JDialog(parent, &quot;Event Actions&quot;, true);</span>
+<span class="nc" id="L413">    dialog.setSize(400, 200);</span>
+<span class="nc" id="L414">    dialog.setLayout(new BorderLayout());</span>
+
+<span class="nc" id="L416">    JPanel panel = new JPanel();</span>
+<span class="nc" id="L417">    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L418">    panel.setBorder(new EmptyBorder(20, 20, 20, 20));</span>
+
+<span class="nc" id="L420">    panel.add(new JLabel(&quot;Event: &quot; + event.getSubject()));</span>
+<span class="nc" id="L421">    panel.add(new JLabel(&quot;Date: &quot; + event.getStartDateTime().toLocalDate().toString()));</span>
+
+<span class="nc" id="L423">    JPanel buttonPanel = new JPanel(new FlowLayout());</span>
+<span class="nc" id="L424">    JButton editButton = new JButton(&quot;Edit Event&quot;);</span>
+<span class="nc" id="L425">    editButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L426">      dialog.dispose();</span>
+<span class="nc" id="L427">      showEditEventDetailsDialog(parent, event, onEdit, onSuccess);</span>
+<span class="nc" id="L428">    });</span>
+<span class="nc" id="L429">    buttonPanel.add(editButton);</span>
+
+<span class="nc" id="L431">    JButton deleteButton = new JButton(&quot;Delete Event&quot;);</span>
+<span class="nc" id="L432">    deleteButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L433">      dialog.dispose();</span>
+<span class="nc" id="L434">      showDeleteEventDialog(parent, event, onDelete, onSuccess);</span>
+<span class="nc" id="L435">    });</span>
+<span class="nc" id="L436">    buttonPanel.add(deleteButton);</span>
+
+<span class="nc" id="L438">    JButton cancelButton = new JButton(&quot;Cancel&quot;);</span>
+<span class="nc" id="L439">    cancelButton.addActionListener(e -&gt; dialog.dispose());</span>
+<span class="nc" id="L440">    buttonPanel.add(cancelButton);</span>
+
+<span class="nc" id="L442">    panel.add(buttonPanel);</span>
+<span class="nc" id="L443">    dialog.add(panel);</span>
+<span class="nc" id="L444">    dialog.setLocationRelativeTo(parent);</span>
+<span class="nc" id="L445">    dialog.setVisible(true);</span>
+<span class="nc" id="L446">  }</span>
+
+  /**
+   * Shows a dialog for deleting an event with scope options.
+   *
+   * @param parent the parent frame
+   * @param event the event to delete
+   * @param onDelete callback to handle event deletion
+   * @param onSuccess callback when event is deleted successfully
+   */
+  private static void showDeleteEventDialog(JFrame parent, EventInfo event,
+                                            DeleteEventCallback onDelete, Runnable onSuccess) {
+<span class="nc" id="L458">    JDialog dialog = new JDialog(parent, &quot;Delete Event&quot;, true);</span>
+<span class="nc" id="L459">    dialog.setSize(400, 250);</span>
+<span class="nc" id="L460">    dialog.setLayout(new BorderLayout());</span>
+
+<span class="nc" id="L462">    JPanel panel = new JPanel();</span>
+<span class="nc" id="L463">    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L464">    panel.setBorder(new EmptyBorder(20, 20, 20, 20));</span>
+
+<span class="nc" id="L466">    panel.add(new JLabel(&quot;Event: &quot; + event.getSubject()));</span>
+<span class="nc" id="L467">    panel.add(new JLabel(&quot;Date: &quot; + event.getStartDateTime().toLocalDate().toString()));</span>
+
+<span class="nc" id="L469">    panel.add(new JLabel(&quot;Delete Scope:&quot;));</span>
+    JComboBox&lt;String&gt; scopeCombo;
+<span class="nc bnc" id="L471" title="All 2 branches missed.">    if (event.isSeries()) {</span>
+<span class="nc" id="L472">      scopeCombo = new JComboBox&lt;&gt;(</span>
+          new String[]{&quot;Single Event&quot;, &quot;All Events From This&quot;, &quot;All Events In Series&quot;});
+    } else {
+<span class="nc" id="L475">      scopeCombo = new JComboBox&lt;&gt;(new String[]{&quot;Single Event&quot;});</span>
+    }
+<span class="nc" id="L477">    panel.add(scopeCombo);</span>
+
+<span class="nc" id="L479">    JPanel buttonPanel = new JPanel(new FlowLayout());</span>
+<span class="nc" id="L480">    JButton deleteButton = new JButton(&quot;Delete&quot;);</span>
+<span class="nc" id="L481">    deleteButton.addActionListener(e -&gt; {</span>
+      try {
+<span class="nc" id="L483">        String scope = (String) scopeCombo.getSelectedItem();</span>
+        String scopeString;
+<span class="nc bnc" id="L485" title="All 2 branches missed.">        if (&quot;Single Event&quot;.equals(scope)) {</span>
+<span class="nc" id="L486">          scopeString = &quot;single&quot;;</span>
+<span class="nc bnc" id="L487" title="All 2 branches missed.">        } else if (&quot;All Events From This&quot;.equals(scope)) {</span>
+<span class="nc" id="L488">          scopeString = &quot;from&quot;;</span>
+        } else {
+<span class="nc" id="L490">          scopeString = &quot;series&quot;;</span>
+        }
+
+<span class="nc bnc" id="L493" title="All 2 branches missed.">        if (onDelete != null) {</span>
+<span class="nc" id="L494">          onDelete.delete(event.getSubject(), event.getStartDateTime(), event.getEndDateTime(),</span>
+              scopeString, (result) -&gt; {
+<span class="nc bnc" id="L496" title="All 6 branches missed.">                if (result != null &amp;&amp; (result.contains(&quot;Error&quot;) || result.contains(&quot;Failed&quot;))) {</span>
+<span class="nc" id="L497">                  javax.swing.JOptionPane.showMessageDialog(dialog, result, &quot;Error&quot;,</span>
+                      javax.swing.JOptionPane.ERROR_MESSAGE);
+                } else {
+<span class="nc" id="L500">                  dialog.dispose();</span>
+<span class="nc bnc" id="L501" title="All 2 branches missed.">                  if (onSuccess != null) {</span>
+<span class="nc" id="L502">                    onSuccess.run();</span>
+                  }
+                }
+<span class="nc" id="L505">              });</span>
+        }
+<span class="nc" id="L507">      } catch (Exception ex) {</span>
+<span class="nc" id="L508">        javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Failed to delete event: &quot; + ex.getMessage(),</span>
+            &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L510">      }</span>
+<span class="nc" id="L511">    });</span>
+<span class="nc" id="L512">    buttonPanel.add(deleteButton);</span>
+
+<span class="nc" id="L514">    JButton cancelButton = new JButton(&quot;Cancel&quot;);</span>
+<span class="nc" id="L515">    cancelButton.addActionListener(e -&gt; dialog.dispose());</span>
+<span class="nc" id="L516">    buttonPanel.add(cancelButton);</span>
+
+<span class="nc" id="L518">    panel.add(buttonPanel);</span>
+<span class="nc" id="L519">    dialog.add(panel);</span>
+<span class="nc" id="L520">    dialog.setLocationRelativeTo(parent);</span>
+<span class="nc" id="L521">    dialog.setVisible(true);</span>
+<span class="nc" id="L522">  }</span>
+
+  private static void showEditEventDetailsDialog(JFrame parent, EventInfo event,
+                                                 EditEventCallback onEdit, Runnable onSuccess) {
+<span class="nc" id="L526">    JDialog dialog = new JDialog(parent, &quot;Edit Event&quot;, true);</span>
+<span class="nc" id="L527">    dialog.setSize(500, 500);</span>
+<span class="nc" id="L528">    dialog.setLayout(new BorderLayout());</span>
+
+<span class="nc" id="L530">    JPanel panel = new JPanel();</span>
+<span class="nc" id="L531">    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L532">    panel.setBorder(new EmptyBorder(20, 20, 20, 20));</span>
+
+<span class="nc" id="L534">    panel.add(new JLabel(&quot;Property to Edit:&quot;));</span>
+<span class="nc" id="L535">    JComboBox&lt;String&gt; propertyCombo = new JComboBox&lt;&gt;(</span>
+        new String[]{&quot;subject&quot;, &quot;start&quot;, &quot;end&quot;, &quot;description&quot;, &quot;location&quot;, &quot;status&quot;});
+<span class="nc" id="L537">    panel.add(propertyCombo);</span>
+
+<span class="nc" id="L539">    panel.add(new JLabel(&quot;New Value:&quot;));</span>
+<span class="nc" id="L540">    JTextField valueField = new JTextField(30);</span>
+<span class="nc" id="L541">    panel.add(valueField);</span>
+
+<span class="nc" id="L543">    panel.add(new JLabel(&quot;Edit Scope:&quot;));</span>
+    JComboBox&lt;String&gt; scopeCombo;
+<span class="nc bnc" id="L545" title="All 2 branches missed.">    if (event.isSeries()) {</span>
+<span class="nc" id="L546">      scopeCombo = new JComboBox&lt;&gt;(</span>
+          new String[]{&quot;Single Event&quot;, &quot;All Events From This&quot;, &quot;All Events In Series&quot;});
+    } else {
+<span class="nc" id="L549">      scopeCombo = new JComboBox&lt;&gt;(new String[]{&quot;Single Event&quot;});</span>
+    }
+<span class="nc" id="L551">    panel.add(scopeCombo);</span>
+
+<span class="nc" id="L553">    JPanel buttonPanel = new JPanel(new FlowLayout());</span>
+<span class="nc" id="L554">    JButton saveButton = new JButton(&quot;Save&quot;);</span>
+<span class="nc" id="L555">    saveButton.addActionListener(e -&gt; {</span>
+      try {
+<span class="nc" id="L557">        String newValue = valueField.getText().trim();</span>
+<span class="nc bnc" id="L558" title="All 2 branches missed.">        if (newValue.isEmpty()) {</span>
+<span class="nc" id="L559">          javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Value cannot be empty&quot;,</span>
+              &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L561">          return;</span>
+        }
+
+<span class="nc" id="L564">        String scope = (String) scopeCombo.getSelectedItem();</span>
+        String scopeString;
+<span class="nc bnc" id="L566" title="All 2 branches missed.">        if (&quot;Single Event&quot;.equals(scope)) {</span>
+<span class="nc" id="L567">          scopeString = &quot;single&quot;;</span>
+<span class="nc bnc" id="L568" title="All 2 branches missed.">        } else if (&quot;All Events From This&quot;.equals(scope)) {</span>
+<span class="nc" id="L569">          scopeString = &quot;from&quot;;</span>
+        } else {
+<span class="nc" id="L571">          scopeString = &quot;series&quot;;</span>
+        }
+<span class="nc" id="L573">        String property = (String) propertyCombo.getSelectedItem();</span>
+<span class="nc bnc" id="L574" title="All 2 branches missed.">        if (onEdit != null) {</span>
+<span class="nc" id="L575">          onEdit.edit(property, event.getSubject(), event.getStartDateTime(),</span>
+<span class="nc" id="L576">              event.getEndDateTime(), newValue, scopeString, (result) -&gt; {</span>
+<span class="nc bnc" id="L577" title="All 6 branches missed.">                if (result != null &amp;&amp; (result.contains(&quot;Error&quot;) || result.contains(&quot;Failed&quot;))) {</span>
+<span class="nc" id="L578">                  javax.swing.JOptionPane.showMessageDialog(dialog, result, &quot;Error&quot;,</span>
+                      javax.swing.JOptionPane.ERROR_MESSAGE);
+                } else {
+<span class="nc" id="L581">                  dialog.dispose();</span>
+<span class="nc bnc" id="L582" title="All 2 branches missed.">                  if (onSuccess != null) {</span>
+<span class="nc" id="L583">                    onSuccess.run();</span>
+                  }
+                }
+<span class="nc" id="L586">              });</span>
+        }
+<span class="nc" id="L588">      } catch (Exception ex) {</span>
+<span class="nc" id="L589">        javax.swing.JOptionPane.showMessageDialog(dialog, &quot;Failed to edit event: &quot; + ex.getMessage(),</span>
+            &quot;Error&quot;, javax.swing.JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L591">      }</span>
+<span class="nc" id="L592">    });</span>
+<span class="nc" id="L593">    buttonPanel.add(saveButton);</span>
+
+<span class="nc" id="L595">    JButton cancelButton = new JButton(&quot;Cancel&quot;);</span>
+<span class="nc" id="L596">    cancelButton.addActionListener(e -&gt; dialog.dispose());</span>
+<span class="nc" id="L597">    buttonPanel.add(cancelButton);</span>
+
+<span class="nc" id="L599">    panel.add(buttonPanel);</span>
+<span class="nc" id="L600">    dialog.add(panel);</span>
+<span class="nc" id="L601">    dialog.setLocationRelativeTo(parent);</span>
+<span class="nc" id="L602">    dialog.setVisible(true);</span>
+<span class="nc" id="L603">  }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

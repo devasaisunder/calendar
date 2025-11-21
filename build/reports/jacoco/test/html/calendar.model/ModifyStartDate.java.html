@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ModifyStartDate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.model</a> &gt; <span class="el_source">ModifyStartDate.java</span></div><h1>ModifyStartDate.java</h1><pre class="source lang-java linenums">package calendar.model;
+
+import calendar.model.interfaces.CalendarEditable;
+import calendar.model.interfaces.EventReadOnly;
+import calendar.model.interfaces.ModifyEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * Implements the ModifyEvent interface to update the start date time of an event.
+ * When the date time changes we also check if is an all day event and.
+ * update the field accordingly.
+ */
+<span class="fc" id="L14">public class ModifyStartDate implements ModifyEvent {</span>
+  @Override
+  public EventReadOnly edit(CalendarEditable calendar, EventReadOnly event, String newValue) {
+
+<span class="fc" id="L18">    String regex = &quot;^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$&quot;;</span>
+
+<span class="fc bfc" id="L20" title="All 2 branches covered.">    if (!newValue.matches(&quot;^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$&quot;)) {</span>
+<span class="fc" id="L21">      throw new IllegalArgumentException(&quot;Invalid date-time format: &quot; + newValue);</span>
+    }
+
+<span class="fc" id="L24">    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd'T'HH:mm&quot;);</span>
+
+<span class="fc" id="L26">    LocalDateTime eightAm = LocalDateTime.parse(newValue, formatter).toLocalDate().atTime(8, 0);</span>
+
+    LocalDateTime
+<span class="fc" id="L29">        fivePm = LocalDateTime.parse(newValue, formatter).toLocalDate().atTime(17, 0);</span>
+
+
+<span class="fc" id="L32">    LocalDateTime newStartDateTime = LocalDateTime.parse(newValue, formatter);</span>
+
+
+    EventReadOnly updatedEvent;
+<span class="fc bfc" id="L36" title="All 4 branches covered.">    boolean isAllDay = newStartDateTime.equals(eightAm) &amp;&amp; event.getEndDateTime().equals(fivePm);</span>
+
+<span class="fc" id="L38">    Event.EventBuilder builder = new Event.EventBuilder(event)</span>
+<span class="fc" id="L39">        .setStartDateTime(newStartDateTime);</span>
+
+<span class="fc" id="L41">    builder.setAllDay(isAllDay);</span>
+<span class="fc" id="L42">    updatedEvent = builder.build();</span>
+<span class="fc" id="L43">    return updatedEvent;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

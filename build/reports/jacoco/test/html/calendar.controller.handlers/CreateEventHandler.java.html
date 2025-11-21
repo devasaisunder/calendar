@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateEventHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller.handlers</a> &gt; <span class="el_source">CreateEventHandler.java</span></div><h1>CreateEventHandler.java</h1><pre class="source lang-java linenums">package calendar.controller.handlers;
+
+import calendar.controller.commanddata.CreateCommandData;
+import calendar.model.Event;
+import calendar.model.datatypes.TypeOfEvent;
+import calendar.model.interfaces.CalendarEditable;
+import calendar.model.interfaces.EventReadOnly;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+
+/**
+ * Handler class that performs the logic for creating events.
+ * Takes parsed command data and interacts with the model.
+ */
+public class CreateEventHandler {
+
+  private final CalendarEditable calendarModel;
+  private final LocalTime allDayStart;
+  private final LocalTime allDayEnd;
+
+  /**
+   * Constructor for CreateEventHandler.
+   *
+   * @param calendarModel the calendar model to interact with
+   */
+<span class="fc" id="L32">  public CreateEventHandler(CalendarEditable calendarModel) {</span>
+<span class="fc" id="L33">    this.calendarModel = Objects.requireNonNull(calendarModel);</span>
+<span class="fc" id="L34">    this.allDayStart = LocalTime.of(8, 0);</span>
+<span class="fc" id="L35">    this.allDayEnd = LocalTime.of(17, 0);</span>
+<span class="fc" id="L36">  }</span>
+
+  /**
+   * Executes the create event logic based on the parsed command data.
+   *
+   * @param data the parsed command data
+   * @return the result string
+   */
+  public String handle(CreateCommandData data) {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">    if (data.isRepeating()) {</span>
+<span class="fc" id="L46">      return handleRepetition(data);</span>
+    } else {
+<span class="fc" id="L48">      return handleSingleEventCreation(data);</span>
+    }
+  }
+
+  private String handleSingleEventCreation(CreateCommandData data) {
+<span class="fc" id="L53">    LocalDateTime startDateTime = data.getStartDateTime();</span>
+<span class="fc" id="L54">    LocalDateTime endDateTime = data.getEndDateTime();</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">    if (endDateTime.isBefore(startDateTime)) {</span>
+<span class="fc" id="L57">      throw new IllegalArgumentException(&quot;End is before start&quot;);</span>
+    }
+<span class="fc bfc" id="L59" title="All 2 branches covered.">    if (isSingleDayEvent(startDateTime, endDateTime)) {</span>
+<span class="fc" id="L60">      return createAndAddEvent(data.getSubject(), startDateTime, endDateTime);</span>
+    }
+
+<span class="fc" id="L63">    return createMultiDayEvents(data.getSubject(), startDateTime, endDateTime);</span>
+  }
+
+  private boolean isSingleDayEvent(LocalDateTime start, LocalDateTime end) {
+<span class="fc" id="L67">    return start.toLocalDate().equals(end.toLocalDate());</span>
+  }
+
+  private String createAndAddEvent(String subject,
+                                   LocalDateTime start, LocalDateTime end) {
+<span class="fc" id="L72">    boolean allDay = isAllDay(start, end);</span>
+<span class="fc" id="L73">    EventReadOnly event = new Event.EventBuilder(subject, start)</span>
+<span class="fc" id="L74">        .setEndDateTime(end)</span>
+<span class="fc" id="L75">        .setAllDay(allDay)</span>
+<span class="fc" id="L76">        .build();</span>
+<span class="fc" id="L77">    return formatEventResult(calendarModel.addEvent(event));</span>
+  }
+
+  private String createMultiDayEvents(String subject,
+                                      LocalDateTime start, LocalDateTime end) {
+<span class="fc" id="L82">    StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L83">    LocalDate currentDate = start.toLocalDate();</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">    while (!currentDate.isAfter(end.toLocalDate())) {</span>
+<span class="fc" id="L86">      LocalDateTime dayStart = getDayStart(currentDate, start);</span>
+<span class="fc" id="L87">      LocalDateTime dayEnd = getDayEnd(currentDate, end);</span>
+
+<span class="fc" id="L89">      result.append(createAndAddEvent(subject, dayStart, dayEnd))</span>
+<span class="fc" id="L90">          .append(System.lineSeparator());</span>
+<span class="fc" id="L91">      currentDate = currentDate.plusDays(1);</span>
+<span class="fc" id="L92">    }</span>
+
+<span class="fc" id="L94">    return result.toString();</span>
+  }
+
+  private LocalDateTime getDayStart(LocalDate date, LocalDateTime start) {
+<span class="fc bfc" id="L98" title="All 2 branches covered.">    if (date.equals(start.toLocalDate())) {</span>
+<span class="fc" id="L99">      return start;</span>
+    }
+<span class="fc" id="L101">    return LocalDateTime.of(date, LocalTime.MIDNIGHT);</span>
+  }
+
+  private LocalDateTime getDayEnd(LocalDate date, LocalDateTime end) {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">    if (date.equals(end.toLocalDate())) {</span>
+<span class="fc" id="L106">      return end;</span>
+    }
+<span class="fc" id="L108">    return LocalDateTime.of(date, LocalTime.of(23, 59));</span>
+  }
+
+  private String formatEventResult(EventReadOnly event) {
+<span class="fc" id="L112">    return &quot;Created Event: &quot; + System.lineSeparator() + event.toString();</span>
+  }
+
+  private String handleRepetition(CreateCommandData data) {
+<span class="fc" id="L116">    String repeatType = data.getRepeatType();</span>
+<span class="fc" id="L117">    String repeatValue = data.getRepeatValue();</span>
+
+<span class="fc bfc" id="L119" title="All 3 branches covered.">    switch (repeatType) {</span>
+      case &quot;for&quot;:
+<span class="fc" id="L121">        int n = Integer.parseInt(repeatValue);</span>
+<span class="fc" id="L122">        return handleTimesRepetitions(data, n);</span>
+      case &quot;until&quot;:
+<span class="fc" id="L124">        LocalDateTime repeatUntil = LocalDateTime.parse(repeatValue + &quot;T23:59&quot;,</span>
+<span class="fc" id="L125">            java.time.format.DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd'T'HH:mm&quot;));</span>
+<span class="fc" id="L126">        return handleRepetitionsUntilDate(data, repeatUntil);</span>
+      default:
+<span class="fc" id="L128">        throw new IllegalArgumentException(&quot;Invalid repetition command: &quot; + repeatType);</span>
+    }
+  }
+
+  private String handleRepetitionsUntilDate(CreateCommandData data,
+                                            LocalDateTime repeatUntil) {
+<span class="fc" id="L134">    LocalDateTime startDateTime = data.getStartDateTime();</span>
+<span class="fc" id="L135">    LocalDateTime endDateTime = data.getEndDateTime();</span>
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">    if (repeatUntil.isBefore(startDateTime)) {</span>
+<span class="fc" id="L138">      throw new IllegalArgumentException(&quot;Repeat until date cannot be before start date&quot;);</span>
+    }
+
+<span class="fc" id="L141">    List&lt;DayOfWeek&gt; repeatDays = populateWeekDays(data.getDaysString());</span>
+<span class="fc" id="L142">    UUID uuid = UUID.randomUUID();</span>
+<span class="fc" id="L143">    List&lt;EventReadOnly&gt; planned = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L144">    boolean allDay = isAllDay(startDateTime, endDateTime);</span>
+<span class="fc" id="L145">    LocalDate startDate = startDateTime.toLocalDate();</span>
+<span class="fc" id="L146">    LocalDate endDate = repeatUntil.toLocalDate();</span>
+<span class="fc" id="L147">    LocalDate currentDate = startDate;</span>
+
+<span class="fc bfc" id="L149" title="All 2 branches covered.">    while (!currentDate.isAfter(endDate)) {</span>
+<span class="fc" id="L150">      DayOfWeek currentDay = currentDate.getDayOfWeek();</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">      if (repeatDays.contains(currentDay)) {</span>
+<span class="fc" id="L152">        LocalDateTime currentStartDateTime = LocalDateTime.of(currentDate,</span>
+<span class="fc" id="L153">            startDateTime.toLocalTime());</span>
+<span class="fc" id="L154">        LocalDateTime currentEndDateTime = LocalDateTime.of(currentDate,</span>
+<span class="fc" id="L155">            endDateTime.toLocalTime());</span>
+<span class="fc" id="L156">        EventReadOnly newEvent = buildRepeatingEvent(data.getSubject(), currentStartDateTime,</span>
+            currentEndDateTime, uuid, allDay);
+<span class="fc" id="L158">        checkConflict(newEvent);</span>
+<span class="fc" id="L159">        planned.add(newEvent);</span>
+      }
+<span class="fc" id="L161">      currentDate = currentDate.plusDays(1);</span>
+<span class="fc" id="L162">    }</span>
+
+<span class="fc" id="L164">    return buildSeriesOutput(planned);</span>
+  }
+
+  private String handleTimesRepetitions(CreateCommandData data, int n) {
+<span class="fc" id="L168">    LocalDateTime startDateTime = data.getStartDateTime();</span>
+<span class="fc" id="L169">    LocalDateTime endDateTime = data.getEndDateTime();</span>
+
+<span class="fc" id="L171">    UUID uuid = UUID.randomUUID();</span>
+<span class="fc" id="L172">    List&lt;DayOfWeek&gt; repeatDays = populateWeekDays(data.getDaysString());</span>
+<span class="fc" id="L173">    List&lt;EventReadOnly&gt; planned = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L175">    LocalDateTime currentStart = startDateTime;</span>
+<span class="fc" id="L176">    LocalDateTime currentEnd = endDateTime;</span>
+<span class="fc" id="L177">    boolean allDay = isAllDay(startDateTime, endDateTime);</span>
+
+<span class="fc bfc" id="L179" title="All 4 branches covered.">    if (n &gt; 0 &amp;&amp; repeatDays.contains(startDateTime.getDayOfWeek())) {</span>
+<span class="fc" id="L180">      EventReadOnly startEvent =</span>
+<span class="fc" id="L181">          buildRepeatingEvent(data.getSubject(), startDateTime, endDateTime, uuid, allDay);</span>
+<span class="fc" id="L182">      checkConflict(startEvent);</span>
+<span class="fc" id="L183">      planned.add(startEvent);</span>
+<span class="fc" id="L184">      n--;</span>
+    }
+
+<span class="fc bfc" id="L187" title="All 2 branches covered.">    while (n &gt; 0) {</span>
+<span class="fc" id="L188">      currentStart = currentStart.plusDays(1);</span>
+<span class="fc" id="L189">      currentEnd = currentEnd.plusDays(1);</span>
+
+<span class="fc bfc" id="L191" title="All 2 branches covered.">      if (repeatDays.contains(currentStart.getDayOfWeek())) {</span>
+<span class="fc" id="L192">        EventReadOnly nextEvent =</span>
+<span class="fc" id="L193">            buildRepeatingEvent(data.getSubject(), currentStart, currentEnd, uuid, allDay);</span>
+<span class="fc" id="L194">        checkConflict(nextEvent);</span>
+<span class="fc" id="L195">        planned.add(nextEvent);</span>
+<span class="fc" id="L196">        n--;</span>
+<span class="fc" id="L197">      }</span>
+    }
+<span class="fc bfc" id="L199" title="All 2 branches covered.">    if (planned.isEmpty()) {</span>
+<span class="fc" id="L200">      throw new IllegalArgumentException(&quot;Invalid command.&quot;);</span>
+    }
+<span class="fc" id="L202">    return buildSeriesOutput(planned);</span>
+  }
+
+  private void checkConflict(EventReadOnly newEvent) {
+<span class="fc" id="L206">    calendarModel.forEachEvent(event -&gt; {</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">      if (newEvent.equals(event)) {</span>
+<span class="fc" id="L208">        throw new IllegalArgumentException(&quot;Cannot create series — conflict with existing event&quot;);</span>
+      }
+<span class="fc" id="L210">    });</span>
+<span class="fc" id="L211">  }</span>
+
+  private EventReadOnly buildRepeatingEvent(String subject, LocalDateTime start, LocalDateTime end,
+                                            UUID seriesId, boolean isAllDay) {
+<span class="fc" id="L215">    return new Event.EventBuilder(subject, start)</span>
+<span class="fc" id="L216">        .setEndDateTime(end)</span>
+<span class="fc" id="L217">        .setEventType(TypeOfEvent.SERIES)</span>
+<span class="fc" id="L218">        .setEventId(seriesId)</span>
+<span class="fc" id="L219">        .setAllDay(isAllDay)</span>
+<span class="fc" id="L220">        .build();</span>
+  }
+
+  private boolean isAllDay(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">    return startDateTime.toLocalDate().equals(endDateTime.toLocalDate())</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        &amp;&amp; startDateTime.toLocalTime().equals(allDayStart)</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        &amp;&amp; endDateTime.toLocalTime().equals(allDayEnd);</span>
+  }
+
+  private String buildSeriesOutput(List&lt;EventReadOnly&gt; plannedEvents) {
+<span class="fc" id="L230">    StringBuilder output = new StringBuilder(&quot;Created a Series Event: &quot; + System.lineSeparator());</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">    for (EventReadOnly e : plannedEvents) {</span>
+<span class="fc" id="L232">      output.append(calendarModel.addEvent(e).toString()).append(System.lineSeparator());</span>
+<span class="fc" id="L233">    }</span>
+
+<span class="fc" id="L235">    return output.toString();</span>
+  }
+
+  private List&lt;DayOfWeek&gt; populateWeekDays(String daysString) {
+<span class="fc" id="L239">    List&lt;DayOfWeek&gt; days = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">    for (char c : daysString.toCharArray()) {</span>
+<span class="fc bfc" id="L241" title="All 8 branches covered.">      switch (c) {</span>
+        case 'M':
+<span class="fc" id="L243">          days.add(DayOfWeek.MONDAY);</span>
+<span class="fc" id="L244">          break;</span>
+        case 'T':
+<span class="fc" id="L246">          days.add(DayOfWeek.TUESDAY);</span>
+<span class="fc" id="L247">          break;</span>
+        case 'W':
+<span class="fc" id="L249">          days.add(DayOfWeek.WEDNESDAY);</span>
+<span class="fc" id="L250">          break;</span>
+        case 'R':
+<span class="fc" id="L252">          days.add(DayOfWeek.THURSDAY);</span>
+<span class="fc" id="L253">          break;</span>
+        case 'F':
+<span class="fc" id="L255">          days.add(DayOfWeek.FRIDAY);</span>
+<span class="fc" id="L256">          break;</span>
+        case 'S':
+<span class="fc" id="L258">          days.add(DayOfWeek.SATURDAY);</span>
+<span class="fc" id="L259">          break;</span>
+        case 'U':
+<span class="fc" id="L261">          days.add(DayOfWeek.SUNDAY);</span>
+<span class="fc" id="L262">          break;</span>
+        default:
+<span class="fc" id="L264">          throw new IllegalArgumentException(&quot;Invalid day of week: &quot; + c);</span>
+      }
+    }
+<span class="fc" id="L267">    return days;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

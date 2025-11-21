@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalendarRunner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">CalendarRunner.java</span></div><h1>CalendarRunner.java</h1><pre class="source lang-java linenums">//import calendar.controller.AdvanceCalendarController;
+//import calendar.controller.CalendarController;
+//import calendar.model.CalendarContainerImpl;
+//import calendar.model.CalendarImpl;
+//import calendar.model.interfaces.CalendarContainer;
+//import calendar.model.interfaces.CalendarEditable;
+//import calendar.view.CalendarGuiView;
+//import calendar.view.CalendarGuiViewImpl;
+//import calendar.view.CalendarView;
+//import calendar.view.CalendarViewImpl;
+//import java.awt.EventQueue;
+//
+///**
+// * Program runner.
+// */
+//public class CalendarRunner {
+//  private static final CalendarContainer container = new CalendarContainerImpl();
+//  private static final CalendarEditable calendar = new CalendarImpl();
+//
+//  /**
+//   * Main method for the Calendar project.
+//   * Initializes the input source, sets up the controller, and runs the application.
+//   * Supports three modes:
+//   * - No arguments: GUI mode
+//   * - --mode interactive: Interactive text mode
+//   * - --mode headless filename: Headless script mode
+//   *
+//   * @param args Command-line arguments (used to determine interactive, headless, or GUI mode)
+//   */
+//  public static void main(String[] args) {
+//    // GUI mode: no arguments
+//    if (args.length == 0) {
+//      EventQueue.invokeLater(() -&gt; {
+//        try {
+//          // Initialize default calendar before creating view
+//          // This ensures the container has a default calendar set up
+//          try {
+//            if (container.getCalendars().isEmpty()) {
+//              calendar.model.AdvancedCalendarImpl defaultCal =
+//                  new calendar.model.AdvancedCalendarImpl
+//                      .AdvancedCalendarBuilder(&quot;default&quot;, java.time.ZoneId.systemDefault())
+//                      .setCalendar(calendar)
+//                      .build();
+//              container.addCalendar(&quot;default&quot;, defaultCal);
+//              container.setActiveCalendar(&quot;default&quot;);
+//            }
+//          } catch (Exception e) {
+//            // Calendar might already exist, ignore
+//          }
+//
+//          CalendarGuiView guiView = new CalendarGuiViewImpl();
+//          // Create GUI controller that handles all logic
+//          calendar.controller.CalendarGuiController guiController =
+//              new calendar.controller.CalendarGuiController(container, guiView);
+//          // Start the application
+//          guiController.go();
+//        } catch (Exception e) {
+//          e.printStackTrace();
+//        }
+//      });
+//      return;
+//    }
+//
+//    // CLI modes: interactive or headless
+//    try {
+//      Readable input = InputFactory.getInput(args);
+//      CalendarView view = new CalendarViewImpl(System.out);
+//      CalendarController controller = new AdvanceCalendarController(container, input, view);
+//      controller.run();
+//    } catch (IllegalArgumentException e) {
+//      System.err.println(&quot;Error: &quot; + e.getMessage());
+//      System.err.println(&quot;Usage:&quot;);
+//      System.err.println(&quot;  java -jar JARNAME.jar                    # GUI mode&quot;);
+//      System.err.println(&quot;  java -jar JARNAME.jar --mode interactive # Interactive text mode&quot;);
+//      System.err.println(&quot;  java -jar JARNAME.jar --mode headless &lt;filename&gt; # Headless mode&quot;);
+//      System.exit(1);
+//    }
+//  }
+//}
+
+
+import calendar.controller.AdvanceCalendarController;
+import calendar.controller.CalendarController;
+import calendar.model.CalendarContainerImpl;
+import calendar.model.CalendarImpl;
+import calendar.model.interfaces.CalendarContainer;
+import calendar.model.interfaces.CalendarEditable;
+import calendar.view.CalendarGuiView;
+import calendar.view.CalendarGuiViewImpl;
+import calendar.view.CalendarView;
+import calendar.view.CalendarViewImpl;
+
+/**
+ * Program runner.
+ */
+<span class="nc" id="L96">public class CalendarRunner {</span>
+<span class="fc" id="L97">  private static final CalendarContainer container = new CalendarContainerImpl();</span>
+<span class="fc" id="L98">  private static final CalendarEditable calendar = new CalendarImpl();</span>
+
+  /**
+   * Main method for the Calendar project.
+   * Initializes the input source, sets up the controller, and runs the application.
+   * Supports three modes:
+   * - No arguments: GUI mode
+   * - --mode interactive: Interactive text mode
+   * - --mode headless filename: Headless script mode
+   *
+   * @param args Command-line arguments
+   */
+  public static void main(String[] args) {
+    // GUI mode: no arguments
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">    if (args.length == 0) {</span>
+      try {
+        // Initialize default calendar before creating view
+        try {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">          if (container.getCalendars().isEmpty()) {</span>
+<span class="nc" id="L117">            calendar.model.AdvancedCalendarImpl defaultCal =</span>
+                new calendar.model.AdvancedCalendarImpl
+<span class="nc" id="L119">                    .AdvancedCalendarBuilder(&quot;default&quot;, java.time.ZoneId.systemDefault())</span>
+<span class="nc" id="L120">                    .setCalendar(calendar)</span>
+<span class="nc" id="L121">                    .build();</span>
+<span class="nc" id="L122">            container.addCalendar(&quot;default&quot;, defaultCal);</span>
+<span class="nc" id="L123">            container.setActiveCalendar(&quot;default&quot;);</span>
+          }
+<span class="nc" id="L125">        } catch (Exception e) {</span>
+          // Calendar might already exist, ignore
+<span class="nc" id="L127">        }</span>
+
+<span class="nc" id="L129">        CalendarGuiView guiView = new CalendarGuiViewImpl();</span>
+<span class="nc" id="L130">        calendar.controller.CalendarGuiController guiController =</span>
+            new calendar.controller.CalendarGuiController(container, guiView);
+
+        // Start application directly (no EventQueue)
+<span class="nc" id="L134">        guiController.go();</span>
+
+<span class="nc" id="L136">      } catch (Exception e) {</span>
+<span class="nc" id="L137">        e.printStackTrace();</span>
+<span class="nc" id="L138">      }</span>
+<span class="nc" id="L139">      return;</span>
+    }
+
+    // CLI modes: interactive or headless
+    try {
+<span class="fc" id="L144">      Readable input = InputFactory.getInput(args);</span>
+<span class="fc" id="L145">      CalendarView view = new CalendarViewImpl(System.out);</span>
+<span class="fc" id="L146">      CalendarController controller = new AdvanceCalendarController(container, input, view);</span>
+<span class="fc" id="L147">      controller.run();</span>
+<span class="nc" id="L148">    } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L149">      System.err.println(&quot;Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L150">      System.err.println(&quot;Usage:&quot;);</span>
+<span class="nc" id="L151">      System.err.println(&quot;  java -jar JARNAME.jar                    # GUI mode&quot;);</span>
+<span class="nc" id="L152">      System.err.println(&quot;  java -jar JARNAME.jar --mode interactive # Interactive text mode&quot;);</span>
+<span class="nc" id="L153">      System.err.println(&quot;  java -jar JARNAME.jar --mode headless &lt;filename&gt; # Headless mode&quot;);</span>
+<span class="nc" id="L154">      System.exit(1);</span>
+<span class="fc" id="L155">    }</span>
+<span class="fc" id="L156">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

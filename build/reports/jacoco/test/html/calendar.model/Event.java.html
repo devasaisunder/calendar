@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Event.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.model</a> &gt; <span class="el_source">Event.java</span></div><h1>Event.java</h1><pre class="source lang-java linenums">package calendar.model;
+
+import calendar.model.datatypes.EventStatus;
+import calendar.model.datatypes.Location;
+import calendar.model.datatypes.TypeOfEvent;
+import calendar.model.interfaces.EventReadOnly;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+import java.util.UUID;
+
+/**
+ * Represents a single event in the calendar.
+ */
+
+public class Event implements EventReadOnly {
+  private final String subject;
+  private final LocalDateTime startDateTime;
+  private final LocalDateTime endDateTime;
+  private final String description;
+  private final Location location;
+  private final EventStatus eventStatus;
+  private final TypeOfEvent eventType;
+  private final UUID eventId;
+  private final boolean allDay;
+
+
+  /**
+   * Private constructs an Event with the given parameters.
+   *
+   * @param subject       the title of the event (String)
+   * @param startDateTime starting date and time of the event (LocalDateTime - yyyy-MM-dd'T'HH:mm).
+   * @param endDateTime   end date and time of the event (LocalDateTime - yyyy-MM-dd'T'HH:mm).
+   * @param description   the contents or the description of the event. (String)
+   * @param location      the location of the event,
+   *                      represented using Enum location(PHYSICAL, ONLINE, UNKNOWN)
+   * @param status        the status of the event,
+   *                      represented using Enum Event status (PUBLIC, PRIVATE, UNKNOWN)
+   * @param type          the type of event,
+   *                      represented using Enum TypeOfEvent (SERIES, SINGLE)
+   * @param eventId       UUID - unique id for each event (series events will have same id)
+   * @param allDay        Represents if it is an all day event, true represents an all event.
+   */
+  private Event(String subject, LocalDateTime startDateTime, LocalDateTime endDateTime,
+                String description, Location location, EventStatus status, TypeOfEvent type,
+<span class="fc" id="L46">                UUID eventId, boolean allDay) {</span>
+
+<span class="fc bfc" id="L48" title="All 2 branches covered.">    if (endDateTime.isBefore(startDateTime)) {</span>
+<span class="fc" id="L49">      throw new IllegalArgumentException(&quot;endDateTime cannot be before startDateTime&quot;);</span>
+    }
+
+<span class="fc" id="L52">    this.subject = subject;</span>
+<span class="fc" id="L53">    this.startDateTime = startDateTime;</span>
+<span class="fc" id="L54">    this.description = description;</span>
+<span class="fc" id="L55">    this.endDateTime = endDateTime;</span>
+<span class="fc" id="L56">    this.location = location;</span>
+<span class="fc" id="L57">    this.eventStatus = status;</span>
+<span class="fc" id="L58">    this.eventType = type;</span>
+<span class="fc" id="L59">    this.eventId = eventId;</span>
+<span class="fc" id="L60">    this.allDay = allDay;</span>
+<span class="fc" id="L61">  }</span>
+
+  /**
+   * Compares this event to another object for equality.
+   * Two events are considered equal if they share the same subject.
+   * start date/time, and end date/time.
+   *
+   * @param o the reference object with which to compare.
+   * @return true if they are equal else false.
+   */
+
+  @Override
+  public boolean equals(Object o) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">    if (this == o) {</span>
+<span class="fc" id="L75">      return true;</span>
+    }
+<span class="fc bfc" id="L77" title="All 2 branches covered.">    if (!(o instanceof Event)) {</span>
+<span class="fc" id="L78">      return false;</span>
+    }
+<span class="fc" id="L80">    Event event = (Event) o;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">    return subject.equals(event.subject)</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        &amp;&amp; startDateTime.equals(event.startDateTime)</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        &amp;&amp; endDateTime.equals(event.endDateTime);</span>
+  }
+
+  /**
+   * Returns the hash code value for this event.
+   * The hash code is based on the subject, start date/time, and end date/time.
+   *
+   * @return the hashcode value of the event.
+   */
+
+  @Override
+  public int hashCode() {
+<span class="fc" id="L95">    return Objects.hash(subject, startDateTime, endDateTime);</span>
+  }
+
+  /**
+   * Returns a string representation of the event.
+   *
+   * @return a formatted string containing event details.
+   */
+
+  @Override
+  public String toString() {
+<span class="fc" id="L106">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L107">    sb.append(&quot;Subject: &quot;).append(subject).append(&quot;, &quot;);</span>
+<span class="fc" id="L108">    sb.append(&quot;Start: &quot;).append(startDateTime).append(&quot;, &quot;);</span>
+<span class="fc" id="L109">    sb.append(&quot;End: &quot;).append(endDateTime).append(&quot;, &quot;);</span>
+<span class="fc" id="L110">    sb.append(&quot;Description: &quot;).append(description).append(&quot;, &quot;);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">    if (location != Location.UNKNOWN) {</span>
+<span class="fc" id="L112">      sb.append(&quot;Location: &quot;).append(location).append(&quot;, &quot;);</span>
+    }
+<span class="fc bfc" id="L114" title="All 2 branches covered.">    if (eventStatus != EventStatus.UNKNOWN) {</span>
+<span class="fc" id="L115">      sb.append(&quot;Status: &quot;).append(eventStatus).append(&quot;, &quot;);</span>
+    }
+<span class="fc" id="L117">    sb.append(&quot;Type: &quot;).append(eventType).append(&quot;, &quot;);</span>
+<span class="fc" id="L118">    sb.append(&quot;AllDayEvent: &quot;).append(allDay);</span>
+    //    sb.append(&quot;ID: &quot;).append(eventId);
+<span class="fc" id="L120">    return sb.toString();</span>
+  }
+
+  @Override
+  public String getSubject() {
+<span class="fc" id="L125">    return this.subject;</span>
+  }
+
+  @Override
+  public LocalDateTime getStartDateTime() {
+<span class="fc" id="L130">    return this.startDateTime;</span>
+  }
+
+  @Override
+  public LocalDateTime getEndDateTime() {
+<span class="fc" id="L135">    return this.endDateTime;</span>
+  }
+
+  @Override
+  public String getDescription() {
+<span class="fc" id="L140">    return this.description;</span>
+  }
+
+  @Override
+  public Location getLocation() {
+<span class="fc" id="L145">    return this.location;</span>
+  }
+
+  @Override
+  public EventStatus getEventStatus() {
+<span class="fc" id="L150">    return this.eventStatus;</span>
+  }
+
+  @Override
+  public TypeOfEvent getEventType() {
+<span class="fc" id="L155">    return this.eventType;</span>
+  }
+
+  @Override
+  public UUID getId() {
+<span class="fc" id="L160">    return this.eventId;</span>
+  }
+
+  @Override
+  public boolean isAllDay() {
+<span class="fc" id="L165">    return this.allDay;</span>
+  }
+
+  /**
+   * A builder class used to build and create a Event class.
+   * It follows the builder patterns to simplify creation of Event.
+   * Helps in chaining and setting the values.
+   */
+
+  public static class EventBuilder {
+<span class="fc" id="L175">    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd'T'HH:mm&quot;);</span>
+    private String subject;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
+    private String description;
+    private Location location;
+    private EventStatus eventStatus;
+    private TypeOfEvent eventType;
+    private UUID eventId;
+    private boolean allDay;
+
+    /**
+     * We first initialize a event builder with.
+     * mandatory fields subject and StartDateTime from the user.
+     */
+<span class="fc" id="L190">    public EventBuilder(String subject, LocalDateTime startDateTime) {</span>
+<span class="fc bfc" id="L191" title="All 4 branches covered.">      if (subject == null || startDateTime == null) {</span>
+<span class="fc" id="L192">        throw new IllegalArgumentException(&quot;subject and startDateTime cannot be null&quot;);</span>
+      }
+
+<span class="fc" id="L195">      this.subject = subject;</span>
+<span class="fc" id="L196">      this.startDateTime = startDateTime;</span>
+<span class="fc" id="L197">      this.endDateTime = startDateTime.plusHours(1);</span>
+<span class="fc" id="L198">      this.description = &quot;No description given&quot;;</span>
+<span class="fc" id="L199">      this.location = Location.UNKNOWN;</span>
+<span class="fc" id="L200">      this.eventStatus = EventStatus.UNKNOWN;</span>
+<span class="fc" id="L201">      this.eventType = TypeOfEvent.SINGLE;</span>
+<span class="fc" id="L202">      this.eventId = UUID.randomUUID();</span>
+<span class="fc" id="L203">      this.allDay = false;</span>
+<span class="fc" id="L204">    }</span>
+
+    /**
+     * Creates a new EventBuilder initialized with the values of an existing event.
+     *
+     * @param event the event whose values will be copied into the builder
+     */
+<span class="fc" id="L211">    public EventBuilder(EventReadOnly event) {</span>
+<span class="fc" id="L212">      this.subject = event.getSubject();</span>
+<span class="fc" id="L213">      this.startDateTime = event.getStartDateTime();</span>
+<span class="fc" id="L214">      this.endDateTime = event.getEndDateTime();</span>
+<span class="fc" id="L215">      this.description = event.getDescription();</span>
+<span class="fc" id="L216">      this.location = event.getLocation();</span>
+<span class="fc" id="L217">      this.eventStatus = event.getEventStatus();</span>
+<span class="fc" id="L218">      this.eventType = event.getEventType();</span>
+<span class="fc" id="L219">      this.eventId = event.getId();</span>
+<span class="fc" id="L220">      this.allDay = event.isAllDay();</span>
+<span class="fc" id="L221">    }</span>
+
+    /**
+     * Sets the subject for the builder event.
+     */
+    public EventBuilder setSubject(String subject) {
+<span class="fc" id="L227">      this.subject = subject;</span>
+<span class="fc" id="L228">      return this;</span>
+    }
+
+    /**
+     * Sets the start date and time for the builder event.
+     */
+    public EventBuilder setStartDateTime(LocalDateTime startDateTime) {
+<span class="fc" id="L235">      this.startDateTime = startDateTime;</span>
+<span class="fc" id="L236">      return this;</span>
+    }
+
+    /**
+     * Sets the end date and time for the builder event.
+     */
+    public EventBuilder setEndDateTime(LocalDateTime endDateTime) {
+<span class="fc" id="L243">      this.endDateTime = endDateTime;</span>
+<span class="fc" id="L244">      return this;</span>
+    }
+
+    /**
+     * Sets the description for the builder event.
+     */
+    public EventBuilder setDescription(String description) {
+<span class="fc" id="L251">      this.description = description;</span>
+<span class="fc" id="L252">      return this;</span>
+    }
+
+    /**
+     * Sets the location for the builder event.
+     */
+    public EventBuilder setLocation(Location location) {
+<span class="fc" id="L259">      this.location = location;</span>
+<span class="fc" id="L260">      return this;</span>
+    }
+
+    /**
+     * Sets the event status for the builder event.
+     */
+    public EventBuilder setEventStatus(EventStatus eventStatus) {
+<span class="fc" id="L267">      this.eventStatus = eventStatus;</span>
+<span class="fc" id="L268">      return this;</span>
+    }
+
+    /**
+     * Sets the event type for the builder event.
+     */
+    public EventBuilder setEventType(TypeOfEvent eventType) {
+<span class="fc" id="L275">      this.eventType = eventType;</span>
+<span class="fc" id="L276">      return this;</span>
+    }
+
+    /**
+     * Sets the uuid for the builder event.
+     */
+    public EventBuilder setEventId(UUID eventId) {
+<span class="fc" id="L283">      this.eventId = eventId;</span>
+<span class="fc" id="L284">      return this;</span>
+    }
+
+    /**
+     * Sets the end date and time for the builder event.
+     */
+    public EventBuilder setAllDay(boolean allDay) {
+<span class="fc" id="L291">      this.allDay = allDay;</span>
+<span class="fc" id="L292">      return this;</span>
+    }
+
+
+    /**
+     * Builds and returns a instance of Event.
+     *
+     * @return a fully built Event object.
+     */
+    public EventReadOnly build() {
+<span class="fc" id="L302">      return new Event(this.subject, this.startDateTime, this.endDateTime, this.description,</span>
+          this.location, this.eventStatus, this.eventType, this.eventId, this.allDay);
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

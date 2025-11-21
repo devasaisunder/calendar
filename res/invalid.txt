@@ -1,0 +1,37 @@
+create event event1
+create event "Multiple Events" from 2025-06-26T10:00 to 2025-06-26T11:00 repeats MRU for 0 times
+create event eventSubject from 2025-06-26T23:45 to 2025-06-26T23:59 repeats MRU for N times
+create event Meeting from 2025-06-26T23:45 to 2025-06-26T23:59 repeats ghj for 8 times
+create event eventSubject from 2025-06-26T23:45 to 2025-06-26T23:59 repeats MRU fro 30 times
+create
+cret
+creat evnt
+create event eventSubject on 2025-10-25 repeats MRU
+export cal nofile
+show status from 2025-06-26T23:54
+show status on
+print events on
+print events from 2025-06-26T00:00 too 2025-06-30T00:00
+print events from 2025-06-26T00:00 to
+print events from
+edit event sub firstEvent from 2025-10-25T08:00 to 2025-10-25T17:00 with "first Event New Subject"
+edit event start firstEvent from 2025-10-25T08:00 to 2025-10-25T17:00 with "first Event New Subject"
+edit event end firstEvent from 2025-10-25T08:00 to 2025-10-25T17:00 with "first Event New Subject"
+edit event start firstEvent from 2025-10-25T08:00 to 2025-10-25T17:00 with 2025-10-25T18:00
+edit event subject first
+edit series subject first
+edit events subject first
+edit series subject Meet from 2025-10-26T08:00 abc "Updated Meet"
+edit series subject Meet abc 2025-10-26T08:00 with "Updated Meet"
+edit events subject Meet from 2025-10-26T08:00 abc "Updated Meet"
+edit events subject Meet abc 2025-10-26T08:00 with "Updated Meet"
+edit series START Meet from 2025-10-26T08:00 abc "Updated Meet"
+create calendar --name
+create cal
+edit cal
+random check
+edit calendar --name cal1 --property names calendar
+use --name <name-of-calendar>
+copy event event1
+copy events on 20252310 --target calendarName to
+copy events between dateString and dateString --target calendarName to dateString

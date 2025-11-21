@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">CreateCommand.java</span></div><h1>CreateCommand.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.CreateCommandData;
+import calendar.controller.handlers.CreateEventHandler;
+import calendar.model.interfaces.CalendarEditable;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+
+/**
+ * Executes the &quot;create command&quot; command from the user input.
+ * Represents the command used to create the calendar events.
+ * This class handles parsing, while CreateEventHandler handles the logic.
+ */
+public class CreateCommand implements Command {
+
+  private final CreateEventHandler handler;
+  private final DateTimeFormatter formatter;
+  private final LocalTime allDayStart;
+  private final LocalTime allDayEnd;
+
+  /**
+   * Constructor for creating a new event.
+   * It takes in a Calendar in which event to be created.
+   *
+   * @param calendar the calendar in which event is added.
+   */
+<span class="fc" id="L30">  public CreateCommand(CalendarEditable calendar) {</span>
+<span class="fc" id="L31">    this.handler = new CreateEventHandler(calendar);</span>
+<span class="fc" id="L32">    this.formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd'T'HH:mm&quot;);</span>
+<span class="fc" id="L33">    this.allDayStart = LocalTime.of(8, 0);</span>
+<span class="fc" id="L34">    this.allDayEnd = LocalTime.of(17, 0);</span>
+<span class="fc" id="L35">  }</span>
+
+  @Override
+  public String execute(List&lt;String&gt; parsedCommand) {
+    try {
+<span class="fc" id="L40">      CreateCommandData data = parse(parsedCommand);</span>
+<span class="fc" id="L41">      return handler.handle(data);</span>
+<span class="fc" id="L42">    } catch (DateTimeParseException e) {</span>
+<span class="fc" id="L43">      throw new IllegalArgumentException(&quot;Invalid date format&quot;);</span>
+<span class="fc" id="L44">    } catch (NumberFormatException e) {</span>
+<span class="fc" id="L45">      throw new IllegalArgumentException(&quot;Invalid value for N&quot;);</span>
+    }
+  }
+
+  /**
+   * Parses the command input into a CreateCommandData object.
+   *
+   * @param parsedCommand the parsed command tokens
+   * @return CreateCommandData containing parsed information
+   */
+  public CreateCommandData parse(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L56">    String subject = parsedCommand.get(2);</span>
+
+<span class="fc bfc" id="L58" title="All 4 branches covered.">    if (parsedCommand.size() &gt; 3 &amp;&amp; parsedCommand.get(3).equals(&quot;from&quot;)) {</span>
+<span class="fc" id="L59">      return parseFromCommand(parsedCommand, subject);</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">    } else if (parsedCommand.size() &gt; 3 &amp;&amp; parsedCommand.get(3).equals(&quot;on&quot;)) {</span>
+<span class="fc" id="L61">      return parseOnCommand(parsedCommand, subject);</span>
+    }
+<span class="fc" id="L63">    throw new IllegalArgumentException(&quot;Invalid creation command&quot;);</span>
+  }
+
+  private CreateCommandData parseFromCommand(List&lt;String&gt; parsedCommand, String subject) {
+<span class="fc" id="L67">    LocalDateTime startDateTime = LocalDateTime.parse(parsedCommand.get(4), formatter);</span>
+<span class="fc" id="L68">    LocalDateTime endDateTime = LocalDateTime.parse(parsedCommand.get(6), formatter);</span>
+
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">    if (parsedCommand.size() &gt; 7 &amp;&amp; parsedCommand.get(7).equals(&quot;repeats&quot;)) {</span>
+<span class="fc" id="L71">      int repeatsIndex = parsedCommand.indexOf(&quot;repeats&quot;);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">      if (parsedCommand.size() &lt; repeatsIndex + 4) {</span>
+<span class="fc" id="L73">        throw new IllegalArgumentException(&quot;Invalid creation command&quot;);</span>
+      }
+<span class="fc" id="L75">      String daysString = parsedCommand.get(repeatsIndex + 1);</span>
+<span class="fc" id="L76">      String repeatType = parsedCommand.get(repeatsIndex + 2);</span>
+<span class="fc" id="L77">      String repeatValue = parsedCommand.get(repeatsIndex + 3);</span>
+
+<span class="fc" id="L79">      return new CreateCommandData(subject, startDateTime, endDateTime,</span>
+          daysString, repeatType, repeatValue, true);
+    } else {
+<span class="fc" id="L82">      return new CreateCommandData(subject, startDateTime, endDateTime, true);</span>
+    }
+  }
+
+  private CreateCommandData parseOnCommand(List&lt;String&gt; parsedCommand, String subject) {
+<span class="fc" id="L87">    String date = parsedCommand.get(4);</span>
+<span class="fc" id="L88">    LocalDateTime startDateTime = LocalDateTime.parse(date + &quot;T&quot; + allDayStart, formatter);</span>
+<span class="fc" id="L89">    LocalDateTime endDateTime = LocalDateTime.parse(date + &quot;T&quot; + allDayEnd, formatter);</span>
+
+<span class="pc bpc" id="L91" title="1 of 4 branches missed.">    if (parsedCommand.size() &gt; 5 &amp;&amp; parsedCommand.get(5).equals(&quot;repeats&quot;)) {</span>
+<span class="fc" id="L92">      int repeatsIndex = parsedCommand.indexOf(&quot;repeats&quot;);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">      if (parsedCommand.size() &lt; repeatsIndex + 4) {</span>
+<span class="fc" id="L94">        throw new IllegalArgumentException(&quot;Invalid creation command&quot;);</span>
+      }
+<span class="fc" id="L96">      String daysString = parsedCommand.get(repeatsIndex + 1);</span>
+<span class="fc" id="L97">      String repeatType = parsedCommand.get(repeatsIndex + 2);</span>
+<span class="fc" id="L98">      String repeatValue = parsedCommand.get(repeatsIndex + 3);</span>
+
+<span class="fc" id="L100">      return new CreateCommandData(subject, startDateTime, endDateTime,</span>
+          daysString, repeatType, repeatValue, false);
+    } else {
+<span class="fc" id="L103">      return new CreateCommandData(subject, startDateTime, endDateTime, false);</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

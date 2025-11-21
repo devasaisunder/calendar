@@ -1,0 +1,598 @@
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+Calendar with name cal has been successfully created
+Calendar name edited successfully
+Calendar timezone edited successfully
+Now you are using calendar cal1
+Created Event: 
+Subject: Testing, Start: 2025-11-12T05:58, End: 2025-11-12T09:00, Description: No description given, Type: SINGLE, AllDayEvent: false
+Created a Series Event: 
+Subject: Submission, Start: 2025-11-12T09:00, End: 2025-11-12T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2025-11-19T09:00, End: 2025-11-19T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2025-11-26T09:00, End: 2025-11-26T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2025-12-03T09:00, End: 2025-12-03T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2025-12-10T09:00, End: 2025-12-10T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2025-12-17T09:00, End: 2025-12-17T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2025-12-24T09:00, End: 2025-12-24T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2025-12-31T09:00, End: 2025-12-31T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-01-07T09:00, End: 2026-01-07T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-01-14T09:00, End: 2026-01-14T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-01-21T09:00, End: 2026-01-21T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-01-28T09:00, End: 2026-01-28T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-02-04T09:00, End: 2026-02-04T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-02-11T09:00, End: 2026-02-11T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-02-18T09:00, End: 2026-02-18T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-02-25T09:00, End: 2026-02-25T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-03-04T09:00, End: 2026-03-04T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-03-11T09:00, End: 2026-03-11T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-03-18T09:00, End: 2026-03-18T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-03-25T09:00, End: 2026-03-25T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-04-01T09:00, End: 2026-04-01T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-04-08T09:00, End: 2026-04-08T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-04-15T09:00, End: 2026-04-15T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-04-22T09:00, End: 2026-04-22T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-04-29T09:00, End: 2026-04-29T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-05-06T09:00, End: 2026-05-06T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-05-13T09:00, End: 2026-05-13T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-05-20T09:00, End: 2026-05-20T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-05-27T09:00, End: 2026-05-27T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Submission, Start: 2026-06-03T09:00, End: 2026-06-03T21:00, Description: No description given, Type: SERIES, AllDayEvent: false
+
+Created a Series Event: 
+Subject: Assignment, Start: 2025-09-03T03:00, End: 2025-09-03T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-05T03:00, End: 2025-09-05T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-10T03:00, End: 2025-09-10T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-12T03:00, End: 2025-09-12T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-17T03:00, End: 2025-09-17T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-19T03:00, End: 2025-09-19T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-24T03:00, End: 2025-09-24T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-26T03:00, End: 2025-09-26T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-01T03:00, End: 2025-10-01T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-03T03:00, End: 2025-10-03T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-08T03:00, End: 2025-10-08T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-10T03:00, End: 2025-10-10T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-15T03:00, End: 2025-10-15T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-17T03:00, End: 2025-10-17T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-22T03:00, End: 2025-10-22T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-24T03:00, End: 2025-10-24T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-29T03:00, End: 2025-10-29T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-31T03:00, End: 2025-10-31T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-05T03:00, End: 2025-11-05T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-07T03:00, End: 2025-11-07T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-12T03:00, End: 2025-11-12T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-14T03:00, End: 2025-11-14T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-19T03:00, End: 2025-11-19T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-21T03:00, End: 2025-11-21T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-26T03:00, End: 2025-11-26T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-28T03:00, End: 2025-11-28T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-12-03T03:00, End: 2025-12-03T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-12-05T03:00, End: 2025-12-05T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-12-10T03:00, End: 2025-12-10T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-12-12T03:00, End: 2025-12-12T06:00, Description: No description given, Type: SERIES, AllDayEvent: false
+
+Created Event: 
+Subject: Lab, Start: 2025-11-17T08:00, End: 2025-11-17T17:00, Description: No description given, Type: SINGLE, AllDayEvent: true
+Created a Series Event: 
+Subject: Labs, Start: 2025-09-08T08:00, End: 2025-09-08T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-09-15T08:00, End: 2025-09-15T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-09-22T08:00, End: 2025-09-22T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-09-29T08:00, End: 2025-09-29T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-10-06T08:00, End: 2025-10-06T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-10-13T08:00, End: 2025-10-13T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-10-20T08:00, End: 2025-10-20T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-10-27T08:00, End: 2025-10-27T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-11-03T08:00, End: 2025-11-03T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-11-10T08:00, End: 2025-11-10T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Labs, Start: 2025-11-17T08:00, End: 2025-11-17T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+
+Created a Series Event: 
+Subject: Work, Start: 2025-11-13T08:00, End: 2025-11-13T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-14T08:00, End: 2025-11-14T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-15T08:00, End: 2025-11-15T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-16T08:00, End: 2025-11-16T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-17T08:00, End: 2025-11-17T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-18T08:00, End: 2025-11-18T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-19T08:00, End: 2025-11-19T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-20T08:00, End: 2025-11-20T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-21T08:00, End: 2025-11-21T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-22T08:00, End: 2025-11-22T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-23T08:00, End: 2025-11-23T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-24T08:00, End: 2025-11-24T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-25T08:00, End: 2025-11-25T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-26T08:00, End: 2025-11-26T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-27T08:00, End: 2025-11-27T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-28T08:00, End: 2025-11-28T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-29T08:00, End: 2025-11-29T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-11-30T08:00, End: 2025-11-30T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-01T08:00, End: 2025-12-01T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-02T08:00, End: 2025-12-02T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-03T08:00, End: 2025-12-03T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-04T08:00, End: 2025-12-04T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-05T08:00, End: 2025-12-05T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-06T08:00, End: 2025-12-06T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-07T08:00, End: 2025-12-07T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-08T08:00, End: 2025-12-08T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-09T08:00, End: 2025-12-09T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-10T08:00, End: 2025-12-10T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-11T08:00, End: 2025-12-11T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-12T08:00, End: 2025-12-12T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-13T08:00, End: 2025-12-13T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-14T08:00, End: 2025-12-14T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-15T08:00, End: 2025-12-15T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-16T08:00, End: 2025-12-16T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-17T08:00, End: 2025-12-17T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-18T08:00, End: 2025-12-18T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-19T08:00, End: 2025-12-19T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-20T08:00, End: 2025-12-20T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-21T08:00, End: 2025-12-21T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-22T08:00, End: 2025-12-22T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-23T08:00, End: 2025-12-23T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-24T08:00, End: 2025-12-24T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-25T08:00, End: 2025-12-25T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-26T08:00, End: 2025-12-26T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-27T08:00, End: 2025-12-27T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-28T08:00, End: 2025-12-28T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-29T08:00, End: 2025-12-29T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-30T08:00, End: 2025-12-30T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Work, Start: 2025-12-31T08:00, End: 2025-12-31T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+
+Event updated:
+Subject: WorkDone, Start: 2025-11-13T08:00, End: 2025-11-13T17:00, Description: No description given, Type: SERIES, AllDayEvent: true
+
+> Subject: WorkDone, StartDateTime: 2025-11-13T08:00, EndDateTime: 2025-11-13T17:00, Location: UNKNOWN
+
+> Assignment starting on 2025-09-03 at 03:00, ending on 2025-09-03 at 06:00
+> Assignment starting on 2025-09-05 at 03:00, ending on 2025-09-05 at 06:00
+> Labs starting on 2025-09-08 at 08:00, ending on 2025-09-08 at 17:00
+> Assignment starting on 2025-09-10 at 03:00, ending on 2025-09-10 at 06:00
+> Assignment starting on 2025-09-12 at 03:00, ending on 2025-09-12 at 06:00
+> Labs starting on 2025-09-15 at 08:00, ending on 2025-09-15 at 17:00
+> Assignment starting on 2025-09-17 at 03:00, ending on 2025-09-17 at 06:00
+> Assignment starting on 2025-09-19 at 03:00, ending on 2025-09-19 at 06:00
+> Labs starting on 2025-09-22 at 08:00, ending on 2025-09-22 at 17:00
+> Assignment starting on 2025-09-24 at 03:00, ending on 2025-09-24 at 06:00
+> Assignment starting on 2025-09-26 at 03:00, ending on 2025-09-26 at 06:00
+> Labs starting on 2025-09-29 at 08:00, ending on 2025-09-29 at 17:00
+> Assignment starting on 2025-10-01 at 03:00, ending on 2025-10-01 at 06:00
+> Assignment starting on 2025-10-03 at 03:00, ending on 2025-10-03 at 06:00
+> Labs starting on 2025-10-06 at 08:00, ending on 2025-10-06 at 17:00
+> Assignment starting on 2025-10-08 at 03:00, ending on 2025-10-08 at 06:00
+> Assignment starting on 2025-10-10 at 03:00, ending on 2025-10-10 at 06:00
+> Labs starting on 2025-10-13 at 08:00, ending on 2025-10-13 at 17:00
+> Assignment starting on 2025-10-15 at 03:00, ending on 2025-10-15 at 06:00
+> Assignment starting on 2025-10-17 at 03:00, ending on 2025-10-17 at 06:00
+> Labs starting on 2025-10-20 at 08:00, ending on 2025-10-20 at 17:00
+> Assignment starting on 2025-10-22 at 03:00, ending on 2025-10-22 at 06:00
+> Assignment starting on 2025-10-24 at 03:00, ending on 2025-10-24 at 06:00
+> Labs starting on 2025-10-27 at 08:00, ending on 2025-10-27 at 17:00
+> Assignment starting on 2025-10-29 at 03:00, ending on 2025-10-29 at 06:00
+> Assignment starting on 2025-10-31 at 03:00, ending on 2025-10-31 at 06:00
+> Labs starting on 2025-11-03 at 08:00, ending on 2025-11-03 at 17:00
+> Assignment starting on 2025-11-05 at 03:00, ending on 2025-11-05 at 06:00
+> Assignment starting on 2025-11-07 at 03:00, ending on 2025-11-07 at 06:00
+> Labs starting on 2025-11-10 at 08:00, ending on 2025-11-10 at 17:00
+> Testing starting on 2025-11-12 at 05:58, ending on 2025-11-12 at 09:00
+> Submission starting on 2025-11-12 at 09:00, ending on 2025-11-12 at 21:00
+> Assignment starting on 2025-11-12 at 03:00, ending on 2025-11-12 at 06:00
+> WorkDone starting on 2025-11-13 at 08:00, ending on 2025-11-13 at 17:00
+> Assignment starting on 2025-11-14 at 03:00, ending on 2025-11-14 at 06:00
+> Work starting on 2025-11-14 at 08:00, ending on 2025-11-14 at 17:00
+> Work starting on 2025-11-15 at 08:00, ending on 2025-11-15 at 17:00
+> Work starting on 2025-11-16 at 08:00, ending on 2025-11-16 at 17:00
+> Lab starting on 2025-11-17 at 08:00, ending on 2025-11-17 at 17:00
+> Labs starting on 2025-11-17 at 08:00, ending on 2025-11-17 at 17:00
+> Work starting on 2025-11-17 at 08:00, ending on 2025-11-17 at 17:00
+> Work starting on 2025-11-18 at 08:00, ending on 2025-11-18 at 17:00
+> Submission starting on 2025-11-19 at 09:00, ending on 2025-11-19 at 21:00
+> Assignment starting on 2025-11-19 at 03:00, ending on 2025-11-19 at 06:00
+> Work starting on 2025-11-19 at 08:00, ending on 2025-11-19 at 17:00
+> Work starting on 2025-11-20 at 08:00, ending on 2025-11-20 at 17:00
+> Assignment starting on 2025-11-21 at 03:00, ending on 2025-11-21 at 06:00
+> Work starting on 2025-11-21 at 08:00, ending on 2025-11-21 at 17:00
+> Work starting on 2025-11-22 at 08:00, ending on 2025-11-22 at 17:00
+> Work starting on 2025-11-23 at 08:00, ending on 2025-11-23 at 17:00
+> Work starting on 2025-11-24 at 08:00, ending on 2025-11-24 at 17:00
+> Work starting on 2025-11-25 at 08:00, ending on 2025-11-25 at 17:00
+> Submission starting on 2025-11-26 at 09:00, ending on 2025-11-26 at 21:00
+> Assignment starting on 2025-11-26 at 03:00, ending on 2025-11-26 at 06:00
+> Work starting on 2025-11-26 at 08:00, ending on 2025-11-26 at 17:00
+> Work starting on 2025-11-27 at 08:00, ending on 2025-11-27 at 17:00
+> Assignment starting on 2025-11-28 at 03:00, ending on 2025-11-28 at 06:00
+> Work starting on 2025-11-28 at 08:00, ending on 2025-11-28 at 17:00
+> Work starting on 2025-11-29 at 08:00, ending on 2025-11-29 at 17:00
+> Work starting on 2025-11-30 at 08:00, ending on 2025-11-30 at 17:00
+> Work starting on 2025-12-01 at 08:00, ending on 2025-12-01 at 17:00
+> Work starting on 2025-12-02 at 08:00, ending on 2025-12-02 at 17:00
+> Submission starting on 2025-12-03 at 09:00, ending on 2025-12-03 at 21:00
+> Assignment starting on 2025-12-03 at 03:00, ending on 2025-12-03 at 06:00
+> Work starting on 2025-12-03 at 08:00, ending on 2025-12-03 at 17:00
+> Work starting on 2025-12-04 at 08:00, ending on 2025-12-04 at 17:00
+> Assignment starting on 2025-12-05 at 03:00, ending on 2025-12-05 at 06:00
+> Work starting on 2025-12-05 at 08:00, ending on 2025-12-05 at 17:00
+> Work starting on 2025-12-06 at 08:00, ending on 2025-12-06 at 17:00
+> Work starting on 2025-12-07 at 08:00, ending on 2025-12-07 at 17:00
+> Work starting on 2025-12-08 at 08:00, ending on 2025-12-08 at 17:00
+> Work starting on 2025-12-09 at 08:00, ending on 2025-12-09 at 17:00
+> Submission starting on 2025-12-10 at 09:00, ending on 2025-12-10 at 21:00
+> Assignment starting on 2025-12-10 at 03:00, ending on 2025-12-10 at 06:00
+> Work starting on 2025-12-10 at 08:00, ending on 2025-12-10 at 17:00
+> Work starting on 2025-12-11 at 08:00, ending on 2025-12-11 at 17:00
+> Assignment starting on 2025-12-12 at 03:00, ending on 2025-12-12 at 06:00
+> Work starting on 2025-12-12 at 08:00, ending on 2025-12-12 at 17:00
+> Work starting on 2025-12-13 at 08:00, ending on 2025-12-13 at 17:00
+> Work starting on 2025-12-14 at 08:00, ending on 2025-12-14 at 17:00
+> Work starting on 2025-12-15 at 08:00, ending on 2025-12-15 at 17:00
+> Work starting on 2025-12-16 at 08:00, ending on 2025-12-16 at 17:00
+> Submission starting on 2025-12-17 at 09:00, ending on 2025-12-17 at 21:00
+> Work starting on 2025-12-17 at 08:00, ending on 2025-12-17 at 17:00
+> Work starting on 2025-12-18 at 08:00, ending on 2025-12-18 at 17:00
+> Work starting on 2025-12-19 at 08:00, ending on 2025-12-19 at 17:00
+> Work starting on 2025-12-20 at 08:00, ending on 2025-12-20 at 17:00
+> Work starting on 2025-12-21 at 08:00, ending on 2025-12-21 at 17:00
+> Work starting on 2025-12-22 at 08:00, ending on 2025-12-22 at 17:00
+> Work starting on 2025-12-23 at 08:00, ending on 2025-12-23 at 17:00
+> Submission starting on 2025-12-24 at 09:00, ending on 2025-12-24 at 21:00
+> Work starting on 2025-12-24 at 08:00, ending on 2025-12-24 at 17:00
+> Work starting on 2025-12-25 at 08:00, ending on 2025-12-25 at 17:00
+> Work starting on 2025-12-26 at 08:00, ending on 2025-12-26 at 17:00
+> Work starting on 2025-12-27 at 08:00, ending on 2025-12-27 at 17:00
+> Work starting on 2025-12-28 at 08:00, ending on 2025-12-28 at 17:00
+> Work starting on 2025-12-29 at 08:00, ending on 2025-12-29 at 17:00
+> Work starting on 2025-12-30 at 08:00, ending on 2025-12-30 at 17:00
+
+Successfully exported to: C:\Users\croha\Documents\FALL 25\PDP Lab\f25-hw5-cal2-group-TeamPseudo\exportedEvents.csv
+User is Busy
+Successfully exported to: C:\Users\croha\Documents\FALL 25\PDP Lab\f25-hw5-cal2-group-TeamPseudo\exportToIcal.ical
+Calendar timezone edited successfully
+> Assignment starting on 2025-09-03 at 09:00, ending on 2025-09-03 at 12:00
+> Assignment starting on 2025-09-05 at 09:00, ending on 2025-09-05 at 12:00
+> Labs starting on 2025-09-08 at 14:00, ending on 2025-09-08 at 23:00
+> Assignment starting on 2025-09-10 at 09:00, ending on 2025-09-10 at 12:00
+> Assignment starting on 2025-09-12 at 09:00, ending on 2025-09-12 at 12:00
+> Labs starting on 2025-09-15 at 14:00, ending on 2025-09-15 at 23:00
+> Assignment starting on 2025-09-17 at 09:00, ending on 2025-09-17 at 12:00
+> Assignment starting on 2025-09-19 at 09:00, ending on 2025-09-19 at 12:00
+> Labs starting on 2025-09-22 at 14:00, ending on 2025-09-22 at 23:00
+> Assignment starting on 2025-09-24 at 09:00, ending on 2025-09-24 at 12:00
+> Assignment starting on 2025-09-26 at 09:00, ending on 2025-09-26 at 12:00
+> Labs starting on 2025-09-29 at 14:00, ending on 2025-09-29 at 23:00
+> Assignment starting on 2025-10-01 at 09:00, ending on 2025-10-01 at 12:00
+> Assignment starting on 2025-10-03 at 09:00, ending on 2025-10-03 at 12:00
+> Labs starting on 2025-10-06 at 14:00, ending on 2025-10-06 at 23:00
+> Assignment starting on 2025-10-08 at 09:00, ending on 2025-10-08 at 12:00
+> Assignment starting on 2025-10-10 at 09:00, ending on 2025-10-10 at 12:00
+> Labs starting on 2025-10-13 at 14:00, ending on 2025-10-13 at 23:00
+> Assignment starting on 2025-10-15 at 09:00, ending on 2025-10-15 at 12:00
+> Assignment starting on 2025-10-17 at 09:00, ending on 2025-10-17 at 12:00
+> Labs starting on 2025-10-20 at 14:00, ending on 2025-10-20 at 23:00
+> Assignment starting on 2025-10-22 at 09:00, ending on 2025-10-22 at 12:00
+> Assignment starting on 2025-10-24 at 09:00, ending on 2025-10-24 at 12:00
+> Labs starting on 2025-10-27 at 13:00, ending on 2025-10-27 at 22:00
+> Assignment starting on 2025-10-29 at 08:00, ending on 2025-10-29 at 11:00
+> Assignment starting on 2025-10-31 at 08:00, ending on 2025-10-31 at 11:00
+> Labs starting on 2025-11-03 at 14:00, ending on 2025-11-03 at 23:00
+> Assignment starting on 2025-11-05 at 09:00, ending on 2025-11-05 at 12:00
+> Assignment starting on 2025-11-07 at 09:00, ending on 2025-11-07 at 12:00
+> Labs starting on 2025-11-10 at 14:00, ending on 2025-11-10 at 23:00
+> Testing starting on 2025-11-12 at 11:58, ending on 2025-11-12 at 15:00
+> Submission starting on 2025-11-12 at 15:00, ending on 2025-11-13 at 03:00
+> Assignment starting on 2025-11-12 at 09:00, ending on 2025-11-12 at 12:00
+> WorkDone starting on 2025-11-13 at 14:00, ending on 2025-11-13 at 23:00
+> Assignment starting on 2025-11-14 at 09:00, ending on 2025-11-14 at 12:00
+> Work starting on 2025-11-14 at 14:00, ending on 2025-11-14 at 23:00
+> Work starting on 2025-11-15 at 14:00, ending on 2025-11-15 at 23:00
+> Work starting on 2025-11-16 at 14:00, ending on 2025-11-16 at 23:00
+> Lab starting on 2025-11-17 at 14:00, ending on 2025-11-17 at 23:00
+> Labs starting on 2025-11-17 at 14:00, ending on 2025-11-17 at 23:00
+> Work starting on 2025-11-17 at 14:00, ending on 2025-11-17 at 23:00
+> Work starting on 2025-11-18 at 14:00, ending on 2025-11-18 at 23:00
+> Submission starting on 2025-11-19 at 15:00, ending on 2025-11-20 at 03:00
+> Assignment starting on 2025-11-19 at 09:00, ending on 2025-11-19 at 12:00
+> Work starting on 2025-11-19 at 14:00, ending on 2025-11-19 at 23:00
+> Work starting on 2025-11-20 at 14:00, ending on 2025-11-20 at 23:00
+> Assignment starting on 2025-11-21 at 09:00, ending on 2025-11-21 at 12:00
+> Work starting on 2025-11-21 at 14:00, ending on 2025-11-21 at 23:00
+> Work starting on 2025-11-22 at 14:00, ending on 2025-11-22 at 23:00
+> Work starting on 2025-11-23 at 14:00, ending on 2025-11-23 at 23:00
+> Work starting on 2025-11-24 at 14:00, ending on 2025-11-24 at 23:00
+> Work starting on 2025-11-25 at 14:00, ending on 2025-11-25 at 23:00
+> Submission starting on 2025-11-26 at 15:00, ending on 2025-11-27 at 03:00
+> Assignment starting on 2025-11-26 at 09:00, ending on 2025-11-26 at 12:00
+> Work starting on 2025-11-26 at 14:00, ending on 2025-11-26 at 23:00
+> Work starting on 2025-11-27 at 14:00, ending on 2025-11-27 at 23:00
+> Assignment starting on 2025-11-28 at 09:00, ending on 2025-11-28 at 12:00
+> Work starting on 2025-11-28 at 14:00, ending on 2025-11-28 at 23:00
+> Work starting on 2025-11-29 at 14:00, ending on 2025-11-29 at 23:00
+> Work starting on 2025-11-30 at 14:00, ending on 2025-11-30 at 23:00
+> Work starting on 2025-12-01 at 14:00, ending on 2025-12-01 at 23:00
+> Work starting on 2025-12-02 at 14:00, ending on 2025-12-02 at 23:00
+> Submission starting on 2025-12-03 at 15:00, ending on 2025-12-04 at 03:00
+> Assignment starting on 2025-12-03 at 09:00, ending on 2025-12-03 at 12:00
+> Work starting on 2025-12-03 at 14:00, ending on 2025-12-03 at 23:00
+> Work starting on 2025-12-04 at 14:00, ending on 2025-12-04 at 23:00
+> Assignment starting on 2025-12-05 at 09:00, ending on 2025-12-05 at 12:00
+> Work starting on 2025-12-05 at 14:00, ending on 2025-12-05 at 23:00
+> Work starting on 2025-12-06 at 14:00, ending on 2025-12-06 at 23:00
+> Work starting on 2025-12-07 at 14:00, ending on 2025-12-07 at 23:00
+> Work starting on 2025-12-08 at 14:00, ending on 2025-12-08 at 23:00
+> Work starting on 2025-12-09 at 14:00, ending on 2025-12-09 at 23:00
+> Submission starting on 2025-12-10 at 15:00, ending on 2025-12-11 at 03:00
+> Assignment starting on 2025-12-10 at 09:00, ending on 2025-12-10 at 12:00
+> Work starting on 2025-12-10 at 14:00, ending on 2025-12-10 at 23:00
+> Work starting on 2025-12-11 at 14:00, ending on 2025-12-11 at 23:00
+> Assignment starting on 2025-12-12 at 09:00, ending on 2025-12-12 at 12:00
+> Work starting on 2025-12-12 at 14:00, ending on 2025-12-12 at 23:00
+> Work starting on 2025-12-13 at 14:00, ending on 2025-12-13 at 23:00
+> Work starting on 2025-12-14 at 14:00, ending on 2025-12-14 at 23:00
+> Work starting on 2025-12-15 at 14:00, ending on 2025-12-15 at 23:00
+> Work starting on 2025-12-16 at 14:00, ending on 2025-12-16 at 23:00
+> Submission starting on 2025-12-17 at 15:00, ending on 2025-12-18 at 03:00
+> Work starting on 2025-12-17 at 14:00, ending on 2025-12-17 at 23:00
+> Work starting on 2025-12-18 at 14:00, ending on 2025-12-18 at 23:00
+> Work starting on 2025-12-19 at 14:00, ending on 2025-12-19 at 23:00
+> Work starting on 2025-12-20 at 14:00, ending on 2025-12-20 at 23:00
+> Work starting on 2025-12-21 at 14:00, ending on 2025-12-21 at 23:00
+> Work starting on 2025-12-22 at 14:00, ending on 2025-12-22 at 23:00
+> Work starting on 2025-12-23 at 14:00, ending on 2025-12-23 at 23:00
+> Submission starting on 2025-12-24 at 15:00, ending on 2025-12-25 at 03:00
+> Work starting on 2025-12-24 at 14:00, ending on 2025-12-24 at 23:00
+> Work starting on 2025-12-25 at 14:00, ending on 2025-12-25 at 23:00
+> Work starting on 2025-12-26 at 14:00, ending on 2025-12-26 at 23:00
+> Work starting on 2025-12-27 at 14:00, ending on 2025-12-27 at 23:00
+> Work starting on 2025-12-28 at 14:00, ending on 2025-12-28 at 23:00
+> Work starting on 2025-12-29 at 14:00, ending on 2025-12-29 at 23:00
+> Work starting on 2025-12-30 at 14:00, ending on 2025-12-30 at 23:00
+
+Calendar with name cal2 has been successfully created
+Calendar timezone edited successfully
+Copied Events:
+Subject: Testing, Start: 2025-11-12T08:58, End: 2025-11-12T12:00, Description: No description given, Type: SINGLE, AllDayEvent: false
+
+Copied Events:
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-11-25T19:30, End: 2026-11-26T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2026-11-25T18:30, End: 2026-11-26T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+
+Copied Events:
+Subject: Assignment, Start: 2025-09-03T12:30, End: 2025-09-03T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-05T12:30, End: 2025-09-05T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-10T12:30, End: 2025-09-10T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-12T12:30, End: 2025-09-12T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-17T12:30, End: 2025-09-17T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-19T12:30, End: 2025-09-19T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-24T12:30, End: 2025-09-24T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-09-26T12:30, End: 2025-09-26T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-01T12:30, End: 2025-10-01T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-03T12:30, End: 2025-10-03T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-08T12:30, End: 2025-10-08T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-10T12:30, End: 2025-10-10T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-15T12:30, End: 2025-10-15T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-17T12:30, End: 2025-10-17T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-22T12:30, End: 2025-10-22T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-24T12:30, End: 2025-10-24T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-29T12:30, End: 2025-10-29T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-10-31T12:30, End: 2025-10-31T15:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-05T13:30, End: 2025-11-05T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-07T13:30, End: 2025-11-07T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-12T13:30, End: 2025-11-12T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-14T13:30, End: 2025-11-14T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-19T13:30, End: 2025-11-19T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-21T13:30, End: 2025-11-21T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-26T13:30, End: 2025-11-26T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-11-28T13:30, End: 2025-11-28T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-12-03T13:30, End: 2025-12-03T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-12-05T13:30, End: 2025-12-05T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-12-10T13:30, End: 2025-12-10T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+Subject: Assignment, Start: 2025-12-12T13:30, End: 2025-12-12T16:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-09-08T17:30, End: 2025-09-09T02:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-09-15T17:30, End: 2025-09-16T02:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-09-22T17:30, End: 2025-09-23T02:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-09-29T17:30, End: 2025-09-30T02:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-10-06T17:30, End: 2025-10-07T02:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-10-13T17:30, End: 2025-10-14T02:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-10-20T17:30, End: 2025-10-21T02:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-10-27T17:30, End: 2025-10-28T02:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-11-03T18:30, End: 2025-11-04T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-11-10T18:30, End: 2025-11-11T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Labs, Start: 2025-11-17T18:30, End: 2025-11-18T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Testing, Start: 2025-11-12T16:28, End: 2025-11-12T19:30, Description: No description given, Type: SINGLE, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2025-11-12T19:30, End: 2025-11-13T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2025-11-19T19:30, End: 2025-11-20T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2025-11-26T19:30, End: 2025-11-27T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2025-12-03T19:30, End: 2025-12-04T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2025-12-10T19:30, End: 2025-12-11T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2025-12-17T19:30, End: 2025-12-18T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2025-12-24T19:30, End: 2025-12-25T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2025-12-31T19:30, End: 2026-01-01T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-01-07T19:30, End: 2026-01-08T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-01-14T19:30, End: 2026-01-15T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-01-21T19:30, End: 2026-01-22T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-01-28T19:30, End: 2026-01-29T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-02-04T19:30, End: 2026-02-05T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-02-11T19:30, End: 2026-02-12T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-02-18T19:30, End: 2026-02-19T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-02-25T19:30, End: 2026-02-26T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-03-04T19:30, End: 2026-03-05T07:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-03-11T18:30, End: 2026-03-12T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-03-18T18:30, End: 2026-03-19T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-03-25T18:30, End: 2026-03-26T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-04-01T18:30, End: 2026-04-02T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-04-08T18:30, End: 2026-04-09T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-04-15T18:30, End: 2026-04-16T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-04-22T18:30, End: 2026-04-23T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-04-29T18:30, End: 2026-04-30T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-05-06T18:30, End: 2026-05-07T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-05-13T18:30, End: 2026-05-14T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-05-20T18:30, End: 2026-05-21T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-05-27T18:30, End: 2026-05-28T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Submission, Start: 2026-06-03T18:30, End: 2026-06-04T06:30, Description: No description given, Type: SERIES, AllDayEvent: false
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: WorkDone, Start: 2025-11-13T18:30, End: 2025-11-14T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-14T18:30, End: 2025-11-15T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-15T18:30, End: 2025-11-16T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-16T18:30, End: 2025-11-17T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-17T18:30, End: 2025-11-18T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-18T18:30, End: 2025-11-19T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-19T18:30, End: 2025-11-20T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-20T18:30, End: 2025-11-21T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-21T18:30, End: 2025-11-22T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-22T18:30, End: 2025-11-23T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-23T18:30, End: 2025-11-24T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-24T18:30, End: 2025-11-25T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-25T18:30, End: 2025-11-26T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-26T18:30, End: 2025-11-27T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-27T18:30, End: 2025-11-28T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-28T18:30, End: 2025-11-29T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-29T18:30, End: 2025-11-30T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-11-30T18:30, End: 2025-12-01T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-01T18:30, End: 2025-12-02T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-02T18:30, End: 2025-12-03T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-03T18:30, End: 2025-12-04T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-04T18:30, End: 2025-12-05T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-05T18:30, End: 2025-12-06T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-06T18:30, End: 2025-12-07T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-07T18:30, End: 2025-12-08T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-08T18:30, End: 2025-12-09T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-09T18:30, End: 2025-12-10T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-10T18:30, End: 2025-12-11T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-11T18:30, End: 2025-12-12T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-12T18:30, End: 2025-12-13T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-13T18:30, End: 2025-12-14T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-14T18:30, End: 2025-12-15T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-15T18:30, End: 2025-12-16T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-16T18:30, End: 2025-12-17T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-17T18:30, End: 2025-12-18T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-18T18:30, End: 2025-12-19T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-19T18:30, End: 2025-12-20T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-20T18:30, End: 2025-12-21T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-21T18:30, End: 2025-12-22T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-22T18:30, End: 2025-12-23T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-23T18:30, End: 2025-12-24T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-24T18:30, End: 2025-12-25T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-25T18:30, End: 2025-12-26T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-26T18:30, End: 2025-12-27T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-27T18:30, End: 2025-12-28T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-28T18:30, End: 2025-12-29T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-29T18:30, End: 2025-12-30T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-30T18:30, End: 2025-12-31T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+WARNING: Series event in target calendar is spreading across multiple days
+Subject: Work, Start: 2025-12-31T18:30, End: 2026-01-01T03:30, Description: No description given, Type: SERIES, AllDayEvent: true
+Subject: Lab, Start: 2025-11-17T18:30, End: 2025-11-18T03:30, Description: No description given, Type: SINGLE, AllDayEvent: true
+

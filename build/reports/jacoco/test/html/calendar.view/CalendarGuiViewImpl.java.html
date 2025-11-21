@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalendarGuiViewImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.view</a> &gt; <span class="el_source">CalendarGuiViewImpl.java</span></div><h1>CalendarGuiViewImpl.java</h1><pre class="source lang-java linenums">package calendar.view;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+/**
+ * Implementation of CalendarGuiView using Java Swing.
+ * Provides a month view calendar with event management capabilities.
+ * The view only handles UI and emits events through ViewListener interface.
+ */
+public class CalendarGuiViewImpl extends JFrame implements CalendarGuiView {
+  private LocalDate currentMonth;
+  private LocalDate selectedDate;
+  private Map&lt;String, Color&gt; calendarColors;
+  private int colorIndex;
+  private final List&lt;ViewListener&gt; listeners;
+  private Map&lt;LocalDate, List&lt;EventInfo&gt;&gt; currentMonthEvents;
+  private List&lt;EventInfo&gt; currentDayEvents;
+  private Features featuresForDialogs; // For dialogs to query data only
+  
+  // Panel components
+  private TopPanel topPanel;
+  private MonthViewPanel monthViewPanel;
+  private DayViewPanel dayViewPanel;
+  private BottomPanel bottomPanel;
+  
+<span class="nc" id="L37">  private static final Color[] CALENDAR_COLORS = {</span>
+      new Color(173, 216, 230), // Light Blue
+      new Color(255, 182, 193), // Light Pink
+      new Color(144, 238, 144), // Light Green
+      new Color(255, 218, 185), // Peach
+      new Color(221, 160, 221), // Plum
+      new Color(176, 224, 230), // Powder Blue
+      new Color(255, 228, 181)  // Moccasin
+  };
+
+  /**
+   * Constructor for CalendarGuiViewImpl.
+   */
+<span class="nc" id="L50">  public CalendarGuiViewImpl() {</span>
+<span class="nc" id="L51">    this.currentMonth = LocalDate.now();</span>
+<span class="nc" id="L52">    this.selectedDate = LocalDate.now();</span>
+<span class="nc" id="L53">    this.calendarColors = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L54">    this.colorIndex = 0;</span>
+<span class="nc" id="L55">    this.listeners = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L56">    this.currentMonthEvents = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L57">    this.currentDayEvents = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L58">    initializeGui();</span>
+<span class="nc" id="L59">  }</span>
+
+  /**
+   * Adds a ViewListener to receive events from this view.
+   *
+   * @param listener the ViewListener to add
+   */
+  public void addViewListener(ViewListener listener) {
+<span class="nc" id="L67">    listeners.add(Objects.requireNonNull(listener));</span>
+<span class="nc" id="L68">  }</span>
+
+  private void initializeGui() {
+<span class="nc" id="L71">    setTitle(&quot;Calendar Application&quot;);</span>
+<span class="nc" id="L72">    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L73">    setLayout(new BorderLayout());</span>
+
+    // Top panel with calendar selection and navigation
+<span class="nc" id="L76">    topPanel = new TopPanel();</span>
+<span class="nc" id="L77">    setupTopPanelListeners();</span>
+<span class="nc" id="L78">    add(topPanel, BorderLayout.NORTH);</span>
+
+    // Center panel with month view and day view
+<span class="nc" id="L81">    JPanel centerPanel = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L82">    centerPanel.setBorder(new EmptyBorder(10, 10, 10, 10));</span>
+    
+<span class="nc" id="L84">    monthViewPanel = new MonthViewPanel();</span>
+<span class="nc" id="L85">    setupMonthViewListeners();</span>
+<span class="nc" id="L86">    centerPanel.add(monthViewPanel, BorderLayout.CENTER);</span>
+    
+<span class="nc" id="L88">    dayViewPanel = new DayViewPanel();</span>
+<span class="nc" id="L89">    centerPanel.add(dayViewPanel, BorderLayout.EAST);</span>
+    
+<span class="nc" id="L91">    add(centerPanel, BorderLayout.CENTER);</span>
+
+    // Bottom panel with action buttons
+<span class="nc" id="L94">    bottomPanel = new BottomPanel();</span>
+<span class="nc" id="L95">    setupBottomPanelListeners();</span>
+<span class="nc" id="L96">    add(bottomPanel, BorderLayout.SOUTH);</span>
+
+<span class="nc" id="L98">    pack();</span>
+<span class="nc" id="L99">    setSize(1000, 700);</span>
+<span class="nc" id="L100">    setLocationRelativeTo(null);</span>
+<span class="nc" id="L101">  }</span>
+
+  private void setupTopPanelListeners() {
+    // Calendar combo box listener
+<span class="nc" id="L105">    topPanel.getCalendarComboBox().addActionListener(e -&gt; {</span>
+<span class="nc" id="L106">      String selected = (String) topPanel.getCalendarComboBox().getSelectedItem();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">      if (selected != null) {</span>
+<span class="nc" id="L108">        emitSwitchCalendar(selected);</span>
+      }
+<span class="nc" id="L110">    });</span>
+
+    // Create calendar button
+<span class="nc" id="L113">    topPanel.getCreateCalendarButton().addActionListener(e -&gt; {</span>
+<span class="nc" id="L114">      CalendarDialog.showCreateDialog(this, (name, timezone) -&gt; {</span>
+<span class="nc" id="L115">        emitCreateCalendar(name, timezone);</span>
+<span class="nc" id="L116">      }, this::emitRefresh);</span>
+<span class="nc" id="L117">    });</span>
+
+    // Edit calendar button
+<span class="nc" id="L120">    topPanel.getEditCalendarButton().addActionListener(e -&gt; {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">      if (featuresForDialogs != null) {</span>
+<span class="nc" id="L122">        String activeCalendarName = featuresForDialogs.getActiveCalendarName();</span>
+<span class="nc" id="L123">        String currentTimezone = featuresForDialogs.getActiveCalendarTimezone();</span>
+<span class="nc" id="L124">        CalendarDialog.showEditDialog(this, () -&gt; activeCalendarName, () -&gt; currentTimezone,</span>
+            (calendarName, property, newValue, resultHandler) -&gt; {
+<span class="nc" id="L126">              emitEditCalendar(calendarName, property, newValue);</span>
+<span class="nc" id="L127">              resultHandler.accept(null); // Assume success, controller will show errors</span>
+<span class="nc" id="L128">            }, this::emitRefresh);</span>
+      }
+<span class="nc" id="L130">    });</span>
+
+    // Previous month button
+<span class="nc" id="L133">    topPanel.getPrevButton().addActionListener(e -&gt; {</span>
+<span class="nc" id="L134">      currentMonth = currentMonth.minusMonths(1);</span>
+<span class="nc" id="L135">      topPanel.updateMonthYear(currentMonth);</span>
+<span class="nc" id="L136">      emitPreviousMonth();</span>
+<span class="nc" id="L137">    });</span>
+
+    // Next month button
+<span class="nc" id="L140">    topPanel.getNextButton().addActionListener(e -&gt; {</span>
+<span class="nc" id="L141">      currentMonth = currentMonth.plusMonths(1);</span>
+<span class="nc" id="L142">      topPanel.updateMonthYear(currentMonth);</span>
+<span class="nc" id="L143">      emitNextMonth();</span>
+<span class="nc" id="L144">    });</span>
+<span class="nc" id="L145">  }</span>
+
+  private void setupMonthViewListeners() {
+    // Set up date selection callback
+<span class="nc" id="L149">    monthViewPanel.setDateSelectionCallback(date -&gt; {</span>
+<span class="nc" id="L150">      selectedDate = date;</span>
+<span class="nc" id="L151">      topPanel.updateSelectedDate(selectedDate);</span>
+<span class="nc" id="L152">      emitDateSelected(date);</span>
+<span class="nc" id="L153">    });</span>
+<span class="nc" id="L154">  }</span>
+
+  private void setupBottomPanelListeners() {
+    // Create event button
+<span class="nc" id="L158">    bottomPanel.getCreateEventButton().addActionListener(e -&gt; {</span>
+<span class="nc" id="L159">      EventDialog.showCreateDialog(this, selectedDate, </span>
+          (subject, start, end, desc, loc, status, repeat, days, endDate, resultHandler) -&gt; {
+            // Emit event - controller will handle
+<span class="nc" id="L162">            emitCreateEvent(subject, start, end, desc, loc, status, repeat, days, endDate);</span>
+            // Controller will handle result through refresh
+<span class="nc" id="L164">            resultHandler.accept(null); // Assume success, controller will show errors</span>
+<span class="nc" id="L165">          }, this::emitRefresh);</span>
+<span class="nc" id="L166">    });</span>
+
+    // Edit event button
+<span class="nc" id="L169">    bottomPanel.getEditEventButton().addActionListener(e -&gt; {</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">      if (featuresForDialogs != null) {</span>
+<span class="nc" id="L171">        EventDialog.showEditDialog(this, featuresForDialogs::getEventsForDay, selectedDate,</span>
+            (prop, subj, start, end, val, scope, resultHandler) -&gt; {
+<span class="nc" id="L173">              emitEditEvent(prop, subj, start, end, val, scope);</span>
+<span class="nc" id="L174">              resultHandler.accept(&quot;Success&quot;);</span>
+<span class="nc" id="L175">            },</span>
+            (subj, start, end, scope, resultHandler) -&gt; {
+<span class="nc" id="L177">              emitDeleteEvent(subj, start, end, scope);</span>
+<span class="nc" id="L178">              resultHandler.accept(&quot;Success&quot;);</span>
+<span class="nc" id="L179">            },</span>
+            this::emitRefresh);
+      }
+<span class="nc" id="L182">    });</span>
+
+    // Delete event button
+<span class="nc" id="L185">    bottomPanel.getDeleteEventButton().addActionListener(e -&gt; {</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">      if (featuresForDialogs != null) {</span>
+<span class="nc" id="L187">        EventDialog.showEditDialog(this, featuresForDialogs::getEventsForDay, selectedDate,</span>
+            (prop, subj, start, end, val, scope, resultHandler) -&gt; {
+<span class="nc" id="L189">              emitEditEvent(prop, subj, start, end, val, scope);</span>
+<span class="nc" id="L190">              resultHandler.accept(&quot;Success&quot;);</span>
+<span class="nc" id="L191">            },</span>
+            (subj, start, end, scope, resultHandler) -&gt; {
+<span class="nc" id="L193">              emitDeleteEvent(subj, start, end, scope);</span>
+<span class="nc" id="L194">              resultHandler.accept(&quot;Success&quot;);</span>
+<span class="nc" id="L195">            },</span>
+            this::emitRefresh);
+      }
+<span class="nc" id="L198">    });</span>
+
+    // Export button
+<span class="nc" id="L201">    bottomPanel.getExportButton().addActionListener(e -&gt; {</span>
+<span class="nc" id="L202">      showExportDialog();</span>
+<span class="nc" id="L203">    });</span>
+<span class="nc" id="L204">  }</span>
+
+  private void updateCalendarComboBox(List&lt;String&gt; calendarNames, String activeCalendarName) {
+<span class="nc bnc" id="L207" title="All 2 branches missed.">    if (topPanel == null) {</span>
+<span class="nc" id="L208">      return;</span>
+    }
+    
+    // Update calendar colors
+<span class="nc bnc" id="L212" title="All 2 branches missed.">    for (String name : calendarNames) {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">      if (!calendarColors.containsKey(name)) {</span>
+<span class="nc" id="L214">        calendarColors.put(name, CALENDAR_COLORS[colorIndex % CALENDAR_COLORS.length]);</span>
+<span class="nc" id="L215">        colorIndex++;</span>
+      }
+<span class="nc" id="L217">    }</span>
+    
+<span class="nc" id="L219">    topPanel.updateCalendarComboBox(calendarNames, activeCalendarName);</span>
+    
+    // Update month view calendar color
+<span class="nc bnc" id="L222" title="All 2 branches missed.">    if (activeCalendarName != null) {</span>
+<span class="nc" id="L223">      Color calendarColor = calendarColors.getOrDefault(activeCalendarName, Color.WHITE);</span>
+<span class="nc" id="L224">      monthViewPanel.setCalendarColor(calendarColor);</span>
+    }
+<span class="nc" id="L226">  }</span>
+
+  // Event emission methods
+  private void emitSwitchCalendar(String calendarName) {
+<span class="nc bnc" id="L230" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L231">      listener.handleSwitchCalendar(calendarName);</span>
+<span class="nc" id="L232">    }</span>
+<span class="nc" id="L233">  }</span>
+
+  private void emitCreateCalendar(String name, String timezone) {
+<span class="nc bnc" id="L236" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L237">      listener.handleCreateCalendar(name, timezone);</span>
+<span class="nc" id="L238">    }</span>
+<span class="nc" id="L239">  }</span>
+
+  private void emitEditCalendar(String calendarName, String property, String newValue) {
+<span class="nc bnc" id="L242" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L243">      listener.handleEditCalendar(calendarName, property, newValue);</span>
+<span class="nc" id="L244">    }</span>
+<span class="nc" id="L245">  }</span>
+
+  private void emitPreviousMonth() {
+<span class="nc bnc" id="L248" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L249">      listener.handlePreviousMonth();</span>
+<span class="nc" id="L250">    }</span>
+<span class="nc" id="L251">  }</span>
+
+  private void emitNextMonth() {
+<span class="nc bnc" id="L254" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L255">      listener.handleNextMonth();</span>
+<span class="nc" id="L256">    }</span>
+<span class="nc" id="L257">  }</span>
+
+  private void emitDateSelected(LocalDate date) {
+<span class="nc bnc" id="L260" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L261">      listener.handleDateSelected(date);</span>
+<span class="nc" id="L262">    }</span>
+<span class="nc" id="L263">  }</span>
+
+  private void emitCreateEvent(String subject, java.time.LocalDateTime startDateTime,
+                               java.time.LocalDateTime endDateTime, String description,
+                               String location, String status, boolean isRepeating,
+                               String repeatDays, LocalDate repeatEndDate) {
+<span class="nc bnc" id="L269" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L270">      listener.handleCreateEvent(subject, startDateTime, endDateTime, description,</span>
+          location, status, isRepeating, repeatDays, repeatEndDate);
+<span class="nc" id="L272">    }</span>
+<span class="nc" id="L273">  }</span>
+
+  private void emitEditEvent(String property, String subject,
+                             java.time.LocalDateTime startDateTime,
+                             java.time.LocalDateTime endDateTime, String newValue, String scope) {
+<span class="nc bnc" id="L278" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L279">      listener.handleEditEvent(property, subject, startDateTime, endDateTime, newValue, scope);</span>
+<span class="nc" id="L280">    }</span>
+<span class="nc" id="L281">  }</span>
+
+  private void emitDeleteEvent(String subject, java.time.LocalDateTime startDateTime,
+                               java.time.LocalDateTime endDateTime, String scope) {
+<span class="nc bnc" id="L285" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L286">      listener.handleDeleteEvent(subject, startDateTime, endDateTime, scope);</span>
+<span class="nc" id="L287">    }</span>
+<span class="nc" id="L288">  }</span>
+
+  private void emitExportCalendar(String fileName) {
+<span class="nc bnc" id="L291" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L292">      listener.handleExportCalendar(fileName);</span>
+<span class="nc" id="L293">    }</span>
+<span class="nc" id="L294">  }</span>
+
+  private void emitRefresh() {
+<span class="nc bnc" id="L297" title="All 2 branches missed.">    for (ViewListener listener : listeners) {</span>
+<span class="nc" id="L298">      listener.handleRefresh();</span>
+<span class="nc" id="L299">    }</span>
+<span class="nc" id="L300">  }</span>
+
+  private void showExportDialog() {
+<span class="nc" id="L303">    javax.swing.JDialog dialog = new javax.swing.JDialog(this, &quot;Export Calendar&quot;, true);</span>
+<span class="nc" id="L304">    dialog.setSize(400, 150);</span>
+<span class="nc" id="L305">    dialog.setLayout(new BorderLayout());</span>
+
+<span class="nc" id="L307">    javax.swing.JPanel panel = new javax.swing.JPanel();</span>
+<span class="nc" id="L308">    panel.setLayout(new javax.swing.BoxLayout(panel, javax.swing.BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L309">    panel.setBorder(new EmptyBorder(20, 20, 20, 20));</span>
+
+<span class="nc" id="L311">    panel.add(new javax.swing.JLabel(&quot;File Name (with extension .csv or .ical):&quot;));</span>
+<span class="nc" id="L312">    javax.swing.JTextField fileNameField = new javax.swing.JTextField(&quot;calendar_export.csv&quot;);</span>
+<span class="nc" id="L313">    panel.add(fileNameField);</span>
+
+<span class="nc" id="L315">    javax.swing.JPanel buttonPanel = new javax.swing.JPanel(new java.awt.FlowLayout());</span>
+<span class="nc" id="L316">    javax.swing.JButton exportButton = new javax.swing.JButton(&quot;Export&quot;);</span>
+<span class="nc" id="L317">    exportButton.addActionListener(e -&gt; {</span>
+      try {
+<span class="nc" id="L319">        String fileName = fileNameField.getText().trim();</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">        if (fileName.isEmpty()) {</span>
+<span class="nc" id="L321">          renderError(&quot;File name cannot be empty&quot;);</span>
+<span class="nc" id="L322">          return;</span>
+        }
+<span class="nc" id="L324">        emitExportCalendar(fileName);</span>
+<span class="nc" id="L325">        dialog.dispose();</span>
+<span class="nc" id="L326">      } catch (Exception ex) {</span>
+<span class="nc" id="L327">        renderError(&quot;Failed to export: &quot; + ex.getMessage());</span>
+<span class="nc" id="L328">      }</span>
+<span class="nc" id="L329">    });</span>
+<span class="nc" id="L330">    buttonPanel.add(exportButton);</span>
+
+<span class="nc" id="L332">    javax.swing.JButton cancelButton = new javax.swing.JButton(&quot;Cancel&quot;);</span>
+<span class="nc" id="L333">    cancelButton.addActionListener(e -&gt; dialog.dispose());</span>
+<span class="nc" id="L334">    buttonPanel.add(cancelButton);</span>
+
+<span class="nc" id="L336">    panel.add(buttonPanel);</span>
+<span class="nc" id="L337">    dialog.add(panel);</span>
+<span class="nc" id="L338">    dialog.setLocationRelativeTo(this);</span>
+<span class="nc" id="L339">    dialog.setVisible(true);</span>
+<span class="nc" id="L340">  }</span>
+
+  @Override
+  public void addFeatures(Features features) {
+    // Deprecated - use addViewListener instead
+    // Kept for backward compatibility
+<span class="nc" id="L346">  }</span>
+
+  /**
+   * Gets the current month being displayed.
+   *
+   * @return the current month
+   */
+  public LocalDate getCurrentMonth() {
+<span class="nc" id="L354">    return currentMonth;</span>
+  }
+
+  /**
+   * Gets the selected date.
+   *
+   * @return the selected date
+   */
+  public LocalDate getSelectedDate() {
+<span class="nc" id="L363">    return selectedDate;</span>
+  }
+
+  /**
+   * Gets the top panel.
+   *
+   * @return the top panel
+   */
+  public TopPanel getTopPanel() {
+<span class="nc" id="L372">    return topPanel;</span>
+  }
+
+  /**
+   * Sets Features interface for dialogs to use for querying data.
+   * This is set by the controller and used only for read operations in dialogs.
+   *
+   * @param features the Features interface
+   */
+  public void setFeaturesForDialogs(Features features) {
+<span class="nc" id="L382">    this.featuresForDialogs = features;</span>
+<span class="nc" id="L383">  }</span>
+
+  @Override
+  public void display() {
+<span class="nc" id="L387">    setVisible(true);</span>
+    // Initial refresh will be triggered by addFeatures
+<span class="nc" id="L389">  }</span>
+
+  @Override
+  public void setCalendars(List&lt;String&gt; calendarNames, String activeCalendarName) {
+<span class="nc" id="L393">    updateCalendarComboBox(calendarNames, activeCalendarName);</span>
+<span class="nc" id="L394">  }</span>
+
+  @Override
+  public void setMonthEvents(LocalDate month, Map&lt;LocalDate, List&lt;EventInfo&gt;&gt; events) {
+<span class="nc bnc" id="L398" title="All 2 branches missed.">    if (month.equals(currentMonth)) {</span>
+<span class="nc" id="L399">      this.currentMonthEvents = events;</span>
+<span class="nc" id="L400">      monthViewPanel.updateMonthView(month, events);</span>
+<span class="nc" id="L401">      monthViewPanel.updateSelectedDate(selectedDate);</span>
+    }
+<span class="nc" id="L403">  }</span>
+
+  @Override
+  public void setDayEvents(LocalDate date, List&lt;EventInfo&gt; events) {
+<span class="nc bnc" id="L407" title="All 2 branches missed.">    if (date.equals(selectedDate)) {</span>
+<span class="nc" id="L408">      this.currentDayEvents = events;</span>
+<span class="nc" id="L409">      dayViewPanel.updateDayView(date, events);</span>
+    }
+<span class="nc" id="L411">  }</span>
+
+  @Override
+  public void render(String message) {
+    // Removed - no popups on success
+    // Only show errors
+<span class="nc" id="L417">  }</span>
+
+  @Override
+  public void renderError(String message) {
+<span class="nc" id="L421">    JOptionPane.showMessageDialog(this, message, &quot;Error&quot;,</span>
+        JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L423">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

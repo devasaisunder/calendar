@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventPredicates.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">EventPredicates.java</span></div><h1>EventPredicates.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.model.datatypes.EventStatus;
+import calendar.model.datatypes.Location;
+import calendar.model.datatypes.TypeOfEvent;
+import calendar.model.interfaces.EventReadOnly;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.function.Predicate;
+
+/**
+ * Predicate class used for filtering Events in a calendar.
+ */
+
+<span class="fc" id="L16">public class EventPredicates {</span>
+
+  /**
+   * Predicate that matches events with the given subject.
+   *
+   * @param subject the subject to filter
+   * @return a predicate that returns true for events with specified subject.
+   */
+
+  public static Predicate&lt;EventReadOnly&gt; bySubject(String subject) {
+<span class="fc" id="L26">    return event -&gt; event.getSubject().equals(subject);</span>
+  }
+
+
+  /**
+   * Predicate that matches events with the given start date.
+   *
+   * @param start the subject to filter
+   * @return a predicate that returns true for events with specified start date.
+   */
+
+  public static Predicate&lt;EventReadOnly&gt; byStartDate(LocalDateTime start) {
+<span class="fc" id="L38">    return event -&gt; event.getStartDateTime().equals(start);</span>
+  }
+
+  /**
+   * Predicate that matches events with the given end date.
+   *
+   * @param end the subject to filter
+   * @return a predicate that returns true for events with specified end date.
+   */
+  public static Predicate&lt;EventReadOnly&gt; byEndDate(LocalDateTime end) {
+<span class="fc" id="L48">    return event -&gt; event.getEndDateTime().equals(end);</span>
+  }
+
+
+  /**
+   * Predicate that matches events with the given description.
+   *
+   * @param description the subject to filter
+   * @return a predicate that returns true for events with specified description.
+   */
+  public static Predicate&lt;EventReadOnly&gt; byDescription(String description) {
+<span class="fc" id="L59">    return event -&gt; event.getDescription().equals(description);</span>
+  }
+
+  /**
+   * Predicate that matches events with the given location.
+   *
+   * @param location the subject to filter
+   * @return a predicate that returns true for events with specified location.
+   */
+  public static Predicate&lt;EventReadOnly&gt; byLocation(Location location) {
+<span class="fc bfc" id="L69" title="All 2 branches covered.">    return event -&gt; event.getLocation() == location;</span>
+  }
+
+  /**
+   * Predicate that matches events with the given status.
+   *
+   * @param status the subject to filter
+   * @return a predicate that returns true for events with specified status.
+   */
+  public static Predicate&lt;EventReadOnly&gt; byStatus(EventStatus status) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">    return event -&gt; event.getEventStatus() == status;</span>
+  }
+
+  /**
+   * Predicate that matches events of a given type.
+   *
+   * @param eventType the event type to match SINGLE, SERIES
+   * @return a predicate that returns true for events with the specified type
+   */
+  public static Predicate&lt;EventReadOnly&gt; byEventType(TypeOfEvent eventType) {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">    return event -&gt; event.getEventType() == eventType;</span>
+  }
+
+  /**
+   * Predicate that matches an event by its unique identifier.
+   *
+   * @param eventId the UUID of the event to match
+   * @return a predicate that returns true for the event with the specified ID
+   */
+  public static Predicate&lt;EventReadOnly&gt; byEventId(UUID eventId) {
+<span class="fc" id="L99">    return event -&gt; Objects.equals(event.getId().toString(), eventId.toString());</span>
+  }
+
+  /**
+   * Predicate that matches all-day or non-all-day events.
+   *
+   * @param allDay true to match all-day events, false otherwise
+   * @return a predicate that returns true for events matching the all-day flag
+   */
+  public static Predicate&lt;EventReadOnly&gt; byAllDay(boolean allDay) {
+<span class="fc bfc" id="L109" title="All 2 branches covered.">    return event -&gt; event.isAllDay() == allDay;</span>
+  }
+
+  /**
+   * Predicate that matches events that belong to a series,
+   * identified by same start time, end time, and subject of the first event in the series.
+   *
+   * @param firstStart   the start time of the first event in the series
+   * @param firstEnd     the end time of the first event in the series
+   * @param firstSubject the subject of the first event in the series
+   * @return a predicate that returns true for events that belong to the specified series
+   */
+
+  public static Predicate&lt;EventReadOnly&gt; bySeries(LocalDateTime firstStart, LocalDateTime firstEnd,
+                                                  String firstSubject) {
+<span class="fc bfc" id="L124" title="All 2 branches covered.">    return event -&gt; event.getStartDateTime().equals(firstStart)</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        &amp;&amp; event.getSubject().equals(firstSubject)</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        &amp;&amp; event.getEndDateTime().equals(firstEnd);</span>
+  }
+
+  /**
+   * Predicate that matches events occurring between the given start and end times.
+   *
+   * @param start the start of the time range
+   * @param end   the end of the time range
+   * @return a predicate that returns true for events starting between the specified times.
+   */
+  public static Predicate&lt;EventReadOnly&gt; betweenStartAndEnd(LocalDateTime start,
+                                                            LocalDateTime end) {
+<span class="fc" id="L138">    return event -&gt;</span>
+<span class="fc bfc" id="L139" title="All 4 branches covered.">        !event.getEndDateTime().isBefore(start) &amp;&amp; !event.getStartDateTime().isAfter(end);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

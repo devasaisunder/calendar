@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.view</a> &gt; <span class="el_source">EventInfo.java</span></div><h1>EventInfo.java</h1><pre class="source lang-java linenums">package calendar.view;
+
+import java.time.LocalDateTime;
+
+/**
+ * Data transfer object for event information to be displayed in the view.
+ * This class isolates the view from the model's EventReadOnly interface.
+ */
+public class EventInfo {
+  private final String subject;
+  private final LocalDateTime startDateTime;
+  private final LocalDateTime endDateTime;
+  private final String description;
+  private final String location;
+  private final String status;
+  private final boolean allDay;
+  private final boolean isSeries;
+
+  /**
+   * Constructor for EventInfo.
+   *
+   * @param subject       the event subject
+   * @param startDateTime the start date and time
+   * @param endDateTime   the end date and time
+   * @param description   the description
+   * @param location      the location
+   * @param status        the status
+   * @param allDay        whether it's an all-day event
+   * @param isSeries      whether it's part of a series
+   */
+  public EventInfo(String subject, LocalDateTime startDateTime, LocalDateTime endDateTime,
+                   String description, String location, String status, boolean allDay,
+<span class="nc" id="L33">                   boolean isSeries) {</span>
+<span class="nc" id="L34">    this.subject = subject;</span>
+<span class="nc" id="L35">    this.startDateTime = startDateTime;</span>
+<span class="nc" id="L36">    this.endDateTime = endDateTime;</span>
+<span class="nc" id="L37">    this.description = description;</span>
+<span class="nc" id="L38">    this.location = location;</span>
+<span class="nc" id="L39">    this.status = status;</span>
+<span class="nc" id="L40">    this.allDay = allDay;</span>
+<span class="nc" id="L41">    this.isSeries = isSeries;</span>
+<span class="nc" id="L42">  }</span>
+
+  public String getSubject() {
+<span class="nc" id="L45">    return subject;</span>
+  }
+
+  public LocalDateTime getStartDateTime() {
+<span class="nc" id="L49">    return startDateTime;</span>
+  }
+
+  public LocalDateTime getEndDateTime() {
+<span class="nc" id="L53">    return endDateTime;</span>
+  }
+
+  public String getDescription() {
+<span class="nc" id="L57">    return description;</span>
+  }
+
+  public String getLocation() {
+<span class="nc" id="L61">    return location;</span>
+  }
+
+  public String getStatus() {
+<span class="nc" id="L65">    return status;</span>
+  }
+
+  public boolean isAllDay() {
+<span class="nc" id="L69">    return allDay;</span>
+  }
+
+  public boolean isSeries() {
+<span class="nc" id="L73">    return isSeries;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

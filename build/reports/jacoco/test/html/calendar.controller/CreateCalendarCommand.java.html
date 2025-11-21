@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateCalendarCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">CreateCalendarCommand.java</span></div><h1>CreateCalendarCommand.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.CreateCalendarCommandData;
+import calendar.controller.handlers.CreateCalendarHandler;
+import calendar.model.interfaces.CalendarContainer;
+import java.time.ZoneId;
+import java.time.zone.ZoneRulesException;
+import java.util.List;
+
+/**
+ * Command class to create a new calendar with a unique name and timezone
+ * as specified by the user. The expected timezone format is the
+ * IANA Time Zone Database format. In this format the timezone is specified as &quot;area/location&quot;.
+ * It throws an Illegal argument exception if a calendar with given name is already existing.
+ * This class handles parsing, while CreateCalendarHandler handles the logic.
+ * Example usage of commands:
+ * &quot;create calendar --name calName --timezone area/location&quot;
+ */
+public class CreateCalendarCommand implements Command {
+
+  private final CreateCalendarHandler handler;
+
+  /**
+   * Constructor for creating a new calendar.
+   * It takes in the Calendar Manager to which this new calendar needs to be added.
+   *
+   * @param calendarManager the calendar manager using which calendar creation is performed.
+   */
+<span class="fc" id="L29">  public CreateCalendarCommand(CalendarContainer calendarManager) {</span>
+<span class="fc" id="L30">    this.handler = new CreateCalendarHandler(calendarManager);</span>
+<span class="fc" id="L31">  }</span>
+
+  /**
+   * Parses the command and delegates to the handler.
+   *
+   * @param parsedCommand list of user input values.
+   * @return a string based on the operation performed.
+   */
+  @Override
+  public String execute(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L41">    CreateCalendarCommandData data = parse(parsedCommand);</span>
+<span class="fc" id="L42">    return handler.handle(data);</span>
+  }
+
+  /**
+   * Parses the command input into a CreateCalendarCommandData object.
+   *
+   * @param parsedCommand the parsed command tokens
+   * @return CreateCalendarCommandData containing parsed information
+   */
+  public CreateCalendarCommandData parse(List&lt;String&gt; parsedCommand) {
+<span class="fc bfc" id="L52" title="All 4 branches covered.">    if (parsedCommand.size() != 6 || !parsedCommand.get(2).equalsIgnoreCase(&quot;--name&quot;)</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        || !parsedCommand.get(4).equalsIgnoreCase(&quot;--timezone&quot;)) {</span>
+<span class="fc" id="L54">      throw new IllegalArgumentException(&quot;Invalid create calendar command. &quot;</span>
+          + &quot;Usage: create calendar --name &lt;calName&gt; --timezone area/location&quot;);
+    }
+<span class="fc" id="L57">    String name = parsedCommand.get(3);</span>
+    ZoneId timezone;
+
+    try {
+<span class="fc" id="L61">      timezone = ZoneId.of(parsedCommand.get(5));</span>
+<span class="fc" id="L62">    } catch (ZoneRulesException e) {</span>
+<span class="fc" id="L63">      throw new IllegalArgumentException(&quot;Invalid timezone&quot;);</span>
+<span class="fc" id="L64">    }</span>
+<span class="fc" id="L65">    return new CreateCalendarCommandData(name, timezone);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

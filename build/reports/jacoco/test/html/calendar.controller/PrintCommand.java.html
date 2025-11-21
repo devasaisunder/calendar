@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrintCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">PrintCommand.java</span></div><h1>PrintCommand.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.PrintCommandData;
+import calendar.controller.handlers.PrintEventHandler;
+import calendar.model.interfaces.CalendarEditable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+/**
+ * Executes the &quot;print events&quot; command from the user input.
+ * Represents the command used to print events for a given date and time.
+ * This class handles parsing, while PrintEventHandler handles the logic.
+ */
+public class PrintCommand implements Command {
+
+  private final PrintEventHandler handler;
+
+  /**
+   * We are passing the active calendar in the constructor.
+   * It is the calendar on which the current operation is to be performed.
+   *
+   * @param calendar current active calendar.
+   */
+<span class="fc" id="L26">  public PrintCommand(CalendarEditable calendar) {</span>
+<span class="fc" id="L27">    this.handler = new PrintEventHandler(calendar);</span>
+<span class="fc" id="L28">  }</span>
+
+  /**
+   * Parses the command and delegates to the handler.
+   *
+   * @param parsedCommand list of user input values.
+   * @return a string to print.
+   */
+  @Override
+  public String execute(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L38">    PrintCommandData data = parse(parsedCommand);</span>
+<span class="fc" id="L39">    return handler.handle(data);</span>
+  }
+
+  /**
+   * Parses the command input into a PrintCommandData object.
+   *
+   * @param parsedCommand the parsed command tokens
+   * @return PrintCommandData containing parsed information
+   */
+  public PrintCommandData parse(List&lt;String&gt; parsedCommand) {
+    LocalDateTime startDateTime;
+    LocalDateTime endDateTime;
+    boolean isOnCommand;
+
+<span class="fc bfc" id="L53" title="All 4 branches covered.">    if (parsedCommand.contains(&quot;on&quot;) &amp;&amp; parsedCommand.size() == 4) {</span>
+<span class="fc" id="L54">      LocalDate localDate = LocalDate.parse(parsedCommand.get(3),</span>
+<span class="fc" id="L55">          DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;));</span>
+<span class="fc" id="L56">      startDateTime = localDate.atStartOfDay();</span>
+<span class="fc" id="L57">      endDateTime = localDate.atTime(23, 59);</span>
+<span class="fc" id="L58">      isOnCommand = true;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">    } else if (parsedCommand.contains(&quot;from&quot;)</span>
+<span class="fc bfc" id="L60" title="All 4 branches covered.">        &amp;&amp; parsedCommand.size() == 6 &amp;&amp; parsedCommand.get(4).equals(&quot;to&quot;)) {</span>
+<span class="fc" id="L61">      startDateTime = LocalDateTime.parse(parsedCommand.get(3),</span>
+<span class="fc" id="L62">          DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd'T'HH:mm&quot;));</span>
+<span class="fc" id="L63">      endDateTime = LocalDateTime.parse(parsedCommand.get(5),</span>
+<span class="fc" id="L64">          DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd'T'HH:mm&quot;));</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">      if (endDateTime.isBefore(startDateTime)) {</span>
+<span class="fc" id="L66">        throw new IllegalArgumentException(&quot;End date cannot be before start date&quot;);</span>
+      }
+<span class="fc" id="L68">      isOnCommand = false;</span>
+    } else {
+<span class="fc" id="L70">      throw new IllegalArgumentException(&quot;Invalid print command&quot;);</span>
+    }
+
+<span class="fc" id="L73">    return new PrintCommandData(startDateTime, endDateTime, isOnCommand);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

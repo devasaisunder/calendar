@@ -1,0 +1,7 @@
+create event event1 from 2025-10-25T09:00 to 2025-10-25T10:00
+create event Meet from 2025-06-26T23:45 to 2025-06-26T23:59 repeats MRU for 10 times
+create event "Meeting at Park" from 2025-06-26T23:45 to 2025-06-26T23:59 repeats MRU until 2025-06-30
+create event "Event 4" on 2025-10-25
+create event "Event 5" on 2025-10-26 repeats MTW for 3 times
+create event "Hello Meet" on 2025-10-12 repeats TUF until 2025-12-12
+exit

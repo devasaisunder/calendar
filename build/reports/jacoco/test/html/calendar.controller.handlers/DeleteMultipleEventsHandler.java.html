@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeleteMultipleEventsHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller.handlers</a> &gt; <span class="el_source">DeleteMultipleEventsHandler.java</span></div><h1>DeleteMultipleEventsHandler.java</h1><pre class="source lang-java linenums">package calendar.controller.handlers;
+
+import calendar.controller.CalendarFilter;
+import calendar.controller.EventPredicates;
+import calendar.controller.commanddata.DeleteMultipleEventsCommandData;
+import calendar.model.datatypes.TypeOfEvent;
+import calendar.model.interfaces.CalendarEditable;
+import calendar.model.interfaces.EventReadOnly;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Handler class that performs the logic for deleting multiple events from a date onwards.
+ * Takes parsed command data and interacts with the model.
+ */
+public class DeleteMultipleEventsHandler {
+
+  private final CalendarEditable calendarModel;
+
+  /**
+   * Constructor for DeleteMultipleEventsHandler.
+   *
+   * @param calendarModel the calendar model to interact with
+   */
+<span class="nc" id="L26">  public DeleteMultipleEventsHandler(CalendarEditable calendarModel) {</span>
+<span class="nc" id="L27">    this.calendarModel = Objects.requireNonNull(calendarModel);</span>
+<span class="nc" id="L28">  }</span>
+
+  /**
+   * Executes the delete multiple events logic based on the parsed command data.
+   *
+   * @param data the parsed command data
+   * @return the result string
+   */
+  public String handle(DeleteMultipleEventsCommandData data) {
+<span class="nc" id="L37">    CalendarFilter filter = new CalendarFilter(calendarModel);</span>
+<span class="nc" id="L38">    List&lt;EventReadOnly&gt; filteredEvents = filter.filter(EventPredicates.bySubject(data.getSubject())</span>
+<span class="nc" id="L39">        .and(EventPredicates.byStartDate(data.getStartDateTime())));</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">    if (filteredEvents.isEmpty()) {</span>
+<span class="nc" id="L42">      return &quot;No events found to delete&quot;;</span>
+    }
+
+<span class="nc" id="L45">    StringBuilder output = new StringBuilder();</span>
+<span class="nc" id="L46">    int deletedCount = 0;</span>
+
+<span class="nc bnc" id="L48" title="All 2 branches missed.">    for (EventReadOnly event : filteredEvents) {</span>
+<span class="nc" id="L49">      List&lt;EventReadOnly&gt; eventsToDelete = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">      if (event.getEventType() == TypeOfEvent.SERIES) {</span>
+        // Get all events in the series from this date onwards
+<span class="nc" id="L52">        List&lt;EventReadOnly&gt; seriesEvents = filter.filter(EventPredicates.byEventId(event.getId()));</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        for (EventReadOnly seriesEvent : seriesEvents) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">          if (seriesEvent.getStartDateTime().isEqual(data.getStartDateTime())</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">              || seriesEvent.getStartDateTime().isAfter(data.getStartDateTime())) {</span>
+<span class="nc" id="L56">            eventsToDelete.add(seriesEvent);</span>
+          }
+<span class="nc" id="L58">        }</span>
+<span class="nc" id="L59">      } else {</span>
+        // Single event - only delete if it matches the start date
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (event.getStartDateTime().isEqual(data.getStartDateTime())) {</span>
+<span class="nc" id="L62">          eventsToDelete.add(event);</span>
+        }
+      }
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">      for (EventReadOnly eventToDelete : eventsToDelete) {</span>
+<span class="nc" id="L67">        calendarModel.removeEvent(eventToDelete);</span>
+<span class="nc" id="L68">        deletedCount++;</span>
+<span class="nc" id="L69">      }</span>
+<span class="nc" id="L70">    }</span>
+
+<span class="nc" id="L72">    output.append(&quot;Deleted &quot;).append(deletedCount).append(&quot; event(s)&quot;).append(System.lineSeparator());</span>
+<span class="nc" id="L73">    return output.toString();</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

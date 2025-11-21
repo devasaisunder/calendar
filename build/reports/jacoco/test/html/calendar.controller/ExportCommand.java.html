@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExportCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">ExportCommand.java</span></div><h1>ExportCommand.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.ExportCommandData;
+import calendar.controller.handlers.ExportEventHandler;
+import calendar.model.interfaces.CalendarEditable;
+import java.util.List;
+
+/**
+ * Executes the &quot;export cal&quot; command from the user input.
+ * Represents the command used to export the calendar events into csv file.
+ * This class handles parsing, while ExportEventHandler handles the logic.
+ */
+public class ExportCommand implements Command {
+
+  private final ExportEventHandler handler;
+
+  /**
+   * We are passing the active calendar in the constructor.
+   * It is the calendar on which the current operation is to be performed.
+   *
+   * @param calendarModel current active calendar.
+   */
+<span class="fc" id="L23">  public ExportCommand(CalendarEditable calendarModel) {</span>
+<span class="fc" id="L24">    this.handler = new ExportEventHandler(calendarModel);</span>
+<span class="fc" id="L25">  }</span>
+
+  /**
+   * Parses the command and delegates to the handler.
+   *
+   * @param parsedCommand list of user input values.
+   * @return the result string
+   */
+  @Override
+  public String execute(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L35">    ExportCommandData data = parse(parsedCommand);</span>
+<span class="fc" id="L36">    return handler.handle(data);</span>
+  }
+
+  /**
+   * Parses the command input into an ExportCommandData object.
+   *
+   * @param parsedCommand the parsed command tokens
+   * @return ExportCommandData containing parsed information
+   */
+  public ExportCommandData parse(List&lt;String&gt; parsedCommand) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">    if (parsedCommand.size() != 3) {</span>
+<span class="fc" id="L47">      throw new IllegalArgumentException(&quot;Invalid export command&quot;);</span>
+    }
+
+<span class="fc" id="L50">    String fileName = parsedCommand.get(2);</span>
+<span class="fc" id="L51">    return new ExportCommandData(fileName);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

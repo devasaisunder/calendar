@@ -1,0 +1,69 @@
+Welcome to the calendar!
+Use below mentioned commands to interact with the application...
+To create a new calendar
+create calendar --name <calName> --timezone area/location
+To edit an existing calendar
+edit calendar --name <calName> --timezone area/location
+To use a calendar that is created:
+use calendar --name <name-of-calendar>
+To copy events from one calendar to another:
+copy event <eventName> on <dateStringTtimeString> --target <calendarName> to <dateStringTtimeString>
+copy events on <dateString> --target <calendarName> to <dateString>
+copy events between <dateString> and <dateString> --target <calendarName> to <dateString>
+
+Commands Supported on individual calendars:
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString>
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> for <N> times
+create event <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> repeats <weekdays> until <dateString>
+create event <eventSubject> on <dateString>
+create event <eventSubject> on <dateString> repeats <weekdays> for <N> times
+create event <eventSubject> on <dateString> repeats <weekdays> until <dateString>
+edit event <property> <eventSubject> from <dateStringTtimeString> to <dateStringTtimeString> with <NewPropertyValue>
+edit events <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+edit series <property> <eventSubject> from <dateStringTtimeString> with <NewPropertyValue>
+print events on <dateString>
+print events from <dateStringTtimeString> to <dateStringTtimeString>
+export cal fileName.csv or export cal fileName.ical
+show status on <dateStringTtimeString>
+To exit the application:
+exit
+
+!!***Invalid creation command***!!
+!!***Invalid command.***!!
+!!***Invalid value for N***!!
+!!***Invalid day of week: g***!!
+!!***Invalid repetition command: fro***!!
+!!***Invalid command: create***!!
+!!***Invalid command: cret***!!
+!!***Invalid command: creat evnt***!!
+!!***Invalid creation command***!!
+!!***Invalid file type.nofile***!!
+!!***Invalid show status command***!!
+!!***Invalid show status command***!!
+!!***Invalid print command***!!
+!!***Invalid print command***!!
+!!***Invalid print command***!!
+!!***Invalid print command***!!
+!!***Event with given details doesn't exist***!!
+!!***Event with given details doesn't exist***!!
+!!***Event with given details doesn't exist***!!
+!!***Event with given details doesn't exist***!!
+!!***Invalid command format***!!
+!!***Invalid command format***!!
+!!***Invalid command format***!!
+!!***Invalid command syntax***!!
+!!***Invalid command syntax***!!
+!!***Invalid command syntax.***!!
+!!***Invalid command syntax.***!!
+!!***Invalid command syntax***!!
+!!***Invalid create calendar command. Usage: create calendar --name <calName> --timezone area/location***!!
+!!***Invalid command: create cal***!!
+!!***Invalid command: edit cal***!!
+!!***Invalid command: random check***!!
+!!***Calendar with name cal1 does not exist***!!
+!!***Invalid command: use --name <name-of-calendar>***!!
+!!***Wrong command format. Usage: copy event <eventName> on <dateTime> --target <calendarName> to <dateTime>***!!
+!!***Invalid copy events command.
+Usage: copy events on <dateString> --target <calendarName> to <dateString> 
+or copy events between <dateString> and <dateString> --target <calendarName> to <dateString>***!!
+!!***Text 'dateString' could not be parsed at index 0***!!

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CopySingleEventCalendarCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">CopySingleEventCalendarCommand.java</span></div><h1>CopySingleEventCalendarCommand.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.controller.commanddata.CopySingleEventCommandData;
+import calendar.controller.handlers.CopySingleEventHandler;
+import calendar.model.datatypes.TypeOfEvent;
+import calendar.model.interfaces.CalendarContainer;
+import calendar.model.interfaces.EventReadOnly;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+/**
+ * Command to copy a specific event with the given name and
+ * start date/time from the current calendar to the target calendar
+ * to start at the specified date/time. The &quot;to&quot; date/time is assumed to
+ * be specified in the timezone of the target calendar.
+ * This class handles parsing, while CopySingleEventHandler handles the logic.
+ * Example usage of commands:
+ * &quot;copy event eventName on dateStringTtimeString --target calendarName to dateStringTtimeString&quot;.
+ */
+public class CopySingleEventCalendarCommand implements Command {
+
+<span class="fc" id="L23">  private static final DateTimeFormatter FORMATTER =</span>
+<span class="fc" id="L24">      DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd'T'HH:mm&quot;);</span>
+  private final CopySingleEventHandler handler;
+
+  /**
+   * Constructor for copying single event from a source calendar to target calendar.
+   * It takes in the Calendar Manager to get information about source and target calendars.
+   *
+   * @param calendarManager the calendar manager using which this copy events is performed
+   */
+<span class="fc" id="L33">  public CopySingleEventCalendarCommand(CalendarContainer calendarManager) {</span>
+<span class="fc" id="L34">    this.handler = new CopySingleEventHandler(calendarManager);</span>
+<span class="fc" id="L35">  }</span>
+
+  /**
+   * Static helper method to format output string.
+   *
+   * @param copiedEvents the list of copied events
+   * @return the formatted output string
+   */
+  public static String getOutputString(List&lt;EventReadOnly&gt; copiedEvents) {
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">    if (copiedEvents.isEmpty()) {</span>
+<span class="nc" id="L45">      throw new IllegalArgumentException(&quot;No events copied.&quot;);</span>
+    }
+<span class="fc" id="L47">    StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L48">    result.append(&quot;Copied Events:&quot;).append(System.lineSeparator());</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">    for (EventReadOnly event : copiedEvents) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">      if (event.getEventType().equals(TypeOfEvent.SERIES)</span>
+<span class="fc" id="L51">          &amp;&amp; !event.getStartDateTime().toLocalDate()</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">          .equals(event.getEndDateTime().toLocalDate())) {</span>
+<span class="fc" id="L53">        result.append(&quot;WARNING: Series event in target calendar is spreading across multiple days&quot;)</span>
+<span class="fc" id="L54">            .append(System.lineSeparator());</span>
+      }
+<span class="fc" id="L56">      result.append(event).append(System.lineSeparator());</span>
+<span class="fc" id="L57">    }</span>
+<span class="fc" id="L58">    return result.toString();</span>
+  }
+
+  @Override
+  public String execute(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L63">    CopySingleEventCommandData data = parse(parsedCommand);</span>
+<span class="fc" id="L64">    return handler.handle(data);</span>
+  }
+
+  /**
+   * Parses the command input into a CopySingleEventCommandData object.
+   *
+   * @param parsedCommand the parsed command tokens
+   * @return CopySingleEventCommandData containing parsed information
+   */
+  public CopySingleEventCommandData parse(List&lt;String&gt; parsedCommand) {
+<span class="fc" id="L74">    validateCommand(parsedCommand);</span>
+
+<span class="fc" id="L76">    String eventName = parsedCommand.get(2);</span>
+<span class="fc" id="L77">    LocalDateTime sourceStart = parseDate(parsedCommand.get(4));</span>
+<span class="fc" id="L78">    String targetCalendarName = parsedCommand.get(6);</span>
+<span class="fc" id="L79">    LocalDateTime targetStart = parseDate(parsedCommand.get(8));</span>
+
+<span class="fc" id="L81">    return new CopySingleEventCommandData(eventName, sourceStart, targetCalendarName, targetStart);</span>
+  }
+
+  private void validateCommand(List&lt;String&gt; cmd) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">    if (cmd.size() != 9</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        || !cmd.get(3).equals(&quot;on&quot;)</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        || !cmd.get(5).equals(&quot;--target&quot;)</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        || !cmd.get(7).equals(&quot;to&quot;)) {</span>
+<span class="fc" id="L89">      throw new IllegalArgumentException(&quot;Wrong command format. Usage: &quot;</span>
+          + &quot;copy event &lt;eventName&gt; on &lt;dateTime&gt; --target &lt;calendarName&gt; to &lt;dateTime&gt;&quot;);
+    }
+<span class="fc" id="L92">  }</span>
+
+  private LocalDateTime parseDate(String dateStr) {
+    try {
+<span class="fc" id="L96">      return LocalDateTime.parse(dateStr, FORMATTER);</span>
+<span class="nc" id="L97">    } catch (Exception e) {</span>
+<span class="nc" id="L98">      throw new IllegalArgumentException(&quot;Invalid date/time format: &quot; + dateStr);</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

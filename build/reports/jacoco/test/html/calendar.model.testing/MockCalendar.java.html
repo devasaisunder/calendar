@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MockCalendar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.model.testing</a> &gt; <span class="el_source">MockCalendar.java</span></div><h1>MockCalendar.java</h1><pre class="source lang-java linenums">package calendar.model.testing;
+
+import calendar.model.interfaces.CalendarEditable;
+import calendar.model.interfaces.EventReadOnly;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
+/**
+ * A mock implementation of CalendarEditable used for testing method calls and interactions.
+ */
+class MockCalendar implements CalendarEditable {
+
+
+  private final Appendable log;
+
+  /**
+   * Creates a mock calendar that logs method calls to the given Appendable.
+   *
+   * @param log the output to record called methods
+   */
+<span class="fc" id="L26">  public MockCalendar(Appendable log) {</span>
+<span class="fc" id="L27">    this.log = log;</span>
+<span class="fc" id="L28">  }</span>
+
+
+  @Override
+  public EventReadOnly addEvent(EventReadOnly event) {
+<span class="fc" id="L33">    appendToLog(&quot;addEvent&quot;);</span>
+<span class="fc" id="L34">    return event;</span>
+  }
+
+  @Override
+  public List&lt;EventReadOnly&gt; editEvent(List&lt;EventReadOnly&gt; events,
+                                       String property, String newValue) {
+<span class="fc" id="L40">    appendToLog(&quot;editEvent&quot;);</span>
+<span class="fc" id="L41">    return events;</span>
+  }
+
+  @Override
+  public void removeEvent(EventReadOnly event) {
+<span class="fc" id="L46">    appendToLog(&quot;removeEvent&quot;);</span>
+<span class="fc" id="L47">  }</span>
+
+  @Override
+  public boolean isBusy(LocalDateTime dateTime) {
+<span class="fc" id="L51">    appendToLog(&quot;isBusy&quot;);</span>
+<span class="fc" id="L52">    return false;</span>
+  }
+
+  @Override
+  public void forEachEvent(Consumer&lt;EventReadOnly&gt; consumer) {
+<span class="fc" id="L57">    appendToLog(&quot;forEachEvent&quot;);</span>
+<span class="fc" id="L58">  }</span>
+
+  @Override
+  public List&lt;EventReadOnly&gt; getEvents(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+<span class="fc" id="L62">    appendToLog(&quot;getEvents&quot;);</span>
+<span class="fc" id="L63">    return new ArrayList&lt;&gt;();</span>
+  }
+
+  @Override
+  public Map&lt;LocalDate, List&lt;EventReadOnly&gt;&gt; getAllEvents() {
+<span class="fc" id="L68">    appendToLog(&quot;getAllEvents&quot;);</span>
+<span class="fc" id="L69">    return Map.of();</span>
+  }
+
+  private void appendToLog(String message) {
+    try {
+<span class="fc" id="L74">      log.append(message);</span>
+<span class="fc" id="L75">    } catch (IOException e) {</span>
+<span class="fc" id="L76">      throw new IllegalArgumentException(&quot;Could not write to log&quot;);</span>
+<span class="fc" id="L77">    }</span>
+<span class="fc" id="L78">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

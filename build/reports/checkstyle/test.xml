@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.23.1">
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarModelTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/calendar/model/testing/ControllerCommandsTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/calendar/model/testing/AdvancedControllerTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/ExpectedOutputGenerator.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarInputFactoryTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/EnumDataTypeTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarContainerControllerTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarEditEventsTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarViewTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarContainerTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarRunnerTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/EventPredicatesTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CalendarExportTest.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/test/java/CopyCommandTest.java">
+</file>
+</checkstyle>

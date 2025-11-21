@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalendarControllerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller</a> &gt; <span class="el_source">CalendarControllerImpl.java</span></div><h1>CalendarControllerImpl.java</h1><pre class="source lang-java linenums">package calendar.controller;
+
+import calendar.model.AdvancedCalendarImpl;
+import calendar.model.CalendarContainerImpl;
+import calendar.model.interfaces.CalendarContainer;
+import calendar.model.interfaces.CalendarEditable;
+import calendar.view.CalendarView;
+import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
+import java.util.function.Function;
+
+/**
+ * Implementation of the Calendar controller interface.
+ * This class handles the user commands from Readable and executes them
+ * via the model Commands and updates the view.
+ */
+public class CalendarControllerImpl implements CalendarController {
+
+  protected final CalendarContainer calendarContainer;
+  protected final CalendarEditable calendar;
+  protected final Readable inputStream;
+  protected final CalendarView calendarView;
+  protected Map&lt;String, Function&lt;CalendarContainer, Command&gt;&gt; commands;
+
+  /**
+   * Backward-compatible constructor (keeps old behavior).
+   * Delegates to the new constructor by creating a fresh CalendarContainerImpl.
+   *
+   * @param calendar     Calendar Editable Model.
+   * @param inputStream  used to read the user input.
+   * @param calendarView Output to the user view.
+   */
+  public CalendarControllerImpl(CalendarEditable calendar, Readable inputStream,
+                                CalendarView calendarView) {
+<span class="fc" id="L39">    this(new CalendarContainerImpl(), calendar, inputStream, calendarView);</span>
+<span class="fc" id="L40">  }</span>
+
+  /**
+   * New primary constructor: accepts an externally-provided CalendarContainer.
+   * This ensures the controller uses the *exact same* container instance that callers pass in.
+   *
+   * @param calendarContainer an existing CalendarContainer to use
+   * @param calendar          Calendar Editable Model (used for default calendar if needed)
+   * @param inputStream       used to read the user input
+   * @param calendarView      Output to the user view
+   */
+  public CalendarControllerImpl(CalendarContainer calendarContainer,
+                                CalendarEditable calendar,
+                                Readable inputStream,
+<span class="fc" id="L54">                                CalendarView calendarView) {</span>
+<span class="fc" id="L55">    this.calendar = Objects.requireNonNull(calendar);</span>
+    // inputStream can be null for GUI mode
+<span class="fc" id="L57">    this.inputStream = inputStream;</span>
+<span class="fc" id="L58">    this.calendarView = Objects.requireNonNull(calendarView);</span>
+<span class="fc" id="L59">    this.commands = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L61">    this.calendarContainer = Objects.requireNonNull(calendarContainer);</span>
+
+    // Initialize default calendar if it doesn't exist
+    try {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">      if (!calendarContainer.getCalendars().containsKey(&quot;default&quot;)) {</span>
+<span class="fc" id="L66">        this.calendarContainer.addCalendar(&quot;default&quot;,</span>
+            new AdvancedCalendarImpl
+<span class="fc" id="L68">                .AdvancedCalendarBuilder(&quot;default&quot;, ZoneId.systemDefault())</span>
+<span class="fc" id="L69">                .setCalendar(calendar)</span>
+<span class="fc" id="L70">                .build());</span>
+      }
+      // Set active calendar to default if no active calendar is set
+<span class="fc bfc" id="L73" title="All 2 branches covered.">      if (calendarContainer.getActiveCalendar() == null</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">          || calendarContainer.getCalendars().containsKey(&quot;default&quot;)) {</span>
+<span class="fc" id="L75">        this.calendarContainer.setActiveCalendar(&quot;default&quot;);</span>
+      }
+<span class="fc" id="L77">    } catch (Exception e) {</span>
+      // Calendar might already exist or other error - log but don't fail
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">      if (calendarView != null) {</span>
+<span class="nc" id="L80">        calendarView.renderError(e.getMessage());</span>
+      }
+<span class="fc" id="L82">    }</span>
+
+<span class="fc" id="L84">    this.commands.put(&quot;create event&quot;,</span>
+<span class="fc" id="L85">        (container) -&gt; new CreateCommand(container.getActiveCalendar()));</span>
+<span class="fc" id="L86">    this.commands.put(&quot;edit event&quot;,</span>
+<span class="fc" id="L87">        (container) -&gt; new EditEventCommand(container.getActiveCalendar()));</span>
+<span class="fc" id="L88">    this.commands.put(&quot;edit events&quot;,</span>
+<span class="fc" id="L89">        (container) -&gt; new EditMultipleEventsCommand(container.getActiveCalendar()));</span>
+<span class="fc" id="L90">    this.commands.put(&quot;edit series&quot;,</span>
+<span class="fc" id="L91">        (container) -&gt; new EditSeriesCommand(container.getActiveCalendar()));</span>
+<span class="fc" id="L92">    this.commands.put(&quot;print events&quot;,</span>
+<span class="fc" id="L93">        (container) -&gt; new PrintCommand(container.getActiveCalendar()));</span>
+<span class="fc" id="L94">    this.commands.put(&quot;export cal&quot;,</span>
+<span class="fc" id="L95">        (container) -&gt; new ExportCommand(container.getActiveCalendar()));</span>
+<span class="fc" id="L96">    this.commands.put(&quot;show status&quot;,</span>
+<span class="fc" id="L97">        (container) -&gt; new UserStatusCommand(container.getActiveCalendar()));</span>
+<span class="fc" id="L98">  }</span>
+
+  @Override
+  public void run() {
+    // For GUI mode, inputStream may be null or empty - don't run CLI loop
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">    if (inputStream == null) {</span>
+<span class="nc" id="L104">      return;</span>
+    }
+<span class="fc" id="L106">    this.welcomeMessage();</span>
+<span class="fc" id="L107">    Scanner scanner = new Scanner(inputStream);</span>
+<span class="fc" id="L108">    CommandTokenizer tokenizer = new CommandTokenizerImpl();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">    while (scanner.hasNext()) {</span>
+<span class="fc" id="L110">      String command = scanner.nextLine();</span>
+<span class="fc" id="L111">      List&lt;String&gt; tokens = tokenizer.parser(command);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">      if (tokens.isEmpty()) {</span>
+<span class="fc" id="L113">        continue;</span>
+      }
+<span class="fc bfc" id="L115" title="All 4 branches covered.">      if (tokens.size() == 1 &amp;&amp; tokens.get(0).equals(&quot;exit&quot;)) {</span>
+<span class="fc" id="L116">        calendarView.render(&quot;Exiting!!&quot;);</span>
+<span class="fc" id="L117">        this.farewellMessage();</span>
+<span class="fc" id="L118">        return;</span>
+      }
+<span class="fc bfc" id="L120" title="All 2 branches covered.">      if (tokens.size() &lt;= 2) {</span>
+<span class="fc" id="L121">        calendarView.renderError(&quot;Invalid command: &quot; + command);</span>
+<span class="fc" id="L122">        continue;</span>
+      }
+<span class="fc" id="L124">      String commandKey = tokens.get(0) + &quot; &quot; + tokens.get(1);</span>
+<span class="fc" id="L125">      Function&lt;CalendarContainer, Command&gt; commandFunction = commands.get(commandKey);</span>
+
+<span class="fc bfc" id="L127" title="All 2 branches covered.">      if (commandFunction == null) {</span>
+<span class="fc" id="L128">        calendarView.renderError(&quot;Invalid command: &quot; + command);</span>
+<span class="fc" id="L129">        continue;</span>
+      }
+      try {
+<span class="fc" id="L132">        calendarView.render(commandFunction.apply(calendarContainer).execute(tokens));</span>
+<span class="fc" id="L133">      } catch (Exception e) {</span>
+<span class="fc" id="L134">        calendarView.renderError(e.getMessage());</span>
+<span class="fc" id="L135">      }</span>
+<span class="fc" id="L136">    }</span>
+<span class="fc" id="L137">  }</span>
+
+  /**
+   * Used print a Farewell message.
+   */
+  protected void farewellMessage() {
+<span class="fc" id="L143">    calendarView.render(&quot;Thank you for using this program!&quot;);</span>
+<span class="fc" id="L144">  }</span>
+
+  private void welcomeMessage() {
+<span class="fc" id="L147">    StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L149">    sb.append(headerSection());</span>
+<span class="fc" id="L150">    sb.append(calendarCommandsSection());</span>
+<span class="fc" id="L151">    sb.append(copyCommandsSection());</span>
+<span class="fc" id="L152">    sb.append(individualCalendarSection());</span>
+<span class="fc" id="L153">    sb.append(exitSection());</span>
+
+<span class="fc" id="L155">    calendarView.render(sb.toString());</span>
+<span class="fc" id="L156">  }</span>
+
+  private String headerSection() {
+<span class="fc" id="L159">    return &quot;Welcome to the calendar!&quot; + System.lineSeparator()</span>
+        + &quot;Use below mentioned commands to interact with the application...&quot;
+<span class="fc" id="L161">        + System.lineSeparator();</span>
+  }
+
+  private String calendarCommandsSection() {
+<span class="fc" id="L165">    return &quot;To create a new calendar&quot; + System.lineSeparator()</span>
+        + &quot;create calendar --name &lt;calName&gt; --timezone area/location&quot;
+<span class="fc" id="L167">        + System.lineSeparator()</span>
+<span class="fc" id="L168">        + &quot;To edit an existing calendar&quot; + System.lineSeparator()</span>
+        + &quot;edit calendar --name &lt;calName&gt; --timezone area/location&quot;
+<span class="fc" id="L170">        + System.lineSeparator()</span>
+<span class="fc" id="L171">        + &quot;To use a calendar that is created:&quot; + System.lineSeparator()</span>
+<span class="fc" id="L172">        + &quot;use calendar --name &lt;name-of-calendar&gt;&quot; + System.lineSeparator();</span>
+  }
+
+  private String copyCommandsSection() {
+<span class="fc" id="L176">    return &quot;To copy events from one calendar to another:&quot; + System.lineSeparator()</span>
+        + &quot;copy event &lt;eventName&gt; on &lt;dateStringTtimeString&gt; &quot;
+<span class="fc" id="L178">        + &quot;--target &lt;calendarName&gt; to &lt;dateStringTtimeString&gt;&quot; + System.lineSeparator()</span>
+        + &quot;copy events on &lt;dateString&gt; --target &lt;calendarName&gt; to &lt;dateString&gt;&quot;
+<span class="fc" id="L180">        + System.lineSeparator()</span>
+        + &quot;copy events between &lt;dateString&gt; and &lt;dateString&gt; &quot;
+<span class="fc" id="L182">        + &quot;--target &lt;calendarName&gt; to &lt;dateString&gt;&quot; + System.lineSeparator()</span>
+<span class="fc" id="L183">        + System.lineSeparator();</span>
+  }
+
+  /**
+   * Returns a formatted string listing all commands supported
+   * for managing individual calendars and events.
+   *
+   * @return a string containing all supported individual calendar commands
+   */
+  private String individualCalendarSection() {
+<span class="fc" id="L193">    return &quot;Commands Supported on individual calendars:&quot; + System.lineSeparator()</span>
+        + &quot;create event &lt;eventSubject&gt; from &lt;dateStringTtimeString&gt; to &quot;
+<span class="fc" id="L195">        + &quot;&lt;dateStringTtimeString&gt;&quot; + System.lineSeparator()</span>
+        + &quot;create event &lt;eventSubject&gt; from &lt;dateStringTtimeString&gt; to &quot;
+        + &quot;&lt;dateStringTtimeString&gt; repeats &lt;weekdays&gt; for &lt;N&gt; times&quot;
+<span class="fc" id="L198">        + System.lineSeparator()</span>
+        + &quot;create event &lt;eventSubject&gt; from &lt;dateStringTtimeString&gt; to &quot;
+        + &quot;&lt;dateStringTtimeString&gt; repeats &lt;weekdays&gt; until &lt;dateString&gt;&quot;
+<span class="fc" id="L201">        + System.lineSeparator()</span>
+<span class="fc" id="L202">        + &quot;create event &lt;eventSubject&gt; on &lt;dateString&gt;&quot; + System.lineSeparator()</span>
+        + &quot;create event &lt;eventSubject&gt; on &lt;dateString&gt; repeats &lt;weekdays&gt; for &lt;N&gt; times&quot;
+<span class="fc" id="L204">        + System.lineSeparator()</span>
+        + &quot;create event &lt;eventSubject&gt; on &lt;dateString&gt; repeats &lt;weekdays&gt; &quot;
+<span class="fc" id="L206">        + &quot;until &lt;dateString&gt;&quot; + System.lineSeparator()</span>
+        + &quot;edit event &lt;property&gt; &lt;eventSubject&gt; from &lt;dateStringTtimeString&gt; to &quot;
+<span class="fc" id="L208">        + &quot;&lt;dateStringTtimeString&gt; with &lt;NewPropertyValue&gt;&quot; + System.lineSeparator()</span>
+        + &quot;edit events &lt;property&gt; &lt;eventSubject&gt; from &lt;dateStringTtimeString&gt; &quot;
+<span class="fc" id="L210">        + &quot;with &lt;NewPropertyValue&gt;&quot; + System.lineSeparator()</span>
+        + &quot;edit series &lt;property&gt; &lt;eventSubject&gt; from &lt;dateStringTtimeString&gt; &quot;
+<span class="fc" id="L212">        + &quot;with &lt;NewPropertyValue&gt;&quot; + System.lineSeparator()</span>
+<span class="fc" id="L213">        + &quot;print events on &lt;dateString&gt;&quot; + System.lineSeparator()</span>
+        + &quot;print events from &lt;dateStringTtimeString&gt; to &lt;dateStringTtimeString&gt;&quot;
+<span class="fc" id="L215">        + System.lineSeparator()</span>
+        + &quot;export cal fileName.csv or export cal fileName.ical&quot;
+<span class="fc" id="L217">        + System.lineSeparator()</span>
+<span class="fc" id="L218">        + &quot;show status on &lt;dateStringTtimeString&gt;&quot; + System.lineSeparator();</span>
+  }
+
+
+  private String exitSection() {
+<span class="fc" id="L223">    return &quot;To exit the application:&quot; + System.lineSeparator()</span>
+<span class="fc" id="L224">        + &quot;exit&quot; + System.lineSeparator();</span>
+  }
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

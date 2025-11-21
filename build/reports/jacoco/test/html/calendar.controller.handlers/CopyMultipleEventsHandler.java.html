@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CopyMultipleEventsHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calendar</a> &gt; <a href="index.source.html" class="el_package">calendar.controller.handlers</a> &gt; <span class="el_source">CopyMultipleEventsHandler.java</span></div><h1>CopyMultipleEventsHandler.java</h1><pre class="source lang-java linenums">package calendar.controller.handlers;
+
+import static calendar.controller.CopySingleEventCalendarCommand.getOutputString;
+
+import calendar.controller.CalendarFilter;
+import calendar.controller.EventPredicates;
+import calendar.controller.commanddata.CopyMultipleEventsCommandData;
+import calendar.model.Event;
+import calendar.model.datatypes.TypeOfEvent;
+import calendar.model.interfaces.AdvancedCalendar;
+import calendar.model.interfaces.CalendarContainer;
+import calendar.model.interfaces.EventReadOnly;
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+/**
+ * Handler class that performs the logic for copying multiple events.
+ * Takes parsed command data and interacts with the model.
+ */
+public class CopyMultipleEventsHandler {
+
+  private final CalendarContainer calendarManager;
+
+  /**
+   * Constructor for CopyMultipleEventsHandler.
+   *
+   * @param calendarManager the calendar container to interact with
+   */
+<span class="fc" id="L39">  public CopyMultipleEventsHandler(CalendarContainer calendarManager) {</span>
+<span class="fc" id="L40">    this.calendarManager = Objects.requireNonNull(calendarManager);</span>
+<span class="fc" id="L41">  }</span>
+
+  /**
+   * Executes the copy multiple events logic based on the parsed command data.
+   *
+   * @param data the parsed command data
+   * @return the result string
+   */
+  public String handle(CopyMultipleEventsCommandData data) {
+<span class="fc" id="L50">    return copyMultipleEvents(data.getSourceStart(), data.getSourceEnd(), data.getTargetStart(),</span>
+<span class="fc" id="L51">        data.getTargetCalendarName());</span>
+  }
+
+  private String copyMultipleEvents(LocalDate sourceStart, LocalDate sourceEnd,
+                                    LocalDate targetStart, String targetCalName) {
+
+<span class="fc" id="L57">    AdvancedCalendar sourceCal = calendarManager.getActiveCalendar();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">    if (!calendarManager.getCalendars().containsKey(targetCalName)) {</span>
+<span class="fc" id="L59">      throw new IllegalArgumentException(&quot;No calendar with name &quot; + targetCalName);</span>
+    }
+<span class="fc" id="L61">    AdvancedCalendar targetCal = calendarManager.getCalendars().get(targetCalName);</span>
+
+<span class="fc" id="L63">    ZoneId sourceZone = sourceCal.getZoneId();</span>
+<span class="fc" id="L64">    ZoneId targetZone = targetCal.getZoneId();</span>
+
+<span class="fc" id="L66">    List&lt;EventReadOnly&gt; eventsToCopy = new CalendarFilter(sourceCal)</span>
+<span class="fc" id="L67">        .filter(EventPredicates.betweenStartAndEnd(sourceStart.atStartOfDay(),</span>
+<span class="fc" id="L68">            sourceEnd.atTime(23, 59, 59)));</span>
+
+<span class="fc" id="L70">    List&lt;EventReadOnly&gt; copiedEvents = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L71">    Set&lt;java.util.UUID&gt; processedSeries = new HashSet&lt;&gt;();</span>
+
+<span class="fc bfc" id="L73" title="All 2 branches covered.">    for (EventReadOnly event : eventsToCopy) {</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">      if (event.getEventType() == TypeOfEvent.SINGLE) {</span>
+<span class="fc" id="L75">        copiedEvents</span>
+<span class="fc" id="L76">            .add(copySingleEvent(event, sourceStart,</span>
+                targetStart, sourceZone, targetZone, targetCal));
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">      } else if (event.getEventType() == TypeOfEvent.SERIES) {</span>
+<span class="fc" id="L79">        java.util.UUID seriesId = event.getId();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (processedSeries.contains(seriesId)) {</span>
+<span class="fc" id="L81">          continue;</span>
+        }
+<span class="fc" id="L83">        processedSeries.add(seriesId);</span>
+
+<span class="fc" id="L85">        List&lt;EventReadOnly&gt; seriesEvents = new CalendarFilter(sourceCal)</span>
+<span class="fc" id="L86">            .filter(EventPredicates.byEventId(seriesId)</span>
+<span class="fc" id="L87">                .and(EventPredicates.betweenStartAndEnd(</span>
+<span class="fc" id="L88">                    sourceStart.atStartOfDay(),</span>
+<span class="fc" id="L89">                    sourceEnd.atTime(23, 59, 59))));</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (EventReadOnly seriesEvent : seriesEvents) {</span>
+<span class="fc" id="L92">          copiedEvents</span>
+<span class="fc" id="L93">              .add(copySingleEvent(seriesEvent, sourceStart,</span>
+                  targetStart, sourceZone, targetZone, targetCal));
+<span class="fc" id="L95">        }</span>
+      }
+<span class="fc" id="L97">    }</span>
+
+<span class="fc" id="L99">    return handleOutput(copiedEvents);</span>
+  }
+
+  private EventReadOnly copySingleEvent(EventReadOnly event, LocalDate sourceStart,
+                                        LocalDate targetStart, ZoneId sourceZone,
+                                        ZoneId targetZone, AdvancedCalendar targetCal) {
+
+<span class="fc" id="L106">    long daysOffset = ChronoUnit.DAYS.between(sourceStart, event.getStartDateTime().toLocalDate());</span>
+<span class="fc" id="L107">    LocalDate targetDate = targetStart.plusDays(daysOffset);</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">    if (event.getEventType() == TypeOfEvent.SERIES) {</span>
+<span class="fc" id="L110">      DayOfWeek originalDay = event.getStartDateTime().getDayOfWeek();</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">      if (targetDate.getDayOfWeek() != originalDay) {</span>
+<span class="fc" id="L112">        targetDate = targetDate.with(TemporalAdjusters.nextOrSame(originalDay));</span>
+      }
+    }
+<span class="fc" id="L115">    Duration duration = Duration.between(event.getStartDateTime(), event.getEndDateTime());</span>
+<span class="fc" id="L116">    LocalDateTime targetStartDateTime =</span>
+<span class="fc" id="L117">        convertToTargetDateTime(event.getStartDateTime(), targetDate, sourceZone, targetZone);</span>
+<span class="fc" id="L118">    LocalDateTime targetEndDateTime = targetStartDateTime.plus(duration);</span>
+
+<span class="fc" id="L120">    EventReadOnly targetEvent = new Event.EventBuilder(event)</span>
+<span class="fc" id="L121">        .setStartDateTime(targetStartDateTime)</span>
+<span class="fc" id="L122">        .setEndDateTime(targetEndDateTime)</span>
+<span class="fc" id="L123">        .build();</span>
+
+<span class="fc" id="L125">    return targetCal.addEvent(targetEvent);</span>
+  }
+
+  private LocalDateTime convertToTargetDateTime(LocalDateTime sourceDateTime, LocalDate targetDate,
+                                                ZoneId sourceZone, ZoneId targetZone) {
+<span class="fc" id="L130">    LocalDateTime converted = sourceDateTime</span>
+<span class="fc" id="L131">        .atZone(sourceZone)</span>
+<span class="fc" id="L132">        .withZoneSameInstant(targetZone)</span>
+<span class="fc" id="L133">        .toLocalDateTime();</span>
+
+<span class="fc" id="L135">    return LocalDateTime.of(targetDate, converted.toLocalTime());</span>
+  }
+
+  private String handleOutput(List&lt;EventReadOnly&gt; copiedEvents) {
+<span class="fc" id="L139">    return getOutputString(copiedEvents);</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

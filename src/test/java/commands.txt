@@ -1,0 +1,23 @@
+create calendar --name cal --timezone Asia/Kolkata
+edit calendar --name cal --property name cal1
+edit calendar --name cal1 --property timezone America/New_York
+use calendar --name cal1
+create event Testing from 2025-11-12T05:58 to 2025-11-12T09:00
+create event Submission from 2025-11-12T09:00 to 2025-11-12T21:00 repeats W for 30 times
+create event Assignment from 2025-09-03T03:00 to 2025-09-03T06:00 repeats WF until 2025-12-16
+create event Lab on 2025-11-17
+create event Labs on 2025-09-03 repeats M for 11 times
+create event Work on 2025-11-13 repeats MTWRFSU until 2025-12-31
+edit event subject Work from 2025-11-13T08:00 to 2025-11-13T17:00 with WorkDone
+print events on 2025-11-13
+print events from 2024-01-01T00:00 to 2025-12-31T00:00
+export cal exportedEvents.csv
+show status on 2025-11-13T08:00
+export cal exportToIcal.ical
+edit calendar --name cal1 --property timezone Europe/Paris
+print events from 2024-01-01T00:00 to 2025-12-31T00:00
+create calendar --name cal2 --timezone Asia/Kolkata
+edit calendar --name cal1 --property timezone America/New_York
+copy event Testing on 2025-11-12T05:58 --target cal2 to 2025-11-12T08:58
+copy events on 2025-12-24 --target cal2 to 2026-11-24
+copy events between 2024-01-01 and 2026-12-31 --target cal2 to 2024-01-01

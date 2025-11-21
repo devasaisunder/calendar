@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.23.1">
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CreateCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/UserStatusCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CalendarControllerImpl.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/AdvanceCalendarController.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/IcalExporter.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CalendarFeatures.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/EditEventCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/EventPredicates.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/DeleteMultipleEventsCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/ExportCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/EditMultipleEventsCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/DeleteSeriesCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/DeleteEventCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/UseCalendarCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/EditEventCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/PrintCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/CopySingleEventCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/CreateCalendarCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/CopyMultipleEventsCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/CreateCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/EditSeriesCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/UserStatusCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/commanddata/EditCalendarCommandData.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CalendarController.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/ExportCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/EditCalendarCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CopySingleEventCalendarCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/Command.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CopyMultipleEventsCalendarCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CalendarGuiController.java">
+<error line="102" severity="warning" message="Line is longer than 100 characters (found 103)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="122" severity="warning" message="Line is longer than 100 characters (found 105)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="168" column="5" severity="warning" message="Distance between variable &apos;timezone&apos; declaration and its first usage is 4, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CommandTokenizerImpl.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/EditSeriesCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/FileExporter.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CreateCalendarCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CommandTokenizer.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CalendarFilter.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/CsvExporter.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/CopyMultipleEventsHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/PrintEventHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/ExportEventHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/DeleteSeriesHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/EditCalendarHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/UserStatusHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/EditEventHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/CreateEventHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/DeleteMultipleEventsHandler.java">
+<error line="72" severity="warning" message="Line is longer than 100 characters (found 102)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/EditMultipleEventsHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/UseCalendarHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/DeleteEventHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/EditSeriesHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/CreateCalendarHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/handlers/CopySingleEventHandler.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/UseCalendarCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/EditMultipleEventsCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/controller/PrintCommand.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/AdvancedCalendarImpl.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/ModifyStatus.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/ModifyStartDate.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/datatypes/EventStatus.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/datatypes/EventProperties.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/datatypes/TypeOfEvent.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/datatypes/UserStatus.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/datatypes/Location.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/ModifyId.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/EditCalendarName.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/ModifyLocation.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/CalendarImpl.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/ModifyEndDate.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/Event.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/testing/MockCalendarContainer.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/testing/FakeAppendable.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/testing/MockCalendar.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/ModifySubject.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/ModifyDescription.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/CalendarContainerImpl.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/interfaces/CalendarReadOnly.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/interfaces/CalendarContainer.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/interfaces/AdvancedCalendar.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/interfaces/CalendarEditable.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/interfaces/ModifyEvent.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/interfaces/EditCalendar.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/interfaces/EventReadOnly.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/model/EditCalendarTimeZone.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/BottomPanel.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/CalendarGuiView.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/TopPanel.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/CalendarDialog.java">
+<error line="103" column="5" severity="warning" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck"/>
+<error line="116" severity="warning" message="Line is longer than 100 characters (found 109)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="120" column="5" severity="warning" message="Distance between variable &apos;currentTimezone&apos; declaration and its first usage is 11, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="141" column="5" severity="warning" message="Distance between variable &apos;valueField&apos; declaration and its first usage is 5, but allowed 3.  Consider making that variable final if you still need to store its value in advance (before method calls that might have side effects on the original value)." source="com.puppycrawl.tools.checkstyle.checks.coding.VariableDeclarationUsageDistanceCheck"/>
+<error line="196" severity="warning" message="Line is longer than 100 characters (found 104)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/ViewListener.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/DayViewPanel.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/EventDialog.java">
+<error line="36" column="5" severity="warning" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck"/>
+<error line="292" severity="warning" message="Line is longer than 100 characters (found 103)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="314" column="5" severity="warning" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck"/>
+<error line="322" column="5" severity="warning" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck"/>
+<error line="332" column="5" severity="warning" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck"/>
+<error line="508" severity="warning" message="Line is longer than 100 characters (found 103)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+<error line="589" severity="warning" message="Line is longer than 100 characters (found 101)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/CalendarGuiViewImpl.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/CalendarView.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/MonthViewPanel.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/CalendarViewImpl.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/EventInfo.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/calendar/view/Features.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/CalendarRunner.java">
+</file>
+<file name="/Users/devasaisundertangella/Documents/Fall2025/PDP/dummyCalendar/CalendarGuiDup/src/main/java/InputFactory.java">
+</file>
+</checkstyle>
